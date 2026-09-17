@@ -74,3 +74,20 @@ This document tracks all foundational architectural and technical decisions made
 - **Decision**: Isolate daily classroom photo streams by class/section audience and require server-validated authorization checks and pickup PIN verification for child dismissal.
 - **Rationale**: Early childhood photos and dismissal are safety-critical. Scoped audiences ensure parents only see photos from their child's classroom, and server-side pickup verification prevents unauthorized dismissals.
 
+---
+
+## ADR 010: Factory Pattern Activity Registry with Data-Driven JSON Payloads
+- **Date**: 2026-09-17
+- **Status**: Accepted
+- **Decision**: Implement the 12 interactive activity types using a centralized `ActivityRunner` registry with type-specific renderers consuming validated JSON content structures.
+- **Rationale**: Hardcoding 12+ separate activity pages leads to massive code duplication and maintenance friction. A data-driven registry allows seamless expansion in Phase 4 when teachers author custom assignments.
+
+---
+
+## ADR 011: Server-Side Star Reward Integrity & Adult Math Gate
+- **Date**: 2026-09-17
+- **Status**: Accepted
+- **Decision**: Calculate all star rewards and milestone badge unlocks on the server upon attempt submission, and enforce an adult math verification challenge on Kid Mode exit.
+- **Rationale**: Prevents client-side star inflation or spoofing and ensures young toddlers cannot accidentally leave the sandboxed kid environment without adult supervision.
+
+

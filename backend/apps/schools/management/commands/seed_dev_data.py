@@ -410,11 +410,384 @@ class Command(BaseCommand):
             user=b_admin, school=school_b, role='SCHOOL_ADMIN', defaults={'is_default': True, 'is_active': True}
         )
 
+        # 14. Phase 3: Learning World Seed
+        from apps.learning.models import (
+            LearningLevel, LearningArea, LearningTopic, Activity, ActivityAttempt,
+            LearningProgress, RewardBadge, ChildBadge, InteractiveStory, StoryScene, CuratedVideo
+        )
+
+        # Learning Levels (6 Developmental Stages)
+        lvl_explore, _ = LearningLevel.objects.update_or_create(
+            code='EXPLORE_2_3',
+            defaults={
+                'name': 'Explore', 'min_age': Decimal('2.0'), 'max_age': Decimal('3.0'),
+                'description': 'Big buttons, animal sounds, color recognition & sensory matching.',
+                'order_index': 1, 'color_theme': 'emerald', 'icon_name': 'Sparkles', 'is_active': True
+            }
+        )
+        lvl_discover, _ = LearningLevel.objects.update_or_create(
+            code='DISCOVER_3_4',
+            defaults={
+                'name': 'Discover', 'min_age': Decimal('3.0'), 'max_age': Decimal('4.0'),
+                'description': 'Letter tracing, counting 1 to 10, pattern discovery & story listening.',
+                'order_index': 2, 'color_theme': 'sky', 'icon_name': 'Compass', 'is_active': True
+            }
+        )
+        lvl_learn, _ = LearningLevel.objects.update_or_create(
+            code='LEARN_4_5',
+            defaults={
+                'name': 'Learn', 'min_age': Decimal('4.0'), 'max_age': Decimal('5.0'),
+                'description': 'Early phonics, word rhyming, counting 1 to 20, voice-assisted storybooks.',
+                'order_index': 3, 'color_theme': 'blue', 'icon_name': 'BookOpen', 'is_active': True
+            }
+        )
+        lvl_build, _ = LearningLevel.objects.update_or_create(
+            code='BUILD_5_7',
+            defaults={
+                'name': 'Build', 'min_age': Decimal('5.0'), 'max_age': Decimal('7.0'),
+                'description': 'Sentence creation, basic addition & subtraction, logical reasoning.',
+                'order_index': 4, 'color_theme': 'purple', 'icon_name': 'Blocks', 'is_active': True
+            }
+        )
+        lvl_create, _ = LearningLevel.objects.update_or_create(
+            code='CREATE_7_9',
+            defaults={
+                'name': 'Create', 'min_age': Decimal('7.0'), 'max_age': Decimal('9.0'),
+                'description': 'Reading comprehension quests, multiplication adventures & nature science.',
+                'order_index': 5, 'color_theme': 'rose', 'icon_name': 'Palette', 'is_active': True
+            }
+        )
+        lvl_grow, _ = LearningLevel.objects.update_or_create(
+            code='GROW_9_10',
+            defaults={
+                'name': 'Grow', 'min_age': Decimal('9.0'), 'max_age': Decimal('10.0'),
+                'description': 'Critical thinking challenges, self-directed learning sprints & science projects.',
+                'order_index': 6, 'color_theme': 'amber', 'icon_name': 'TrendingUp', 'is_active': True
+            }
+        )
+
+        # Learning Areas
+        area_alphabet, _ = LearningArea.objects.update_or_create(
+            code='ALPHABET_PHONICS',
+            defaults={'name': 'Alphabet & Phonics', 'description': 'Letters, sounds, phonics & early words', 'icon_name': 'Type', 'order_index': 1}
+        )
+        area_math, _ = LearningArea.objects.update_or_create(
+            code='NUMBERS_MATH',
+            defaults={'name': 'Numbers & Math', 'description': 'Counting, numbers, shapes & addition', 'icon_name': 'Binary', 'order_index': 2}
+        )
+        area_shapes, _ = LearningArea.objects.update_or_create(
+            code='SHAPES_COLORS',
+            defaults={'name': 'Shapes & Colors', 'description': 'Visual identification, matching & sorting', 'icon_name': 'Shapes', 'order_index': 3}
+        )
+        area_stories, _ = LearningArea.objects.update_or_create(
+            code='STORIES_AUDIO',
+            defaults={'name': 'Storybook Corner', 'description': 'Interactive stories, audiobooks & comprehension', 'icon_name': 'BookOpen', 'order_index': 4}
+        )
+        area_science, _ = LearningArea.objects.update_or_create(
+            code='SCIENCE_NATURE',
+            defaults={'name': 'Science & Nature', 'description': 'Animals, plants, habitats & wonder of the world', 'icon_name': 'Leaf', 'order_index': 5}
+        )
+        area_creativity, _ = LearningArea.objects.update_or_create(
+            code='CREATIVITY_ART',
+            defaults={'name': 'Creativity & Art', 'description': 'Drawing, coloring, rhythm & musical patterns', 'icon_name': 'Palette', 'order_index': 6}
+        )
+
+        # Learning Topics
+        topic_count5, _ = LearningTopic.objects.update_or_create(
+            learning_area=area_math, learning_level=lvl_explore, code='COUNT_1_5',
+            defaults={'name': 'Counting 1 to 5', 'description': 'Learn to count fingers, toys, and fruits', 'order_index': 1}
+        )
+        topic_shapes, _ = LearningTopic.objects.update_or_create(
+            learning_area=area_shapes, learning_level=lvl_explore, code='PRIMARY_SHAPES',
+            defaults={'name': 'Circles, Squares & Triangles', 'description': 'Recognizing basic geometry', 'order_index': 1}
+        )
+        topic_letters_ad, _ = LearningTopic.objects.update_or_create(
+            learning_area=area_alphabet, learning_level=lvl_discover, code='LETTERS_A_D',
+            defaults={'name': 'Letters A through D', 'description': 'Letter sounds and tracing', 'order_index': 1}
+        )
+        topic_addition, _ = LearningTopic.objects.update_or_create(
+            learning_area=area_math, learning_level=lvl_build, code='ADDITION_1_10',
+            defaults={'name': 'Addition Up to 10', 'description': 'Combining groups of objects', 'order_index': 1}
+        )
+
+        # Reward Badges
+        b_first_star, _ = RewardBadge.objects.update_or_create(
+            code='FIRST_STEP',
+            defaults={'name': 'First Step Star', 'description': 'Completed your very first learning activity!', 'icon_name': 'Star', 'badge_type': 'STAR_MILESTONE', 'required_count': 1, 'color_accent': 'amber'}
+        )
+        b_count_master, _ = RewardBadge.objects.update_or_create(
+            code='COUNTING_CHAMP',
+            defaults={'name': 'Counting Champion', 'description': 'Earned 5 stars in Numbers & Math', 'icon_name': 'Binary', 'badge_type': 'STAR_MILESTONE', 'required_count': 5, 'color_accent': 'sky'}
+        )
+        b_alphabet_hero, _ = RewardBadge.objects.update_or_create(
+            code='ALPHABET_EXPLORER',
+            defaults={'name': 'Alphabet Explorer', 'description': 'Earned 10 stars across reading & phonics', 'icon_name': 'BookOpen', 'badge_type': 'STAR_MILESTONE', 'required_count': 10, 'color_accent': 'emerald'}
+        )
+        b_story_voyager, _ = RewardBadge.objects.update_or_create(
+            code='STORY_VOYAGER',
+            defaults={'name': 'Storybook Voyager', 'description': 'Explored 3 interactive storybooks', 'icon_name': 'Trophy', 'badge_type': 'STAR_MILESTONE', 'required_count': 15, 'color_accent': 'purple'}
+        )
+
+        # Activities across the 12 Activity Types
+        # 1. TAP_CHOOSE
+        act_tap, _ = Activity.objects.update_or_create(
+            title='Triangle Detective 🔺',
+            defaults={
+                'learning_level': lvl_explore, 'learning_area': area_shapes, 'topic': topic_shapes,
+                'activity_type': 'TAP_CHOOSE', 'difficulty': 'EASY', 'estimated_duration_minutes': 3,
+                'star_reward': 2, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 1,
+                'description': 'Can you find the shape with 3 pointy corners?',
+                'content': {
+                    'instruction': 'Tap the Triangle!',
+                    'question': 'Which shape has 3 corners? 🔺',
+                    'options': [
+                        {'id': 'opt1', 'label': 'Triangle', 'icon': '🔺', 'is_correct': True},
+                        {'id': 'opt2', 'label': 'Square', 'icon': '🟦', 'is_correct': False},
+                        {'id': 'opt3', 'label': 'Circle', 'icon': '🟡', 'is_correct': False}
+                    ]
+                }
+            }
+        )
+
+        # 2. COUNT
+        act_count, _ = Activity.objects.update_or_create(
+            title='Count the Juicy Apples 🍎',
+            defaults={
+                'learning_level': lvl_explore, 'learning_area': area_math, 'topic': topic_count5,
+                'activity_type': 'COUNT', 'difficulty': 'EASY', 'estimated_duration_minutes': 4,
+                'star_reward': 2, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 2,
+                'description': 'Touch and count how many delicious apples are in the basket!',
+                'content': {
+                    'instruction': 'How many apples do you see?',
+                    'item_emoji': '🍎',
+                    'count': 4,
+                    'options': [2, 3, 4, 5],
+                    'correct_answer': 4
+                }
+            }
+        )
+
+        # 3. MATCH
+        act_match, _ = Activity.objects.update_or_create(
+            title='Animal & Habitat Match 🦁',
+            defaults={
+                'learning_level': lvl_discover, 'learning_area': area_science,
+                'activity_type': 'MATCH', 'difficulty': 'EASY', 'estimated_duration_minutes': 5,
+                'star_reward': 3, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 3,
+                'description': 'Help these cute animals find their happy homes!',
+                'content': {
+                    'instruction': 'Match each animal to where it lives!',
+                    'pairs': [
+                        {'id': 'p1', 'left': '🐟 Fish', 'right': '🌊 Ocean'},
+                        {'id': 'p2', 'left': '🐦 Bird', 'right': '🌳 Tree Nest'},
+                        {'id': 'p3', 'left': '🐝 Bee', 'right': '🍯 Hive'}
+                    ]
+                }
+            }
+        )
+
+        # 4. SORT
+        act_sort, _ = Activity.objects.update_or_create(
+            title='Big vs Small Toy Box 🧸',
+            defaults={
+                'learning_level': lvl_explore, 'learning_area': area_shapes,
+                'activity_type': 'SORT', 'difficulty': 'EASY', 'estimated_duration_minutes': 4,
+                'star_reward': 2, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 4,
+                'description': 'Sort the big and small items into the right boxes.',
+                'content': {
+                    'instruction': 'Sort items into Big Box and Small Box',
+                    'baskets': [
+                        {'id': 'big', 'title': 'Big Box 📦'},
+                        {'id': 'small', 'title': 'Small Box 🛍️'}
+                    ],
+                    'items': [
+                        {'id': 'i1', 'label': '🐘 Elephant', 'basket': 'big'},
+                        {'id': 'i2', 'label': '🐜 Ant', 'basket': 'small'},
+                        {'id': 'i3', 'label': '🚌 Big Bus', 'basket': 'big'},
+                        {'id': 'i4', 'label': '🍓 Strawberry', 'basket': 'small'}
+                    ]
+                }
+            }
+        )
+
+        # 5. MEMORY
+        act_memory, _ = Activity.objects.update_or_create(
+            title='Jungle Memory Flip 🐵',
+            defaults={
+                'learning_level': lvl_discover, 'learning_area': area_science,
+                'activity_type': 'MEMORY', 'difficulty': 'EASY', 'estimated_duration_minutes': 5,
+                'star_reward': 3, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 5,
+                'description': 'Flip cards and find the matching jungle friends.',
+                'content': {
+                    'instruction': 'Find all 3 matching pairs!',
+                    'cards': ['🦁', '🦁', '🐼', '🐼', '🐸', '🐸']
+                }
+            }
+        )
+
+        # 6. SEQUENCE
+        act_sequence, _ = Activity.objects.update_or_create(
+            title='Rocket Number Countdown 🚀',
+            defaults={
+                'learning_level': lvl_discover, 'learning_area': area_math,
+                'activity_type': 'SEQUENCE', 'difficulty': 'EASY', 'estimated_duration_minutes': 4,
+                'star_reward': 2, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 6,
+                'description': 'Arrange numbers 1 to 5 to launch the rocket!',
+                'content': {
+                    'instruction': 'Tap the numbers in order from 1 to 5!',
+                    'sequence': [1, 2, 3, 4, 5]
+                }
+            }
+        )
+
+        # 7. TRACE
+        act_trace, _ = Activity.objects.update_or_create(
+            title='Trace Letter A for Apple 🔤',
+            defaults={
+                'learning_level': lvl_discover, 'learning_area': area_alphabet, 'topic': topic_letters_ad,
+                'activity_type': 'TRACE', 'difficulty': 'EASY', 'estimated_duration_minutes': 5,
+                'star_reward': 2, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 7,
+                'description': 'Follow the dotted lines to draw big letter A!',
+                'content': {
+                    'instruction': 'Trace the letter A with your finger or mouse',
+                    'target_character': 'A',
+                    'hint_word': 'Apple 🍎'
+                }
+            }
+        )
+
+        # 8. COLOR
+        act_color, _ = Activity.objects.update_or_create(
+            title='Paint the Sunny Day 🎨',
+            defaults={
+                'learning_level': lvl_explore, 'learning_area': area_creativity,
+                'activity_type': 'COLOR', 'difficulty': 'EASY', 'estimated_duration_minutes': 4,
+                'star_reward': 2, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 8,
+                'description': 'Pick bright yellow and sky blue to color the sun and clouds.',
+                'content': {
+                    'instruction': 'Choose colors from the palette to paint the picture!',
+                    'palette': ['#F59E0B', '#0EA5E9', '#10B981', '#EF4444', '#8B5CF6'],
+                    'canvas_emoji': '☀️ ☁️ 🌈'
+                }
+            }
+        )
+
+        # 9. QUIZ
+        act_quiz, _ = Activity.objects.update_or_create(
+            title='Animal Superpowers Quiz 🐾',
+            defaults={
+                'learning_level': lvl_learn, 'learning_area': area_science,
+                'activity_type': 'QUIZ', 'difficulty': 'MEDIUM', 'estimated_duration_minutes': 6,
+                'star_reward': 3, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 9,
+                'description': 'Answer fun questions about your favorite animal friends.',
+                'content': {
+                    'questions': [
+                        {
+                            'question': 'Which animal can fly in the sky? 🕊️',
+                            'options': ['Bird', 'Cat', 'Turtle'],
+                            'answer': 'Bird'
+                        },
+                        {
+                            'question': 'What do bees make? 🐝',
+                            'options': ['Honey', 'Milk', 'Bread'],
+                            'answer': 'Honey'
+                        }
+                    ]
+                }
+            }
+        )
+
+        # 10. DRAG_DROP
+        act_drag, _ = Activity.objects.update_or_create(
+            title='Feed the Hungry Caterpillar 🐛',
+            defaults={
+                'learning_level': lvl_explore, 'learning_area': area_science,
+                'activity_type': 'DRAG_DROP', 'difficulty': 'EASY', 'estimated_duration_minutes': 4,
+                'star_reward': 2, 'is_global': True, 'status': 'PUBLISHED', 'order_index': 10,
+                'description': 'Drag green leaves into the caterpillar plate.',
+                'content': {
+                    'instruction': 'Drag all the leaves to the caterpillar!',
+                    'target_label': 'Caterpillar 🐛',
+                    'items': [
+                        {'id': 'd1', 'label': '🍃 Leaf 1'},
+                        {'id': 'd2', 'label': '🌿 Leaf 2'},
+                        {'id': 'd3', 'label': '🌱 Leaf 3'}
+                    ]
+                }
+            }
+        )
+
+        # 11. Interactive Story
+        story_bear, _ = InteractiveStory.objects.update_or_create(
+            title='Pip the Bear & The Rainbow Butterfly 🐻🌈',
+            defaults={
+                'learning_level': lvl_discover, 'author': 'EduKadence Story Lab',
+                'synopsis': 'Join Pip the friendly bear as he helps a lost rainbow butterfly find its blooming wildflower garden.',
+                'cover_image_url': 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=80',
+                'estimated_reading_minutes': 5, 'star_reward': 3, 'is_global': True, 'status': 'PUBLISHED'
+            }
+        )
+        StoryScene.objects.update_or_create(
+            story=story_bear, scene_number=1,
+            defaults={
+                'title': 'The Morning Sunshine',
+                'text_content': 'Once upon a sunny morning, Pip the little bear woke up in his cozy mossy cave. A shimmering purple butterfly landed right on his nose!',
+                'illustration_url': 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=80',
+                'checkpoint_prompt': {'question': 'Who woke up Pip the bear?', 'options': ['A Butterfly', 'A Frog'], 'answer': 'A Butterfly'}
+            }
+        )
+        StoryScene.objects.update_or_create(
+            story=story_bear, scene_number=2,
+            defaults={
+                'title': 'The Whispering Forest',
+                'text_content': 'Pip followed the fluttering butterfly past tall pine trees and singing bluebirds until they reached a field of bright yellow sunflowers.',
+                'illustration_url': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80',
+                'checkpoint_prompt': {'question': 'What color were the flowers?', 'options': ['Bright Yellow', 'Dark Grey'], 'answer': 'Bright Yellow'}
+            }
+        )
+
+        # 12. Curated Video
+        video_nature, _ = CuratedVideo.objects.update_or_create(
+            title='How Do Plants Drink Water? 💧🌱',
+            defaults={
+                'learning_level': lvl_discover, 'learning_area': area_science,
+                'description': 'A cheerful animated adventure discovering how roots drink water from soil.',
+                'duration_seconds': 120, 'thumbnail_url': 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop&q=80',
+                'video_url': 'https://www.w3schools.com/html/mov_bbb.mp4',
+                'checkpoint_question': {'question': 'What parts of plants drink water?', 'options': ['Roots', 'Leaves'], 'answer': 'Roots'},
+                'is_global': True, 'status': 'PUBLISHED'
+            }
+        )
+
+        # Seed Sample Attempts & Earned Badges for Aarav
+        ActivityAttempt.objects.update_or_create(
+            school=school_a, child=aarav, activity=act_tap,
+            defaults={
+                'is_completed': True, 'score': 100, 'correct_count': 1, 'total_count': 1,
+                'stars_awarded': 2, 'completed_at': timezone.now() - timedelta(days=1)
+            }
+        )
+        ActivityAttempt.objects.update_or_create(
+            school=school_a, child=aarav, activity=act_count,
+            defaults={
+                'is_completed': True, 'score': 100, 'correct_count': 1, 'total_count': 1,
+                'stars_awarded': 2, 'completed_at': timezone.now()
+            }
+        )
+        LearningProgress.objects.update_or_create(
+            school=school_a, child=aarav, learning_area=area_shapes,
+            defaults={'activities_completed_count': 2, 'total_stars_earned': 4, 'mastery_percentage': 40, 'last_activity_at': timezone.now()}
+        )
+        ChildBadge.objects.update_or_create(
+            school=school_a, child=aarav, badge=b_first_star, defaults={'earned_at': timezone.now()}
+        )
+
         self.stdout.write(self.style.SUCCESS('\n======================================================='))
-        self.stdout.write(self.style.SUCCESS('[+] EduKadence Phase 2 Seed Complete!'))
+        self.stdout.write(self.style.SUCCESS('[+] EduKadence Phase 3 Seed Complete!'))
         self.stdout.write(self.style.SUCCESS('======================================================='))
         self.stdout.write(self.style.SUCCESS('Admin Login:   principal@sunrisekids.edu   / School@12345'))
         self.stdout.write(self.style.SUCCESS('Teacher Login: sarah.teacher@sunrisekids.edu / Teacher@12345'))
         self.stdout.write(self.style.SUCCESS('Parent Login:  john.parent@gmail.com        / Parent@12345 (Children: Aarav & Riya)'))
         self.stdout.write(self.style.SUCCESS('Super Admin:   admin@edukadence.com         / Admin@12345'))
         self.stdout.write(self.style.SUCCESS('======================================================='))
+

@@ -67,3 +67,38 @@ This document records all meaningful tasks performed across agent sessions.
 - **Known Follow-up**:
   - Phase 3: Kid Mode & Visual Learning Sandbox (developmental stages, interactive sandbox, progress rewards).
 
+---
+
+### Task: Phase 3 Kid Learning Experience & Child Learning World Implementation
+- **Date**: 2026-09-17
+- **Reason**: Build the child-safe, age-adaptive learning environment, data-driven activity engine (12 types), server-evaluated rewards system, and parent learning journey.
+- **Files/Areas Affected**:
+  - `backend/apps/learning/` (`LearningLevel`, `LearningArea`, `LearningTopic`, `Activity`, `ActivityAttempt`, `LearningProgress`, `LearningSession`, `RewardBadge`, `ChildBadge`, `InteractiveStory`, `StoryScene`, `CuratedVideo`, `ActivityAssignment`)
+  - `backend/apps/learning/serializers.py`, `views.py`, `urls.py`, `admin.py`
+  - `backend/apps/core/management/commands/seed_dev_data.py` (Extended with Phase 3 learning catalog seed data)
+  - `backend/tests/test_learning_engine.py` (7 comprehensive learning engine test cases)
+  - `frontend/src/services/learningService.js`
+  - `frontend/src/layouts/KidShell.jsx`, `ParentShell.jsx`
+  - `frontend/src/pages/kid/` (`KidHomePage.jsx`, `KidExplorePage.jsx`, `KidStoriesPage.jsx`, `KidVideosPage.jsx`, `KidBadgesPage.jsx`)
+  - `frontend/src/pages/kid/components/` (`ActivityRunner.jsx` + 12 activity renderers: `TapChooseActivity`, `CountActivity`, `MatchActivity`, `SortActivity`, `MemoryActivity`, `SequenceActivity`, `TraceActivity`, `ColorActivity`, `QuizActivity`, `DragDropActivity`, `StoryReader`, `CuratedVideoPlayer`)
+  - `frontend/src/pages/parent/ParentPortalPage.jsx`, `frontend/src/pages/dashboard/DashboardPage.jsx`, `frontend/src/app/App.jsx`
+  - `docs/` (`LEARNING_ENGINE.md`, `KID_MODE.md`, `ACTIVITY_ENGINE.md`, `CHILD_SAFETY.md`, `CONTENT_MODEL.md`)
+  - `CHANGELOG.md`, `.agent-memory/CURRENT_STATE.md`, `.agent-memory/DECISIONS.md`, `.agent-memory/TASK_HISTORY.md`
+- **What Changed**:
+  - Implemented complete `apps.learning` domain module with strict multi-tenancy and global vs. school content scoping.
+  - Implemented 6 developmental stages: Level 1 (Explore 2-3), Level 2 (Discover 3-4), Level 3 (Learn 4-5), Level 4 (Build 5-7), Level 5 (Create 7-9), Level 6 (Grow 9-10).
+  - Built reusable, extensible Activity Runner supporting 12 interactive activity types.
+  - Implemented server-evaluated rewards and anti-cheat validation with star awards (1-3 stars), milestone badge auto-unlocking, and progress tracking.
+  - Built Kid Mode visual environment with animated feedback, audio prompt helpers, sibling switcher, live star counter, and adult math-gate exit protection.
+  - Built Parent Portal "Learning Journey" tab displaying completion metrics, stars earned, topic mastery progress bars, and unlocked badges.
+  - Added Kid Sandbox launcher to School/Teacher Dashboard for previewing learning content.
+  - Verified 38/38 Pytest automated tests (100% pass rate).
+  - Verified clean frontend production build with Vite (`npm run build` in 6.02s).
+- **Important Decisions**:
+  - ADR 010: Factory Registry Pattern for Activity Engines.
+  - ADR 011: Server-Side Evaluation for Rewards & Progress Integrity.
+- **Testing Performed**:
+  - `pytest tests/ -v` (38/38 passed).
+  - `npm run build` (transformed 1646 modules, 0 errors).
+- **Known Follow-up**:
+  - Phase 4: Teacher Homework Authoring Studio and interactive assignment workflow.
