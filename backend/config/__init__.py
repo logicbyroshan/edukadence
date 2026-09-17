@@ -1,0 +1,1 @@
+"""EduKadence Django Config Package."""

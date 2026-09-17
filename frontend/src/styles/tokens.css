@@ -1,0 +1,31 @@
+/* EduKadence Centralized Design Tokens */
+:root {
+  /* Brand Palette (Derived from EduKadence Logo) */
+  --brand-electric: #2563EB;
+  --brand-electric-hover: #1D4ED8;
+  --brand-sky: #0EA5E9;
+  --brand-sky-hover: #0284C7;
+  --brand-navy: #0F172A;
+  --brand-surface: #F8FAFC;
+  --brand-surface-card: #FFFFFF;
+  --brand-border: #E2E8F0;
+
+  /* Typography Scale */
+  --font-display: 2rem;
+  --font-h1: 1.5rem;
+  --font-h2: 1.25rem;
+  --font-h3: 1.0rem;
+  --font-body: 0.875rem;
+  --font-small: 0.75rem;
+
+  /* Spacing and Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}

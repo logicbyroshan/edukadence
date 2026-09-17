@@ -1,158 +1,192 @@
-<p align="center">
-  <img src="./screenshots/Vidy%20Max%20Banner.png" alt="VidyaFloww School Management Banner" width="100%" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);" />
-</p>
+# EduKadence (Phase 1 Foundation)
 
-<div align="center">
-
-# VidyaFloww — Enterprise School Management Platform
-
-**A unified, high-performance digital operating system engineered for K-12 schools, colleges, and multi-campus educational networks.**
-
-[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
-[![React 19](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=white)](https://react.dev)
-[![TypeScript 5.6](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white)](https://typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
-[![TanStack Router](https://img.shields.io/badge/TanStack_Router-1.x-FF4154?logo=reacttable&logoColor=white)](https://tanstack.com/router)
-[![Zustand](https://img.shields.io/badge/Zustand-4.5-brown?logo=zustand&logoColor=white)](https://github.com/pmndrs/zustand)
-
-</div>
+> **EduKadence** is a modern, production-ready SaaS platform purposefully architected for small schools serving young children approximately **2 to 10 years old** (play schools, preschools, nursery schools, Montessori, kindergartens, and primary schools up to ~200 students).
 
 ---
 
-## 📖 About VidyaFloww
+## 🌟 Product Philosophy
 
-**VidyaFloww** is an institutional-grade, full-stack educational ERP and campus command portal. Designed specifically for school administrators, principals, and educators, VidyaFloww eliminates administrative friction and replaces fragmented spreadsheets with an intuitive, clean, and blisteringly fast digital workspace.
+EduKadence departs from traditional, convoluted enterprise ERPs by delivering three tailored, role-specific experiences:
 
-### 🎨 Institutional Design System Highlights (V1)
-- **High-Legibility Typography**: Solid 16px (`text-base`) foundation with high-contrast text and balanced metric indicators designed specifically for non-tech-friendly school personnel.
-- **Pixel-Aligned Header Geometry**: Unified `72px` height across the top Navbar and Sidebar header creating an unbroken, symmetrical dividing line.
-- **Square Collapsed Sidebar Navigation**: Centered `44px × 44px` square box geometry when collapsed for clean scanning.
-- **Open Sub-Navigation Tabs**: Clean, open tabs resting directly on the sub-header with animated bottom underline indicators (no enclosing box wrappers).
-- **Space-Efficient Borders (`rounded-lg` / `rounded-md`)**: Crisp 8px and 6px border radii that maximize screen real estate and avoid floaty capsule clutter.
-- **Flat Single-Level Hierarchy**: Completely eliminates 3-level "box-inside-box" nesting in favor of clean divided lists (`divide-y divide-border`).
-- **Dynamic School Identity & Logo Studio**: Real-time institution branding, custom logo upload, and preset emblem selectors with live Navbar header integration and `localStorage` persistence.
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                              EDUKADENCE                                │
+└──────────────────────────────────┬─────────────────────────────────────┘
+                                   │
+        ┌──────────────────────────┼──────────────────────────┐
+        ▼                          ▼                          ▼
+   1. SCHOOL                  2. PARENT                  3. CHILD
+     MANAGE                    CONNECT             PLAY + LEARN + GROW
+  Clean, minimal         Mobile-first window      Safe, visual, playful
+  administration for      into their child's       learning universe &
+   small educators         daily school life       interactive homework
+```
 
----
-
-## 🏛️ Active V1 Application Modules
-
-VidyaFloww is organized into clean, isolated modules mapped to distinct, type-safe routes:
-
-| # | Module | Route | Key Capabilities |
-|:---:|---|---|---|
-| **01** | **Dashboard** | `/` | Real-time institutional telemetry, student attendance radar, priority action feed, biometric hardware sync |
-| **02** | **Students** | `/students` | Enrolled student master roster, 360° academic profiles, demographic breakdown, batch promotions |
-| **03** | **Admissions** | `/admissions` | 4-stage conversion funnel CRM, OCR document verification, merit scoring, instant admission letters |
-| **04** | **Attendance** | `/attendance` | Interactive daily roll call, one-click "Mark All Present", absence alerts, biometric gate telemetry |
-| **05** | **Academics** | `/academics` | Academic session master, subject catalog, classroom & section allocation matrix |
-| **06** | **Timetable** | `/timetable` | Weekly period schedule matrix, automated teacher proxy & substitution matcher, standardized bell timings |
-| **07** | **Teachers** | `/staff` | Faculty & educator master directory, department workload meters, class allocations |
-| **08** | **Homework** | `/homework` | Assignment master register, deadline monitoring, student submission grading queue |
-| **09** | **Examinations** | `/examinations` | Examination schedule setup, marks entry, term gradebooks, academic performance summaries |
-| **10** | **Fees & Payments** | `/fees` | Fee collection master register, quarterly dues tracking, WhatsApp payment reminder broadcasts |
-| **11** | **Notices** | `/notices` | Institutional notice board, circular publisher, multi-channel dispatch (Mobile App, SMS, WhatsApp) |
-| **12** | **Reports** | `/reports` | CBSE / RTE compliance audits, academic GPA analytics, 1-click Excel (.xlsx) & PDF exports |
-| **13** | **Settings** | `/settings` | School Identity & Custom Logo Studio, multi-campus directory, RBAC roles & permissions |
+1. **SCHOOL (Manage)**: Streamlined, minimal administration for small educator teams without ERP bloat.
+2. **PARENT (Connect)**: Mobile-first window into the child's daily school life, attendance, milestones, and direct communication.
+3. **CHILD / KID MODE (Play + Learn + Grow)**: A safe, delightful visual interface for age-tailored exploration and interactive learning.
 
 ---
 
-## 🛠️ Technology Stack & Monorepo Architecture
+## 🚀 Technology Stack
 
-```text
-vidyafloww/
-├── apps/
-│   ├── web/                   # React 19 + Vite + TanStack Router Web Portal
-│   │   ├── src/
-│   │   │   ├── layouts/       # Header (72px), Sidebar (72px header), AppShell
-│   │   │   ├── routes/        # TanStack Router type-safe route definitions
-│   │   │   ├── stores/        # Zustand global store with localStorage persistence
-│   │   │   └── styles/        # Tailwind design tokens & globals.css (16px base)
-│   └── backend/               # Django 5 REST API microservice
-├── packages/
-│   ├── ui/                    # @vidyafloww/ui design system primitives
-│   │   ├── VFStatCard.tsx     # Balanced metric card with indicator badges
-│   │   ├── VFCard.tsx         # Flat card with crisp rounded-lg borders
-│   │   ├── VFTabs.tsx         # Open tabs with animated bottom underline indicator
-│   │   ├── VFTable.tsx        # High-performance data table with search & column filters
-│   │   ├── VFButton.tsx       # Standardized buttons with rounded-md/lg styling
-│   │   └── VFBadge.tsx        # Status pill tags
-│   ├── constants/             # Navigation configurations & metadata
-│   ├── types/                 # TypeScript interfaces
-│   └── themes/                # Color palettes & tokens
-└── README.md                  # Project documentation
+### Frontend
+- **Framework**: React 18+ with JavaScript (clean, zero-overhead tooling)
+- **Bundler & Tooling**: Vite
+- **Routing**: React Router v6
+- **Server State & Caching**: TanStack Query v5
+- **HTTP Client**: Axios with automated JWT renewal and error interceptors
+- **Design System**: Tailwind CSS with centralized brand tokens & custom accessible UI primitives
+- **Icons**: Lucide React
+
+### Backend
+- **Framework**: Python 3.11+ / Django 5+
+- **API Engine**: Django REST Framework (DRF)
+- **Authentication**: Simple JWT (Access + Refresh token lifecycle)
+- **Filtering & Validation**: `django-filter`, DRF Serializers
+- **Architecture**: Modular Monolith with domain-driven app structure (`apps/core`, `apps/users`, `apps/schools`)
+- **Testing**: `pytest`, `pytest-django`
+
+### Database & Multi-Tenancy
+- **Database**: PostgreSQL 16 (with zero-config SQLite fallback for local test runs)
+- **Multi-Tenancy**: Shared database, tenant-isolated schema with strict school-scoped querysets and backend RBAC authorization
+
+### Infrastructure
+- **Containers**: Docker & Docker Compose
+- **Environment**: Strict `.env` configuration
+
+---
+
+## 📂 Repository Structure
+
+```
+edukadence/
+├── .editorconfig
+├── .env.example
+├── .gitignore
+├── docker-compose.yml
+├── README.md
+│
+├── docs/                           # Comprehensive Engineering & Product Documentation
+│   ├── PRODUCT.md                  # Product vision, age progression, 3 experiences
+│   ├── ARCHITECTURE.md             # Modular monolith, tenancy, frontend & backend design
+│   ├── DATABASE.md                 # Schema modeling, conventions, indexing, tenancy
+│   ├── API.md                      # REST conventions, /api/v1/ standards, error formats
+│   ├── AUTHENTICATION.md           # JWT lifecycle, token refresh, password hashing
+│   ├── RBAC.md                     # Role hierarchy, permissions, backend authorization
+│   ├── UI_DESIGN_SYSTEM.md         # Color tokens, typography, 25+ UI primitives
+│   ├── DEVELOPMENT.md              # Local setup, CLI workflows, seeding data
+│   ├── DEPLOYMENT.md               # Production Docker, cloud deployment strategies
+│   ├── SECURITY.md                 # OWASP posture, tenant isolation, minor safety
+│   ├── MEDIA_STORAGE.md            # Media and asset pipeline architecture
+│   ├── PHASES.md                   # 5-Phase strategic roadmap (Phases 1–5)
+│   └── DECISIONS.md                # Architecture Decision Records (ADRs)
+│
+├── backend/                        # Django + DRF Backend Modular Monolith
+│   ├── manage.py
+│   ├── pytest.ini
+│   ├── requirements.txt
+│   ├── config/                     # Settings (base, development, production) & URLs
+│   ├── apps/
+│   │   ├── core/                   # Base models, custom exceptions, tenant middleware
+│   │   ├── users/                  # Custom User model, RBAC, JWT Auth endpoints
+│   │   └── schools/                # Multi-school tenancy, memberships, seed data
+│   └── tests/                      # Automated test suite (Auth, RBAC, Tenant Isolation)
+│
+├── frontend/                       # React + Vite Client Application
+│   ├── package.json
+│   ├── vite.config.js
+│   ├── tailwind.config.js
+│   └── src/
+│       ├── app/                    # Routing & App entry
+│       ├── components/ui/          # 25+ reusable design system primitives
+│       ├── layouts/                # AppShell, ParentShell, KidShell, AuthLayout
+│       ├── pages/                  # Login, Dashboard, Schools, Users, Parent, Kid
+│       ├── services/               # Axios API client, auth & school services
+│       ├── lib/                    # Storage, queryClient, formatting utilities
+│       └── styles/                 # Brand tokens, global styles
+│
+└── infra/
+    └── docker/                     # Dockerfiles & Nginx reverse proxy configs
 ```
 
 ---
 
-## 🚀 Getting Started
+## ⚡ Quick Start
 
-### Prerequisites
+### 1. Prerequisites
+- Python 3.11+
+- Node.js 18+ & npm 9+
+- PostgreSQL (or use Docker / SQLite for instant local dev)
 
-Ensure you have the following installed:
-- **Node.js**: `v20.x` or `v22.x` ([nodejs.org](https://nodejs.org/))
-- **pnpm**: `v9.x` (`npm install -g pnpm`)
+### 2. Clone & Environment Setup
+```bash
+git clone https://github.com/logicbyroshan/edukadence.git
+cd edukadence
+cp .env.example .env
+```
+
+### 3. Backend Setup
+```bash
+cd backend
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+# source .venv/bin/activate
+
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_dev_data
+python manage.py runserver
+```
+The API is available at `http://127.0.0.1:8000/api/v1/`.
+
+### 4. Frontend Setup
+```bash
+cd ../frontend
+npm install
+npm run dev
+```
+The application will launch at `http://localhost:5173`.
 
 ---
 
-### Step 1: Clone the Repository
+## 🧪 Running Automated Tests
+
+Run backend tests (including the critical multi-tenant isolation security tests):
+```bash
+cd backend
+pytest tests/ -v
+```
+
+---
+
+## 👥 Seeded Demo Accounts
+
+When you run `python manage.py seed_dev_data`, the following test users are created:
+
+| Role | Email / Username | Password | Experience |
+| :--- | :--- | :--- | :--- |
+| **Super Admin** | `admin@edukadence.com` | `Admin@12345` | Global SaaS Management |
+| **School Admin** | `principal@littlesprouts.edu` | `School@12345` | School Management Shell |
+| **Teacher** | `sarah.teacher@littlesprouts.edu` | `Teacher@12345` | Class & Student Workflows |
+| **Parent** | `john.parent@gmail.com` | `Parent@12345` | Mobile-First Parent Portal |
+| **Child** | `leo.kid` | `Kid@12345` | Kid Mode Learning Shell |
+
+---
+
+## 🐳 Running with Docker Compose
 
 ```bash
-git clone https://github.com/logicbyroshan/vidyafloww-school-management.git
-cd vidyafloww-school-management
+docker compose up --build
 ```
-
----
-
-### Step 2: Install Dependencies
-
-```bash
-pnpm install
-```
-
----
-
-### Step 3: Start the Web Development Server
-
-```bash
-pnpm --filter @vidyafloww/web dev
-```
-
-> The application will run at **`http://localhost:3000`** with Hot Module Replacement (HMR).
-
----
-
-### Step 4: Validate TypeScript Types & Build
-
-```bash
-# Validate type correctness across all packages
-pnpm --filter @vidyafloww/web type-check
-
-# Compile production bundle
-pnpm --filter @vidyafloww/web build
-```
-
----
-
-## 🔐 Authentication & API Documentation
-
-VidyaFloww features a standalone, enterprise authentication architecture adhering to CBSE cloud data compliance and OpenAPI 3.1 specifications.
-
-- 📘 **Complete REST API Specification**: [`API_DOCUMENTATION.md`](./API_DOCUMENTATION.md)
-  - **Endpoints Covered**:
-    - `POST /api/v1/auth/login` (Standard credentials login)
-    - `POST /api/v1/auth/google` (Google Workspace SSO)
-    - `POST /api/v1/auth/register` (4-step multi-role registration)
-    - `POST /api/v1/auth/otp/verify` (6-digit OTP verification)
-    - `POST /api/v1/auth/password/reset` (Password recovery)
-    - `POST /api/v1/auth/username/lookup` (User ID retrieval)
-    - `GET /api/v1/auth/me` (Authenticated profile & permission scopes)
-    - `POST /api/v1/auth/refresh` (JWT session renewal)
-  - **Security Standards**: RFC 7807 Error Responses, 15-minute JWT Access Tokens, 7-day HTTP-Only Refresh Cookies, Rate Limiting, and CBSE Compliance.
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:8000/api/v1/`
+- PostgreSQL: `localhost:5432`
 
 ---
 
 ## 📄 License
 
-Proprietary Software. All rights reserved &copy; 2026 **VidyaFloww Team**.
-
+Proprietary & Confidential - EduKadence Inc.
