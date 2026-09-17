@@ -19,6 +19,7 @@ urlpatterns = [
     path('api/v1/activities/', include('apps.activities.urls', namespace='activities')),
     path('api/v1/communication/', include('apps.communication.urls', namespace='communication')),
     path('api/v1/reports/', include('apps.reports.urls', namespace='reports')),
+    path('api/v1/learning/', include('apps.learning.urls')),
 ]
 
 if settings.DEBUG:

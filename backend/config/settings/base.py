@@ -48,6 +48,7 @@ LOCAL_APPS = [
     'apps.activities.apps.ActivitiesConfig',
     'apps.communication.apps.CommunicationConfig',
     'apps.reports.apps.ReportsConfig',
+    'apps.learning.apps.LearningConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

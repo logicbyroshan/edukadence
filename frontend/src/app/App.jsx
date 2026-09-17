@@ -22,7 +22,11 @@ import { PickupPage } from '../pages/PickupPage';
 import { AnnouncementsPage } from '../pages/AnnouncementsPage';
 import { ReportsPage } from '../pages/ReportsPage';
 import { ParentPortalPage } from '../pages/ParentPortalPage';
-import { KidModePage } from '../pages/KidModePage';
+import { KidHomePage } from '../pages/kid/KidHomePage';
+import { KidExplorePage } from '../pages/kid/KidExplorePage';
+import { KidStoriesPage } from '../pages/kid/KidStoriesPage';
+import { KidVideosPage } from '../pages/kid/KidVideosPage';
+import { KidBadgesPage } from '../pages/kid/KidBadgesPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { LoadingState } from '../components/ui';
@@ -92,6 +96,7 @@ export const App = () => {
       >
         <Route index element={<ParentPortalPage />} />
         <Route path="activities" element={<ParentPortalPage />} />
+        <Route path="learning" element={<ParentPortalPage />} />
         <Route path="attendance" element={<ParentPortalPage />} />
         <Route path="fees" element={<ParentPortalPage />} />
         <Route path="pickup" element={<ParentPortalPage />} />
@@ -109,7 +114,11 @@ export const App = () => {
           </ProtectedRoute>
         }
       >
-        <Route index element={<KidModePage />} />
+        <Route index element={<KidHomePage />} />
+        <Route path="explore" element={<KidExplorePage />} />
+        <Route path="stories" element={<KidStoriesPage />} />
+        <Route path="videos" element={<KidVideosPage />} />
+        <Route path="badges" element={<KidBadgesPage />} />
       </Route>
 
       {/* Root Redirection */}

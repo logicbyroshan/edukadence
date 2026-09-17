@@ -39,10 +39,10 @@ export const ParentShell = () => {
   const navItems = [
     { label: 'Day View', path: '/parent', icon: <Home className="w-5 h-5" /> },
     { label: 'Moments', path: '/parent/activities', icon: <Clock className="w-5 h-5" /> },
+    { label: 'Learning', path: '/parent/learning', icon: <Sparkles className="w-5 h-5" /> },
     { label: 'Attendance', path: '/parent/attendance', icon: <Users className="w-5 h-5" /> },
     { label: 'Fees', path: '/parent/fees', icon: <CreditCard className="w-5 h-5" /> },
     { label: 'Pickup PIN', path: '/parent/pickup', icon: <ShieldCheck className="w-5 h-5" /> },
-    { label: 'Notices', path: '/parent/notices', icon: <Bell className="w-5 h-5" /> },
   ];
 
   return (
