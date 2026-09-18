@@ -1,14 +1,15 @@
-/* EduKadence Centralized Design Tokens */
+/* EduKadence Centralized Design Tokens — Derived from EduKedance.png */
 :root {
-  /* Brand Palette (Derived from EduKadence Logo) */
-  --brand-electric: #2563EB;
-  --brand-electric-hover: #1D4ED8;
-  --brand-sky: #0EA5E9;
-  --brand-sky-hover: #0284C7;
-  --brand-navy: #0F172A;
-  --brand-surface: #F8FAFC;
+  /* Brand Palette (Derived from EduKedance Logo Asset) */
+  --brand-electric: #0084D6;
+  --brand-electric-hover: #006DB3;
+  --brand-sky: #00C3FF;
+  --brand-sky-hover: #00A3D9;
+  --brand-cyan-glow: #00D2FF;
+  --brand-navy: #081928;
+  --brand-surface: #F0F9FF;
   --brand-surface-card: #FFFFFF;
-  --brand-border: #E2E8F0;
+  --brand-border: #E0F2FE;
 
   /* Typography Scale */
   --font-display: 2rem;
@@ -23,6 +24,7 @@
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
   --radius-full: 9999px;
 
   /* Transitions */
