@@ -81,7 +81,7 @@ class ChildViewSet(viewsets.ModelViewSet):
         
         # Recent attendance
         from apps.attendance.models import DailyAttendance
-        recent_attendance = DailyAttendance.objects.filter(child=child).order_by('-date')[:15]
+        attendance_records = list(DailyAttendance.objects.filter(child=child).order_by('-date')[:30])
         
         # Pending fees
         from apps.fees.models import StudentFeeItem
@@ -97,9 +97,9 @@ class ChildViewSet(viewsets.ModelViewSet):
                 'today_pickup': PickupRecordSerializer(pickup_record).data if pickup_record else None,
                 'total_fees_due': sum(item.balance_due for item in fee_items if item.status in ['PENDING', 'PARTIALLY_PAID', 'OVERDUE']),
                 'attendance_summary': {
-                    'present_count': recent_attendance.filter(status='PRESENT').count(),
-                    'absent_count': recent_attendance.filter(status='ABSENT').count(),
-                    'late_count': recent_attendance.filter(status='LATE').count(),
+                    'present_count': sum(1 for a in attendance_records if a.status == 'PRESENT'),
+                    'absent_count': sum(1 for a in attendance_records if a.status == 'ABSENT'),
+                    'late_count': sum(1 for a in attendance_records if a.status == 'LATE'),
                 }
             }
         })

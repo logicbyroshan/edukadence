@@ -52,3 +52,24 @@ def test_parent_child_relationship_multiple_children(auth_client_factory, school
     names = [item['first_name'] for item in results]
     assert 'Aarav' in names
     assert 'Riya' in names
+
+@pytest.mark.django_db
+def test_child_overview_endpoint(auth_client_factory, school_a, school_a_parent):
+    # Create child
+    child = Child.objects.create(
+        school=school_a, first_name='Aarav', last_name='Sharma',
+        date_of_birth=date(2022, 5, 14), admission_number='S-OV-001'
+    )
+    parent = Parent.objects.create(
+        school=school_a, user=school_a_parent, first_name='Patricia',
+        last_name='Parent', phone='+15551234567'
+    )
+    ChildParentRelationship.objects.create(school=school_a, child=child, parent=parent, relationship_type='MOTHER')
+
+    parent_client = auth_client_factory(school_a_parent, school_a.id)
+    res = parent_client.get(f'/api/v1/students/children/{child.id}/overview/')
+    assert res.status_code == 200
+    assert res.data['success'] is True
+    assert 'attendance_summary' in res.data['data']
+    assert res.data['data']['attendance_summary']['present_count'] == 0
+
