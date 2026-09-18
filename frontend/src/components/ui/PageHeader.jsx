@@ -4,10 +4,15 @@ import { Breadcrumb } from './Breadcrumb';
 export const PageHeader = ({
   title,
   subtitle,
+  description,
   breadcrumbs = [],
   action = null,
+  actions = null,
   className = '',
 }) => {
+  const subText = subtitle || description;
+  const actionContent = action || actions;
+
   return (
     <div className={`mb-6 pb-4 border-b border-slate-200/80 ${className}`}>
       {breadcrumbs.length > 0 && <Breadcrumb items={breadcrumbs} className="mb-2" />}
@@ -16,13 +21,13 @@ export const PageHeader = ({
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
             {title}
           </h1>
-          {subtitle && (
+          {subText && (
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-              {subtitle}
+              {subText}
             </p>
           )}
         </div>
-        {action && <div className="flex items-center gap-2.5 shrink-0">{action}</div>}
+        {actionContent && <div className="flex items-center gap-2.5 shrink-0 flex-wrap">{actionContent}</div>}
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ export const Button = ({
   onClick,
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]';
+  const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98] whitespace-nowrap';
 
   const variants = {
     primary: 'bg-brand-600 text-white hover:bg-brand-700 shadow-sm border border-transparent',
@@ -43,11 +43,11 @@ export const Button = ({
       {isLoading ? (
         <Loader2 className="w-4 h-4 animate-spin shrink-0" />
       ) : (
-        leftIcon && <span className="shrink-0 flex items-center justify-center">{leftIcon}</span>
+        leftIcon && <span className="shrink-0 inline-flex items-center justify-center">{leftIcon}</span>
       )}
-      <span className="truncate">{children}</span>
+      {children}
       {!isLoading && rightIcon && (
-        <span className="shrink-0 flex items-center justify-center">{rightIcon}</span>
+        <span className="shrink-0 inline-flex items-center justify-center">{rightIcon}</span>
       )}
     </button>
   );
