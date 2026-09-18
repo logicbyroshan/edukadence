@@ -17,11 +17,12 @@ import {
   ShieldAlert,
   Users,
 } from 'lucide-react';
-import { Modal, Button, Input } from '../components/ui';
 import { learningService } from '../services/learningService';
 import { studentService } from '../services/studentService';
+import { useAuth } from '../hooks/useAuth';
 
 export const KidShell = () => {
+  const { user, activeRole, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -79,11 +80,18 @@ export const KidShell = () => {
     setExitModalOpen(true);
   };
 
-  const handleVerifyExit = (e) => {
+  const handleVerifyExit = async (e) => {
     e.preventDefault();
     if (parseInt(mathAnswer, 10) === mathChallenge.a + mathChallenge.b) {
       setExitModalOpen(false);
-      navigate('/app');
+      if (activeRole === 'PARENT') {
+        navigate('/parent');
+      } else if (activeRole === 'CHILD') {
+        await logout();
+        navigate('/login');
+      } else {
+        navigate('/app');
+      }
     } else {
       setMathError(true);
     }
@@ -223,7 +231,9 @@ export const KidShell = () => {
             <div className="text-xs text-amber-900">
               <p className="font-bold">Leaving Kid Mode</p>
               <p className="text-amber-800 mt-0.5">
-                Please solve this math question to return to the Adult Dashboard.
+                {activeRole === 'PARENT'
+                  ? 'Please solve this quick math challenge to return to your Parent Portal.'
+                  : 'Please solve this math question to exit Kid Mode.'}
               </p>
             </div>
           </div>
@@ -259,7 +269,7 @@ export const KidShell = () => {
               Stay in Kid Mode
             </Button>
             <Button type="submit" variant="primary">
-              Exit to Dashboard
+              {activeRole === 'PARENT' ? 'Return to Parent Portal' : 'Exit to Dashboard'}
             </Button>
           </div>
         </form>

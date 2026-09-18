@@ -53,14 +53,14 @@ export const ParentShell = () => {
               <EduKadenceLogo className="h-6.5 sm:h-7" showText={true} subtitle={activeMembership?.school_name || 'Parent Connect'} />
             </div>
 
-            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <Link
-                to="/app"
-                className="p-1.5 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 transition-colors border border-slate-200/80"
-                title="Switch to School Admin"
-                aria-label="Switch to School Admin"
+                to="/kid"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 text-amber-950 font-black text-xs shadow-xs hover:scale-105 active:scale-95 transition-all"
+                title="Switch to Kid Mode for your child"
               >
-                <Building2 className="w-4 h-4" />
+                <Sparkles className="w-3.5 h-3.5 fill-amber-950 text-amber-950" />
+                <span className="text-[11px] font-black">Kid Mode</span>
               </Link>
               <Avatar name={user?.full_name || 'Parent'} src={user?.avatar} size="xs" />
             </div>

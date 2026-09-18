@@ -83,20 +83,18 @@ export const DashboardPage = () => {
     <div className="space-y-6">
       <PageHeader
         title={`Good Day, ${user?.first_name || 'Educator'} 👋`}
-        subtitle={`${activeMembership?.school_name || 'Sunrise Kids Academy'} • ${isTeacher ? 'Teacher Dashboard' : 'School Operational Control'}`}
+        subtitle={`${activeMembership?.school_name || 'Sunrise Kids Academy'} • ${isTeacher ? 'Teacher Workspace' : 'School Operational Control'}`}
         action={
           <div className="flex items-center gap-2">
-            <Link to="/parent">
-              <Button variant="outline" size="sm">
-                Parent Portal View
-              </Button>
-            </Link>
-            <Link to="/kid">
-              <Button variant="primary" size="sm" className="gap-1.5 bg-blue-600 hover:bg-blue-700">
-                <Sparkles className="w-4 h-4 text-amber-300" />
-                <span>Kid Sandbox</span>
-              </Button>
-            </Link>
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => navigate('/app/attendance')}
+              className="gap-1.5 bg-blue-600 hover:bg-blue-700"
+            >
+              <Calendar className="w-4 h-4 text-white" />
+              <span>Take Attendance</span>
+            </Button>
           </div>
         }
       />
@@ -147,17 +145,30 @@ export const DashboardPage = () => {
           <p className="text-xs text-slate-400 font-medium">{waitingPickupCount} children waiting in care</p>
         </div>
 
-        {/* Fee Collections */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Today's Collections</span>
-            <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
-              <CreditCard className="w-4 h-4" />
+        {/* Fee Collections (Admins) OR Learning Studio (Teachers) */}
+        {!isTeacher ? (
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Today's Collections</span>
+              <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
+                <CreditCard className="w-4 h-4" />
+              </div>
             </div>
+            <div className="text-2xl font-bold text-emerald-700">₹{fees.today_collections.toLocaleString()}</div>
+            <p className="text-xs text-slate-400 font-medium">Pending: ₹{fees.total_pending_due.toLocaleString()}</p>
           </div>
-          <div className="text-2xl font-bold text-emerald-700">₹{fees.today_collections.toLocaleString()}</div>
-          <p className="text-xs text-slate-400 font-medium">Pending: ₹{fees.total_pending_due.toLocaleString()}</p>
-        </div>
+        ) : (
+          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Learning Quests</span>
+              <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
+                <Sparkles className="w-4 h-4 text-purple-600" />
+              </div>
+            </div>
+            <div className="text-2xl font-bold text-brand-700">Active Quests</div>
+            <p className="text-xs text-slate-400 font-medium">Classroom assignments ready</p>
+          </div>
+        )}
       </div>
 
       {/* Daily Workflow Quick Action Tiles */}
@@ -195,14 +206,25 @@ export const DashboardPage = () => {
             <div className="text-[11px] text-blue-200">Verify guardian PIN</div>
           </button>
 
-          <button
-            onClick={() => navigate('/app/payments')}
-            className="p-4 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all text-left space-y-1.5 border border-white/10 group"
-          >
-            <CreditCard className="w-5 h-5 text-purple-200 group-hover:scale-110 transition-transform" />
-            <div className="font-bold text-sm">Record Payment</div>
-            <div className="text-[11px] text-blue-200">Generate receipt</div>
-          </button>
+          {!isTeacher ? (
+            <button
+              onClick={() => navigate('/app/payments')}
+              className="p-4 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all text-left space-y-1.5 border border-white/10 group"
+            >
+              <CreditCard className="w-5 h-5 text-purple-200 group-hover:scale-110 transition-transform" />
+              <div className="font-bold text-sm">Record Payment</div>
+              <div className="text-[11px] text-blue-200">Generate receipt</div>
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate('/app/learning')}
+              className="p-4 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all text-left space-y-1.5 border border-white/10 group"
+            >
+              <Sparkles className="w-5 h-5 text-amber-200 group-hover:scale-110 transition-transform" />
+              <div className="font-bold text-sm">Learning Studio</div>
+              <div className="text-[11px] text-blue-200">Quests & homework</div>
+            </button>
+          )}
         </div>
       </div>
 

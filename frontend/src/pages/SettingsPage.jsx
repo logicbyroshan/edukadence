@@ -147,8 +147,8 @@ export const SettingsPage = () => {
                 <div className="flex items-center gap-2.5">
                   <div className="w-6 h-6 rounded-lg bg-brand-600 shadow-xs" />
                   <div className="text-xs">
-                    <span className="font-semibold text-slate-800 block">Electric Blue</span>
-                    <span className="text-[10px] text-slate-400 font-mono">#2563EB</span>
+                    <span className="font-semibold text-slate-800 block">Electric Brand Blue</span>
+                    <span className="text-[10px] text-slate-400 font-mono">#0084D6</span>
                   </div>
                 </div>
                 <span className="text-[10px] font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded">
@@ -160,8 +160,8 @@ export const SettingsPage = () => {
                 <div className="flex items-center gap-2.5">
                   <div className="w-6 h-6 rounded-lg bg-skybrand-500 shadow-xs" />
                   <div className="text-xs">
-                    <span className="font-semibold text-slate-800 block">Sky Blue Accent</span>
-                    <span className="text-[10px] text-slate-400 font-mono">#0EA5E9</span>
+                    <span className="font-semibold text-slate-800 block">Vibrant Sky Cyan</span>
+                    <span className="text-[10px] text-slate-400 font-mono">#00C3FF</span>
                   </div>
                 </div>
                 <span className="text-[10px] font-semibold text-skybrand-700 bg-skybrand-50 px-2 py-0.5 rounded">
@@ -173,8 +173,8 @@ export const SettingsPage = () => {
                 <div className="flex items-center gap-2.5">
                   <div className="w-6 h-6 rounded-lg bg-navy-900 shadow-xs" />
                   <div className="text-xs">
-                    <span className="font-semibold text-slate-800 block">Deep Sky Slate</span>
-                    <span className="text-[10px] text-slate-400 font-mono">#0F172A</span>
+                    <span className="font-semibold text-slate-800 block">Deep Slate Navy</span>
+                    <span className="text-[10px] text-slate-400 font-mono">#0A192F</span>
                   </div>
                 </div>
                 <span className="text-[10px] font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">

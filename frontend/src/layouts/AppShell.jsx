@@ -31,59 +31,101 @@ export const AppShell = () => {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const navGroups = [
-    {
-      label: null,
-      items: [
-        { label: 'Dashboard', path: '/app', icon: <LayoutDashboard className="w-4 h-4" /> },
-        { label: 'Learning Studio', path: '/app/learning', icon: <Sparkles className="w-4 h-4" /> },
-      ],
-    },
-    {
-      label: 'People',
-      items: [
-        { label: 'Children Directory', path: '/app/children', icon: <Sparkles className="w-4 h-4" /> },
-        { label: 'Parents & Guardians', path: '/app/parents', icon: <HeartHandshake className="w-4 h-4" /> },
-        { label: 'Teachers & Staff', path: '/app/teachers', icon: <UserCheck className="w-4 h-4" /> },
-      ],
-    },
-    {
-      label: 'School Operations',
-      items: [
-        { label: 'Classes & Sections', path: '/app/classes', icon: <BookOpen className="w-4 h-4" /> },
-        { label: 'Daily Attendance', path: '/app/attendance', icon: <Calendar className="w-4 h-4" /> },
-        { label: 'Classroom Moments', path: '/app/activities', icon: <Camera className="w-4 h-4" /> },
-        { label: 'Safe Dismissal', path: '/app/pickup', icon: <ShieldCheck className="w-4 h-4" /> },
-      ],
-    },
-    {
-      label: 'Finance',
-      items: [
-        { label: 'Fees & Invoicing', path: '/app/fees', icon: <CreditCard className="w-4 h-4" /> },
-        { label: 'Payments & Receipts', path: '/app/payments', icon: <FileText className="w-4 h-4" /> },
-      ],
-    },
-    {
-      label: 'Communication',
-      items: [
-        { label: 'Announcements', path: '/app/communication', icon: <Megaphone className="w-4 h-4" /> },
-      ],
-    },
-    {
-      label: 'Analytics',
-      items: [
-        { label: 'Reports & Export', path: '/app/reports', icon: <BarChart3 className="w-4 h-4" /> },
-      ],
-    },
-    {
-      label: 'System',
-      items: [
-        { label: 'Schools Directory', path: '/app/schools', icon: <Building2 className="w-4 h-4" /> },
-        { label: 'Users & RBAC', path: '/app/users', icon: <Users className="w-4 h-4" /> },
-        { label: 'Settings', path: '/app/settings', icon: <Settings className="w-4 h-4" /> },
-      ],
-    },
-  ];
+  // Define role-specific navigation menus
+  const isTeacher = activeRole === 'TEACHER';
+  const isSuperAdmin = activeRole === 'SUPER_ADMIN' || user?.is_superuser;
+
+  let navGroups = [];
+
+  if (isSuperAdmin) {
+    navGroups = [
+      {
+        label: 'Platform Administration',
+        items: [
+          { label: 'System Overview', path: '/app', icon: <LayoutDashboard className="w-4 h-4" /> },
+          { label: 'Schools Directory', path: '/app/schools', icon: <Building2 className="w-4 h-4" /> },
+          { label: 'Users & RBAC', path: '/app/users', icon: <Users className="w-4 h-4" /> },
+          { label: 'System Reports', path: '/app/reports', icon: <BarChart3 className="w-4 h-4" /> },
+          { label: 'Global Settings', path: '/app/settings', icon: <Settings className="w-4 h-4" /> },
+        ],
+      },
+    ];
+  } else if (isTeacher) {
+    navGroups = [
+      {
+        label: 'Educator Workspace',
+        items: [
+          { label: 'Overview', path: '/app', icon: <LayoutDashboard className="w-4 h-4" /> },
+          { label: 'Learning Studio', path: '/app/learning', icon: <Sparkles className="w-4 h-4" /> },
+        ],
+      },
+      {
+        label: 'Classroom Operations',
+        items: [
+          { label: 'Classes & Sections', path: '/app/classes', icon: <BookOpen className="w-4 h-4" /> },
+          { label: 'Daily Attendance', path: '/app/attendance', icon: <Calendar className="w-4 h-4" /> },
+          { label: 'Classroom Moments', path: '/app/activities', icon: <Camera className="w-4 h-4" /> },
+          { label: 'Safe Dismissal', path: '/app/pickup', icon: <ShieldCheck className="w-4 h-4" /> },
+        ],
+      },
+      {
+        label: 'Communication',
+        items: [
+          { label: 'Announcements', path: '/app/communication', icon: <Megaphone className="w-4 h-4" /> },
+        ],
+      },
+    ];
+  } else {
+    // School Admin
+    navGroups = [
+      {
+        label: null,
+        items: [
+          { label: 'Dashboard', path: '/app', icon: <LayoutDashboard className="w-4 h-4" /> },
+          { label: 'Learning Studio', path: '/app/learning', icon: <Sparkles className="w-4 h-4" /> },
+        ],
+      },
+      {
+        label: 'People',
+        items: [
+          { label: 'Children Directory', path: '/app/children', icon: <Sparkles className="w-4 h-4" /> },
+          { label: 'Parents & Guardians', path: '/app/parents', icon: <HeartHandshake className="w-4 h-4" /> },
+          { label: 'Teachers & Staff', path: '/app/teachers', icon: <UserCheck className="w-4 h-4" /> },
+        ],
+      },
+      {
+        label: 'School Operations',
+        items: [
+          { label: 'Classes & Sections', path: '/app/classes', icon: <BookOpen className="w-4 h-4" /> },
+          { label: 'Daily Attendance', path: '/app/attendance', icon: <Calendar className="w-4 h-4" /> },
+          { label: 'Classroom Moments', path: '/app/activities', icon: <Camera className="w-4 h-4" /> },
+          { label: 'Safe Dismissal', path: '/app/pickup', icon: <ShieldCheck className="w-4 h-4" /> },
+        ],
+      },
+      {
+        label: 'Finance',
+        items: [
+          { label: 'Fees & Invoicing', path: '/app/fees', icon: <CreditCard className="w-4 h-4" /> },
+          { label: 'Payments & Receipts', path: '/app/payments', icon: <FileText className="w-4 h-4" /> },
+        ],
+      },
+      {
+        label: 'Communication',
+        items: [
+          { label: 'Announcements', path: '/app/communication', icon: <Megaphone className="w-4 h-4" /> },
+        ],
+      },
+      {
+        label: 'Analytics & Admin',
+        items: [
+          { label: 'Reports & Export', path: '/app/reports', icon: <BarChart3 className="w-4 h-4" /> },
+          { label: 'Schools Directory', path: '/app/schools', icon: <Building2 className="w-4 h-4" /> },
+          { label: 'Users & RBAC', path: '/app/users', icon: <Users className="w-4 h-4" /> },
+          { label: 'Settings', path: '/app/settings', icon: <Settings className="w-4 h-4" /> },
+        ],
+      },
+    ];
+  }
 
   const handleLogout = async () => {
     await logout();
@@ -93,9 +135,9 @@ export const AppShell = () => {
   const currentSchool = activeMembership?.school_name || 'Sunrise Kids Academy';
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col antialiased">
+    <div className="h-screen bg-slate-50 flex flex-col antialiased overflow-hidden">
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-white border-b border-slate-200/80 shadow-xs">
+      <header className="shrink-0 z-40 bg-white border-b border-slate-200/80 shadow-xs">
         <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <button
@@ -148,26 +190,6 @@ export const AppShell = () => {
               <span>AY 2026-2027</span>
             </div>
 
-            {/* Switch Experience Shortcuts */}
-            <div className="hidden sm:flex items-center gap-1 border-l border-slate-200 pl-3">
-              <Link
-                to="/parent"
-                className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                title="Preview Parent Portal"
-              >
-                <HeartHandshake className="w-3.5 h-3.5 text-blue-500" />
-                <span>Parent View</span>
-              </Link>
-              <Link
-                to="/kid"
-                className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-amber-700 hover:bg-amber-50 rounded-lg transition-colors"
-                title="Preview Kid Mode"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                <span>Kid Mode</span>
-              </Link>
-            </div>
-
             {/* User Profile Menu */}
             <Dropdown
               align="right"
@@ -190,9 +212,11 @@ export const AppShell = () => {
                   </Badge>
                 </div>
               </div>
-              <DropdownItem icon={<Settings className="w-4 h-4" />} onClick={() => navigate('/app/settings')}>
-                School Settings
-              </DropdownItem>
+              {!isTeacher && (
+                <DropdownItem icon={<Settings className="w-4 h-4" />} onClick={() => navigate('/app/settings')}>
+                  School Settings
+                </DropdownItem>
+              )}
               <DropdownDivider />
               <DropdownItem icon={<LogOut className="w-4 h-4" />} danger onClick={handleLogout}>
                 Sign Out
@@ -202,24 +226,16 @@ export const AppShell = () => {
         </div>
       </header>
 
-      <div className="flex-1 flex overflow-hidden">
+      {/* Body Area with Independent Scrolling for Sidebar & Main Content */}
+      <div className="flex-1 flex overflow-hidden min-h-0">
         {/* Sidebar for Desktop & Collapsible for Mobile */}
         <aside
           className={`
-            fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r border-slate-200/80 transform transition-transform duration-200 ease-in-out lg:transform-none flex flex-col justify-between overflow-y-auto
+            fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r border-slate-200/80 transform transition-transform duration-200 ease-in-out lg:transform-none flex flex-col justify-between shrink-0 h-full overflow-y-auto
             ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
           `}
         >
-          <div className="p-4 space-y-5">
-            {/* Experience Pill */}
-            <div className="px-3 py-2 rounded-xl bg-blue-50 border border-blue-100/80 flex items-center gap-2.5 text-blue-800">
-              <div className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-blue-900">Experience</span>
-                <span className="text-xs font-semibold">{activeRole === 'TEACHER' ? 'Teacher Workspace' : 'School Management'}</span>
-              </div>
-            </div>
-
+          <div className="p-4 space-y-4">
             {/* Navigation Groups */}
             <nav className="space-y-4">
               {navGroups.map((group, gIdx) => (
@@ -237,7 +253,7 @@ export const AppShell = () => {
                         to={item.path}
                         onClick={() => setSidebarOpen(false)}
                         className={`
-                          flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-all
+                          flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-all
                           ${isActive
                             ? 'bg-blue-600 text-white shadow-sm font-semibold'
                             : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'}
@@ -254,10 +270,13 @@ export const AppShell = () => {
           </div>
 
           {/* Sidebar Footer */}
-          <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+          <div className="p-4 border-t border-slate-100 bg-slate-50/50 shrink-0">
             <div className="text-[11px] text-slate-500 flex items-center justify-between">
-              <span>EduKadence v4.0</span>
-              <span className="text-emerald-600 font-semibold">● Phase 4 Live</span>
+              <span className="font-semibold text-slate-700">EduKadence</span>
+              <span className="text-emerald-600 font-semibold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
+                <span>Production</span>
+              </span>
             </div>
           </div>
         </aside>
@@ -271,7 +290,7 @@ export const AppShell = () => {
         )}
 
         {/* Main Content Viewport */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 h-full overflow-y-auto p-4 sm:p-6 lg:p-8 min-h-0 bg-slate-50">
           <div className="max-w-7xl mx-auto">
             <Outlet />
           </div>
