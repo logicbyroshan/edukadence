@@ -52,11 +52,7 @@ export const ParentShell = () => {
           {/* Header */}
           <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <EduKadenceLogo className="h-6" showText={false} />
-              <div>
-                <h1 className="text-sm font-bold text-slate-900 leading-none">Parent Connect</h1>
-                <span className="text-[10px] text-blue-600 font-semibold">{activeMembership?.school_name || 'Sunrise Kids Academy'}</span>
-              </div>
+              <EduKadenceLogo className="h-7" showText={true} subtitle={activeMembership?.school_name || 'Parent Connect'} />
             </div>
 
             <div className="flex items-center gap-2">

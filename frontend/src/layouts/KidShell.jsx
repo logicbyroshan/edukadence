@@ -103,7 +103,7 @@ export const KidShell = () => {
       <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b-2 border-sky-200 px-4 sm:px-8 py-3 flex items-center justify-between shadow-xs">
         <div className="flex items-center gap-4">
           <Link to="/kid" className="flex items-center gap-2">
-            <EduKadenceLogo className="h-8 sm:h-9" />
+            <EduKadenceLogo className="h-8 sm:h-9" subtitle="Play & Learn" />
           </Link>
 
           {/* Sibling / Child Switcher Pill */}

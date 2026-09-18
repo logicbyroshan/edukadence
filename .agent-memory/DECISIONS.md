@@ -90,4 +90,13 @@ This document tracks all foundational architectural and technical decisions made
 - **Decision**: Calculate all star rewards and milestone badge unlocks on the server upon attempt submission, and enforce an adult math verification challenge on Kid Mode exit.
 - **Rationale**: Prevents client-side star inflation or spoofing and ensures young toddlers cannot accidentally leave the sandboxed kid environment without adult supervision.
 
+---
+
+## ADR 012: Official Brand Asset Integration & Color Palette Extraction
+- **Date**: 2026-09-18
+- **Status**: Accepted
+- **Decision**: Directly utilize the high-resolution official `EduKedance.png` graphic asset across all application shells (Admin, Parent, Kid, Auth) and extract exact color tokens into Tailwind and CSS custom properties (Electric Azure `#0084D6`, Star & Leaping Child Cyan `#00C3FF`/`#00D2FF`, Deep Navy `#081928`).
+- **Rationale**: Guarantees pixel-perfect brand fidelity, consistent visual identity across desktop/tablet/mobile screens, and harmonious design cohesion.
+
+
 

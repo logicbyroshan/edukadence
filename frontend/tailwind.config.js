@@ -8,32 +8,34 @@ export default {
     extend: {
       colors: {
         brand: {
-          50: '#EFF6FF',
-          100: '#DBEAFE',
-          200: '#BFDBFE',
-          300: '#93C5FD',
-          400: '#60A5FA',
-          500: '#3B82F6',
-          600: '#2563EB', // Primary Electric Blue
-          700: '#1D4ED8',
-          800: '#1E40AF',
-          900: '#1E3A8A',
-          950: '#172554',
-        },
-        skybrand: {
           50: '#F0F9FF',
           100: '#E0F2FE',
           200: '#BAE6FD',
           300: '#7DD3FC',
           400: '#38BDF8',
-          500: '#0EA5E9', // Sky Accent
-          600: '#0284C7',
-          700: '#0369A1',
+          500: '#009BE8',
+          600: '#0084D6', // Primary Brand Electric Azure from logo
+          700: '#006DB3',
+          800: '#00578F',
+          900: '#00436E',
+          950: '#002B47',
+        },
+        skybrand: {
+          50: '#F0FDFF',
+          100: '#DDF8FE',
+          200: '#B8F1FD',
+          300: '#6DE6FC',
+          400: '#00D2FF', // Logo Star & Leaping Child Cyan
+          500: '#00C3FF',
+          600: '#00A3D9',
+          700: '#0084B3',
+          800: '#00658C',
+          900: '#004B6B',
         },
         navy: {
-          800: '#1E293B',
-          900: '#0F172A', // Deep Sky Slate Navy
-          950: '#020617',
+          800: '#0D253A',
+          900: '#081928', // Rich Logo Dark Navy
+          950: '#040D16',
         },
       },
       fontFamily: {
@@ -50,6 +52,8 @@ export default {
         subtle: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         card: '0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px 0 rgba(0, 0, 0, 0.04)',
         elevated: '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03)',
+        cyanGlow: '0 0 20px -2px rgba(0, 210, 255, 0.35)',
+        brandGlow: '0 0 20px -2px rgba(0, 132, 214, 0.35)',
       },
     },
   },
