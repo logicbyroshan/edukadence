@@ -20,7 +20,7 @@ from apps.fees.serializers import (
 from apps.students.models import Child
 from apps.classes.models import Section, Enrollment
 from apps.schools.models import AcademicYear
-from apps.core.permissions import IsSchoolAdmin, HasSchoolAccess
+from apps.core.permissions import IsSchoolAdmin, HasSchoolAccess, IsNotChild
 from apps.core.utils import get_request_school_id
 
 def generate_receipt_number(school):
@@ -43,7 +43,7 @@ class FeeStructureViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsAuthenticated(), IsSchoolAdmin()]
-        return [IsAuthenticated(), HasSchoolAccess()]
+        return [IsAuthenticated(), HasSchoolAccess(), IsNotChild()]
 
     def get_queryset(self):
         user = self.request.user
@@ -75,7 +75,7 @@ class StudentFeeItemViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy', 'assign_bulk']:
             return [IsAuthenticated(), IsSchoolAdmin()]
-        return [IsAuthenticated(), HasSchoolAccess()]
+        return [IsAuthenticated(), HasSchoolAccess(), IsNotChild()]
 
     def get_queryset(self):
         user = self.request.user
@@ -153,24 +153,24 @@ class StudentFeeItemViewSet(viewsets.ModelViewSet):
 
         return Response({
             'success': True,
-            'message': f"Assigned fee dues to {created_count} students.",
-            'data': {'assigned_count': created_count}
+            'message': f"Assigned '{title}' to {created_count} students.",
+            'assigned_count': created_count
         })
 
 
 class FeePaymentViewSet(viewsets.ModelViewSet):
     """
-    Fee payment recording and receipt management.
+    Payment receipts and recording.
     """
     serializer_class = FeePaymentSerializer
-    filterset_fields = ['payment_method', 'payment_date', 'child', 'receipt_number']
-    search_fields = ['receipt_number', 'reference_number', 'child__first_name', 'child__last_name']
-    ordering_fields = ['-payment_date', '-created_at', 'amount']
+    filterset_fields = ['payment_method', 'child']
+    search_fields = ['receipt_number', 'transaction_reference', 'child__first_name', 'child__last_name']
+    ordering_fields = ['payment_date', 'amount', 'created_at']
 
     def get_permissions(self):
         if self.action in ['create', 'destroy']:
             return [IsAuthenticated(), IsSchoolAdmin()]
-        return [IsAuthenticated(), HasSchoolAccess()]
+        return [IsAuthenticated(), HasSchoolAccess(), IsNotChild()]
 
     def get_queryset(self):
         user = self.request.user

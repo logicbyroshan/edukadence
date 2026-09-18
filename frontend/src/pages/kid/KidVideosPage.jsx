@@ -80,6 +80,9 @@ export const KidVideosPage = () => {
                       src={vid.thumbnail_url || 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop&q=80'}
                       alt={vid.title}
                       className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop&q=80';
+                      }}
                     />
                     <div className="absolute w-12 h-12 rounded-full bg-white/90 text-indigo-600 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                       <Play className="w-5 h-5 fill-indigo-600 ml-0.5" />

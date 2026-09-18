@@ -86,3 +86,21 @@ class IsChild(BasePermission):
             role='CHILD',
             is_active=True
         ).exists()
+
+class IsNotChild(BasePermission):
+    """Ensures child accounts in Kid Mode cannot access adult/admin/financial endpoints."""
+    def has_permission(self, request, view):
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if request.user.is_superuser:
+            return True
+        school_id = getattr(request, 'active_school_id', None) or request.headers.get('X-School-ID')
+        memberships = request.user.memberships.filter(
+            school_id=school_id, is_active=True
+        ) if school_id else request.user.memberships.filter(is_active=True)
+        
+        roles = list(memberships.values_list('role', flat=True))
+        if roles and all(r == 'CHILD' for r in roles):
+            return False
+        return True
+

@@ -4,6 +4,7 @@ import {
   PageHeader,
   Button,
   Badge,
+  Avatar,
   FormField,
   LoadingState,
   EmptyState,
@@ -236,13 +237,11 @@ export const AttendancePage = () => {
                 className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/60 transition-colors"
               >
                 <div className="flex items-center gap-3">
-                  {student.child_photo_url ? (
-                    <img src={student.child_photo_url} alt={student.child_name} className="w-11 h-11 rounded-full object-cover border border-slate-200" />
-                  ) : (
-                    <div className="w-11 h-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
-                      {student.child_name?.[0] || 'C'}
-                    </div>
-                  )}
+                  <Avatar
+                    src={student.child_photo_url}
+                    name={student.child_name}
+                    size="md"
+                  />
                   <div>
                     <h4 className="font-bold text-slate-900 text-base">{student.child_name}</h4>
                     <span className="text-xs text-slate-500">Roll No: {student.roll_number || 'N/A'} • ID: {student.child_admission_number}</span>

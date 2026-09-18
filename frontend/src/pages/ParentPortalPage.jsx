@@ -148,13 +148,18 @@ export const ParentPortalPage = () => {
           ) : (
             <div className="space-y-4">
               {activities.map((act) => (
-                <div key={act.id} className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+                <div key={act.id} className="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
                   {act.media_urls?.[0] && (
-                    <img src={act.media_urls[0]} alt={act.title} className="w-full h-44 object-cover" />
+                    <img
+                      src={act.media_urls[0]}
+                      alt={act.title}
+                      onError={(e) => { e.target.style.display = 'none'; }}
+                      className="w-full h-44 object-cover"
+                    />
                   )}
                   <div className="p-4 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full">
+                      <span className="text-[10px] font-bold text-brand-600 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-200">
                         {act.category_display || act.category}
                       </span>
                       <span className="text-[10px] text-slate-400">{act.activity_date}</span>
@@ -444,11 +449,11 @@ export const ParentPortalPage = () => {
 
               <div className="pt-2">
                 {pinVisible ? (
-                  <div className="font-mono text-3xl font-black text-blue-700 tracking-widest py-2 px-6 bg-white rounded-xl border-2 border-blue-300 shadow-inner inline-block">
-                    4829
+                  <div className="font-mono text-3xl font-black text-brand-700 tracking-widest py-2 px-6 bg-white rounded-xl border-2 border-brand-300 shadow-inner inline-block">
+                    {child.authorized_pickups?.[0]?.pickup_pin || '4829'}
                   </div>
                 ) : (
-                  <Button onClick={() => setPinVisible(true)} className="gap-2 bg-blue-600 hover:bg-blue-700">
+                  <Button onClick={() => setPinVisible(true)} className="gap-2 bg-brand-600 hover:bg-brand-700">
                     <Key className="w-4 h-4" />
                     <span>Reveal Pickup PIN</span>
                   </Button>
@@ -544,7 +549,14 @@ export const ParentPortalPage = () => {
               </div>
               <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
                 {activities[0].media_urls?.[0] && (
-                  <img src={activities[0].media_urls[0]} alt="" className="w-full h-40 object-cover" />
+                  <img
+                    src={activities[0].media_urls[0]}
+                    alt=""
+                    className="w-full h-40 object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
                 )}
                 <div className="p-4 space-y-1.5">
                   <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">

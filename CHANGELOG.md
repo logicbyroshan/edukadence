@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [5.0.0-audit] - 2026-09-18
+
+### Fixed & Stabilized
+- **Global UI Design System & Component Harmonization**:
+  - Standardized `<Button />` with unified sizing scale (`sm`, `md`, `lg`, `xl`), brand tokens (`#0084D6`, `#00C3FF`), accessible focus states, and double-click lock protection during async mutations.
+  - Enhanced `<Avatar />` component with dynamic initials fallback, soft gradient styling, and React `onError` event handling to eliminate broken image icons across all roles.
+  - Standardized `<EduKadenceLogo />` and brand color palette across `AppShell`, `ParentShell`, `KidShell`, and `AuthLayout`.
+- **Parent Portal & Mobile Responsive Stabilization**:
+  - Overhauled mobile bottom navigation to a uniform 6-column grid (`min-h-[48px]`, centered SVG stroke icons, active indicator pills, zero text wrapping/clipping).
+  - Modernized parent sibling selector into an `overflow-x-auto no-scrollbar` flex capsule container seamlessly accommodating 1 to 10+ children.
+  - Replaced raw image elements with `<Avatar />` and safe image fallbacks across Children directory, Attendance roster, Classroom Moments, Dismissals, and Kid stories/videos.
+- **Backend Tenant Isolation & Child Security Shielding**:
+  - Introduced `IsNotChild` RBAC permission class in `apps/core/permissions.py` shielding institutional fee structures, billing invoices, and staff settings from child sessions.
+  - Scoped parent endpoints to strictly authorized child records in `apps/students/views.py`.
+  - Added `backend/tests/test_audit_stabilization.py` validating cross-school isolation, parent-child record shielding, child mode restrictions, and pickup transitions.
+  - 47 of 47 backend tests passing (100% pass rate).
+  - Frontend production build (`npm run build`) passing with zero errors.
+
+---
+
 ## [4.0.0-phase4] - 2026-09-18
 
 ### Added
