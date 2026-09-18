@@ -100,21 +100,21 @@ export const KidShell = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-100/60 via-white to-amber-50/50 flex flex-col antialiased selection:bg-amber-200">
       {/* Cheerful Top Navigation Header */}
-      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b-2 border-sky-200 px-4 sm:px-8 py-3 flex items-center justify-between shadow-xs">
-        <div className="flex items-center gap-4">
-          <Link to="/kid" className="flex items-center gap-2">
-            <EduKadenceLogo className="h-8 sm:h-9" subtitle="Play & Learn" />
+      <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b-2 border-sky-200 px-3 sm:px-8 py-2.5 sm:py-3 flex items-center justify-between shadow-xs">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+          <Link to="/kid" className="flex items-center gap-2 shrink-0">
+            <EduKadenceLogo className="h-7 sm:h-9" subtitle="Play & Learn" />
           </Link>
 
           {/* Sibling / Child Switcher Pill */}
           {childrenList.length > 1 && (
-            <div className="hidden sm:flex items-center gap-1.5 p-1 bg-sky-50 rounded-2xl border border-sky-200">
+            <div className="hidden sm:flex items-center gap-1.5 p-1 bg-sky-50 rounded-2xl border border-sky-200 overflow-x-auto no-scrollbar max-w-[200px]">
               {childrenList.map((c) => (
                 <button
                   key={c.id}
                   onClick={() => switchChild(c)}
                   className={`
-                    px-3 py-1 rounded-xl text-xs font-black transition-all
+                    px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-xl text-xs font-black transition-all whitespace-nowrap
                     ${selectedChild?.id === c.id
                       ? 'bg-brand-600 text-white shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'}
@@ -151,41 +151,41 @@ export const KidShell = () => {
         </nav>
 
         {/* Star Wallet & Sound & Guardian Exit */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {/* Total Stars Counter */}
           <Link
             to="/kid/badges"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-amber-950 font-black text-xs sm:text-sm shadow-sm border border-amber-500 transition-transform active:scale-95"
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-amber-950 font-black text-xs sm:text-sm shadow-sm border border-amber-500 transition-transform active:scale-95 whitespace-nowrap"
             title="View My Stars & Badges"
           >
-            <Star className="w-4 h-4 fill-amber-950 text-amber-950 animate-spin-slow" />
+            <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-950 text-amber-950 animate-spin-slow" />
             <span>{childSummary?.total_stars || 12} Stars</span>
           </Link>
 
           {/* Sound Toggle */}
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className="p-2 rounded-2xl bg-sky-100 text-sky-700 hover:bg-sky-200 transition-colors"
+            className="p-1.5 sm:p-2 rounded-2xl bg-sky-100 text-sky-700 hover:bg-sky-200 transition-colors"
             title={soundEnabled ? 'Sound Enabled' : 'Sound Muted'}
             aria-label="Toggle Sound"
           >
-            {soundEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5 text-slate-400" />}
+            {soundEnabled ? <Volume2 className="w-4.5 h-4.5 sm:w-5 sm:h-5" /> : <VolumeX className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-slate-400" />}
           </button>
 
           {/* Safe Guardian Exit */}
           <button
             onClick={openExitModal}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors border border-slate-200 shadow-xs"
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors border border-slate-200 shadow-xs"
             title="Parent / Educator Exit"
           >
-            <LogOut className="w-4 h-4" />
+            <LogOut className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span className="hidden sm:inline">Exit</span>
           </button>
         </div>
       </header>
 
       {/* Main Canvas */}
-      <main className="flex-1 p-4 sm:p-8 max-w-6xl mx-auto w-full">
+      <main className="flex-1 p-3 sm:p-6 lg:p-8 max-w-6xl mx-auto w-full">
         <Outlet context={{ selectedChild, childSummary, refreshSummary: () => loadSummary(selectedChild?.id) }} />
       </main>
 

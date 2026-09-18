@@ -40,20 +40,20 @@ export const KidVideosPage = () => {
   return (
     <div className="space-y-6">
       {/* Videos Hub Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg flex items-center justify-between">
-        <div className="space-y-2 max-w-xl">
+      <div className="p-4 sm:p-8 rounded-3xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg flex items-center justify-between gap-3">
+        <div className="space-y-1.5 sm:space-y-2 max-w-xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-black">
             <Video className="w-4 h-4 text-indigo-200" />
             <span>Curated Safe Learning Room</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black">
+          <h1 className="text-xl sm:text-3xl font-black">
             Watch, Wonder & Discover! 🎬
           </h1>
           <p className="text-xs sm:text-sm text-indigo-100 font-medium">
             Safe, ad-free educational mini-videos exploring nature, science wonders, and rhymes.
           </p>
         </div>
-        <span className="text-6xl hidden sm:block select-none">🍿</span>
+        <span className="text-4xl sm:text-6xl hidden sm:block select-none">🍿</span>
       </div>
 
       {/* Videos List Grid */}

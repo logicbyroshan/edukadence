@@ -31,11 +31,11 @@ export const ColorActivity = ({ content = {}, onComplete }) => {
       </div>
 
       {/* Interactive Painting Shapes */}
-      <div className="p-8 rounded-3xl bg-slate-50 border-3 border-slate-200 flex items-center justify-center gap-6">
+      <div className="p-4 sm:p-8 rounded-3xl bg-slate-50 border-2 sm:border-3 border-slate-200 flex flex-wrap items-center justify-center gap-3 sm:gap-6">
         <button
           onClick={() => colorShape('sun')}
           style={{ backgroundColor: coloredParts['sun'] || '#FEF3C7' }}
-          className="w-20 h-20 rounded-full border-3 border-amber-300 shadow-md flex items-center justify-center text-3xl transition-transform active:scale-95"
+          className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-3 border-amber-300 shadow-md flex items-center justify-center text-2xl sm:text-3xl transition-transform active:scale-95"
           title="Sun"
         >
           ☀️
@@ -44,7 +44,7 @@ export const ColorActivity = ({ content = {}, onComplete }) => {
         <button
           onClick={() => colorShape('cloud')}
           style={{ backgroundColor: coloredParts['cloud'] || '#E0F2FE' }}
-          className="w-24 h-16 rounded-3xl border-3 border-sky-300 shadow-md flex items-center justify-center text-3xl transition-transform active:scale-95"
+          className="w-20 h-14 sm:w-24 sm:h-16 rounded-2xl sm:rounded-3xl border-3 border-sky-300 shadow-md flex items-center justify-center text-2xl sm:text-3xl transition-transform active:scale-95"
           title="Cloud"
         >
           ☁️
@@ -53,7 +53,7 @@ export const ColorActivity = ({ content = {}, onComplete }) => {
         <button
           onClick={() => colorShape('rainbow')}
           style={{ backgroundColor: coloredParts['rainbow'] || '#F3E8FF' }}
-          className="w-20 h-20 rounded-2xl border-3 border-purple-300 shadow-md flex items-center justify-center text-3xl transition-transform active:scale-95"
+          className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border-3 border-purple-300 shadow-md flex items-center justify-center text-2xl sm:text-3xl transition-transform active:scale-95"
           title="Rainbow"
         >
           🌈
@@ -63,15 +63,15 @@ export const ColorActivity = ({ content = {}, onComplete }) => {
       {/* Palette Colors */}
       <div className="space-y-2">
         <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Choose your color:</p>
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {palette.map((hex) => (
             <button
               key={hex}
               onClick={() => setSelectedColor(hex)}
               style={{ backgroundColor: hex }}
               className={`
-                w-10 h-10 sm:w-12 sm:h-12 rounded-2xl border-3 transition-transform active:scale-90 shadow-sm
-                ${selectedColor === hex ? 'ring-4 ring-slate-400 scale-115 border-white' : 'border-transparent hover:scale-105'}
+                w-9 h-9 sm:w-12 sm:h-12 rounded-2xl border-3 transition-transform active:scale-90 shadow-sm
+                ${selectedColor === hex ? 'ring-3 sm:ring-4 ring-slate-400 scale-110 sm:scale-115 border-white' : 'border-transparent hover:scale-105'}
               `}
             />
           ))}

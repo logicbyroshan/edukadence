@@ -39,7 +39,7 @@ export const TapChooseActivity = ({ content = {}, onComplete }) => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-3">
         {options.map((opt) => {
           const isThisSelected = selectedId === opt.id;
           return (
@@ -48,18 +48,18 @@ export const TapChooseActivity = ({ content = {}, onComplete }) => {
               onClick={() => handleSelect(opt)}
               disabled={isCorrect === true}
               className={`
-                p-5 rounded-3xl border-3 transition-all flex flex-col items-center justify-center gap-3 active:scale-95 select-none shadow-sm
+                p-3.5 sm:p-5 rounded-3xl border-2 sm:border-3 transition-all flex flex-col items-center justify-center gap-2 sm:gap-3 active:scale-95 select-none shadow-sm
                 ${isThisSelected && isCorrect === true
-                  ? 'bg-emerald-500 border-emerald-600 text-white ring-4 ring-emerald-200 scale-105'
+                  ? 'bg-emerald-500 border-emerald-600 text-white ring-3 sm:ring-4 ring-emerald-200 scale-102 sm:scale-105'
                   : isThisSelected && isCorrect === false
                   ? 'bg-rose-100 border-rose-400 text-rose-800 shake'
                   : 'bg-white hover:bg-sky-50 border-sky-200 text-slate-800 hover:border-sky-400'}
               `}
             >
-              <span className="text-4xl sm:text-5xl block animate-bounce-slow">
+              <span className="text-3xl sm:text-5xl block animate-bounce-slow">
                 {opt.icon || '⭐'}
               </span>
-              <span className="text-base font-black">{opt.label}</span>
+              <span className="text-sm sm:text-base font-black">{opt.label}</span>
             </button>
           );
         })}

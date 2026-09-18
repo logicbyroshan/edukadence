@@ -178,17 +178,17 @@ export const ParentPortalPage = () => {
       {isLearningTab && (
         <div className="space-y-5">
           {/* Kid Mode Direct Launcher Banner */}
-          <div className="p-5 bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 text-amber-950 rounded-3xl shadow-sm flex items-center justify-between">
+          <div className="p-4 sm:p-5 bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 text-amber-950 rounded-3xl shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="space-y-1">
-              <span className="text-[10px] font-black uppercase tracking-wider bg-white/30 px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] font-black uppercase tracking-wider bg-white/30 px-2.5 py-0.5 rounded-full inline-block">
                 Interactive Learning World
               </span>
-              <h4 className="text-base font-black">Open Kid Mode for {child.first_name}</h4>
+              <h4 className="text-sm sm:text-base font-black">Open Kid Mode for {child.first_name}</h4>
               <p className="text-xs opacity-90 font-medium">Safe playground for games, phonics & stories</p>
             </div>
             <Link
               to="/kid"
-              className="px-4 py-2.5 rounded-2xl bg-amber-950 hover:bg-black text-white font-extrabold text-xs shadow-md transition-transform active:scale-95 flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-2xl bg-amber-950 hover:bg-black text-white font-extrabold text-xs shadow-md transition-transform active:scale-95 flex items-center gap-1.5 shrink-0"
             >
               <span>Launch</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -196,17 +196,17 @@ export const ParentPortalPage = () => {
           </div>
 
           {/* Star & Milestone Summary */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-center">
-              <Star className="w-6 h-6 fill-amber-400 text-amber-500 mx-auto mb-1" />
-              <div className="text-2xl font-black text-amber-950">{totalStarsEarned || 4}</div>
-              <span className="text-[10px] font-bold text-amber-800 uppercase tracking-wider">Stars Earned</span>
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+            <div className="p-3 sm:p-4 rounded-2xl bg-amber-50 border border-amber-200 text-center">
+              <Star className="w-5 h-5 sm:w-6 sm:h-6 fill-amber-400 text-amber-500 mx-auto mb-1" />
+              <div className="text-xl sm:text-2xl font-black text-amber-950">{totalStarsEarned || 4}</div>
+              <span className="text-[9px] sm:text-[10px] font-bold text-amber-800 uppercase tracking-wider block">Stars Earned</span>
             </div>
 
-            <div className="p-4 rounded-2xl bg-purple-50 border border-purple-200 text-center">
-              <Trophy className="w-6 h-6 text-purple-600 mx-auto mb-1" />
-              <div className="text-2xl font-black text-purple-950">{childBadges.length || 1}</div>
-              <span className="text-[10px] font-bold text-purple-800 uppercase tracking-wider">Badges Unlocked</span>
+            <div className="p-3 sm:p-4 rounded-2xl bg-purple-50 border border-purple-200 text-center">
+              <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 mx-auto mb-1" />
+              <div className="text-xl sm:text-2xl font-black text-purple-950">{childBadges.length || 1}</div>
+              <span className="text-[9px] sm:text-[10px] font-bold text-purple-800 uppercase tracking-wider block">Badges Unlocked</span>
             </div>
           </div>
 
@@ -496,19 +496,19 @@ export const ParentPortalPage = () => {
           </div>
 
           {/* Quick Launch Kid Mode Card */}
-          <div className="p-4 bg-gradient-to-r from-amber-400 to-orange-400 rounded-2xl text-amber-950 flex items-center justify-between shadow-xs">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-white/30 text-amber-950">
-                <Sparkles className="w-5 h-5" />
+          <div className="p-3.5 sm:p-4 bg-gradient-to-r from-amber-400 to-orange-400 rounded-2xl text-amber-950 flex items-center justify-between gap-2 shadow-xs">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              <div className="p-2 rounded-xl bg-white/30 text-amber-950 shrink-0">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <div>
-                <h4 className="text-xs font-black">Kid Mode Ready</h4>
-                <p className="text-[10px] font-bold opacity-90">⭐ {totalStarsEarned || 4} Stars • 🏆 {childBadges.length || 1} Badges</p>
+              <div className="min-w-0">
+                <h4 className="text-xs font-black truncate">Kid Mode Ready</h4>
+                <p className="text-[10px] font-bold opacity-90 truncate">⭐ {totalStarsEarned || 4} Stars • 🏆 {childBadges.length || 1} Badges</p>
               </div>
             </div>
             <Link
               to="/kid"
-              className="px-3 py-1.5 rounded-xl bg-white text-amber-900 font-black text-xs shadow-xs hover:bg-amber-50 transition-colors"
+              className="px-3 py-1.5 rounded-xl bg-white text-amber-900 font-black text-xs shadow-xs hover:bg-amber-50 transition-colors shrink-0"
             >
               Play & Learn
             </Link>
@@ -516,23 +516,23 @@ export const ParentPortalPage = () => {
 
           {/* Pickup PIN Card Quick Reveal */}
           <Card className="border-blue-200 bg-gradient-to-br from-blue-50/50 to-white">
-            <CardBody className="p-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-blue-100 text-blue-700">
-                  <ShieldCheck className="w-5 h-5" />
+            <CardBody className="p-3.5 sm:p-4 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                <div className="p-2 rounded-xl bg-blue-100 text-blue-700 shrink-0">
+                  <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <div>
-                  <h4 className="text-xs font-bold text-slate-900">Authorized Pickup PIN</h4>
-                  <p className="text-[10px] text-slate-500">Show to teacher at dismissal</p>
+                <div className="min-w-0">
+                  <h4 className="text-xs font-bold text-slate-900 truncate">Authorized Pickup PIN</h4>
+                  <p className="text-[10px] text-slate-500 truncate">Show to teacher at dismissal</p>
                 </div>
               </div>
-              <div>
+              <div className="shrink-0">
                 {pinVisible ? (
-                  <span className="font-mono text-base font-black text-blue-700 tracking-widest px-3 py-1 bg-white rounded-lg border border-blue-300">
+                  <span className="font-mono text-sm sm:text-base font-black text-blue-700 tracking-widest px-2.5 sm:px-3 py-1 bg-white rounded-lg border border-blue-300">
                     4829
                   </span>
                 ) : (
-                  <Button size="sm" onClick={() => setPinVisible(true)} className="bg-blue-600 hover:bg-blue-700 text-xs">
+                  <Button size="sm" onClick={() => setPinVisible(true)} className="bg-blue-600 hover:bg-blue-700 text-xs py-1.5 px-3">
                     Reveal PIN
                   </Button>
                 )}

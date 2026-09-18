@@ -113,7 +113,7 @@ export const KidModePage = () => {
           <span className="text-xs text-slate-500 font-medium">Select a stage to explore</span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {ageStages.map((stage) => {
             const isSelected = stage.id === selectedAgeStage;
             return (
@@ -124,15 +124,15 @@ export const KidModePage = () => {
                   setExerciseCompleted(false);
                 }}
                 className={`
-                  p-3.5 rounded-2xl border text-left transition-all relative overflow-hidden select-none
+                  p-2.5 sm:p-3.5 rounded-2xl border text-left transition-all relative overflow-hidden select-none
                   ${isSelected
                     ? 'border-brand-500 bg-white ring-2 ring-brand-400 shadow-md scale-[1.02]'
                     : 'border-slate-200 bg-white/80 hover:bg-white hover:border-slate-300'}
                 `}
               >
-                <div className={`w-3 h-3 rounded-full ${stage.color} mb-2`} />
-                <h4 className="text-xs font-bold text-slate-900 leading-tight">{stage.name}</h4>
-                <span className="text-[10px] font-semibold text-slate-500">{stage.age}</span>
+                <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${stage.color} mb-1.5 sm:mb-2`} />
+                <h4 className="text-[11px] sm:text-xs font-bold text-slate-900 leading-tight">{stage.name}</h4>
+                <span className="text-[9px] sm:text-[10px] font-semibold text-slate-500">{stage.age}</span>
               </button>
             );
           })}
@@ -143,60 +143,60 @@ export const KidModePage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left 2 Cols: Interactive Exercise Simulator */}
         <div className="lg:col-span-2 space-y-4">
-          <Card className="border-2 border-sky-200 bg-white p-6 rounded-3xl shadow-md">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-2xl bg-amber-100 text-amber-700">
-                  <Gamepad2 className="w-5 h-5" />
+          <Card className="border-2 border-sky-200 bg-white p-4 sm:p-6 rounded-3xl shadow-md">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-4 gap-2">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="p-2 rounded-2xl bg-amber-100 text-amber-700 shrink-0">
+                  <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-slate-900">
+                <div className="min-w-0">
+                  <h4 className="text-xs sm:text-sm font-bold text-slate-900 truncate">
                     Interactive Activity: {activeStage?.name} Adventure
                   </h4>
-                  <p className="text-xs text-slate-500">{activeStage?.badge}</p>
+                  <p className="text-[10px] sm:text-xs text-slate-500 truncate">{activeStage?.badge}</p>
                 </div>
               </div>
-              <Badge variant="kid" size="md">
+              <Badge variant="kid" size="md" className="shrink-0">
                 ⭐ +1 Star Reward
               </Badge>
             </div>
 
             {/* Simulated Interactive Question */}
-            <div className="p-6 rounded-2xl bg-sky-50/70 border border-sky-100 text-center space-y-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-sky-700">
+            <div className="p-4 sm:p-6 rounded-2xl bg-sky-50/70 border border-sky-100 text-center space-y-4">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-sky-700">
                 Visual Matching Challenge
               </span>
-              <h3 className="text-lg font-bold text-slate-900">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900">
                 Which shape has 3 corners? 🔺
               </h3>
 
-              <div className="grid grid-cols-3 gap-4 max-w-md mx-auto pt-2">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-md mx-auto pt-2">
                 <button
                   onClick={() => handleInteractiveAnswer(true)}
                   className={`
-                    p-4 rounded-2xl font-bold text-sm border-2 transition-all active:scale-95
+                    p-2.5 sm:p-4 rounded-2xl font-bold text-xs sm:text-sm border-2 transition-all active:scale-95
                     ${exerciseCompleted
-                      ? 'bg-emerald-500 text-white border-emerald-600 shadow-md ring-4 ring-emerald-200'
+                      ? 'bg-emerald-500 text-white border-emerald-600 shadow-md ring-2 sm:ring-4 ring-emerald-200'
                       : 'bg-white hover:bg-sky-100 text-slate-800 border-sky-200 shadow-xs'}
                   `}
                 >
-                  <span className="text-2xl block mb-1">🔺</span>
+                  <span className="text-xl sm:text-2xl block mb-1">🔺</span>
                   <span>Triangle</span>
                 </button>
 
                 <button
                   onClick={() => handleInteractiveAnswer(false)}
-                  className="p-4 rounded-2xl font-bold text-sm bg-white hover:bg-sky-100 text-slate-800 border-2 border-sky-200 shadow-xs transition-all active:scale-95"
+                  className="p-2.5 sm:p-4 rounded-2xl font-bold text-xs sm:text-sm bg-white hover:bg-sky-100 text-slate-800 border-2 border-sky-200 shadow-xs transition-all active:scale-95"
                 >
-                  <span className="text-2xl block mb-1">🟦</span>
+                  <span className="text-xl sm:text-2xl block mb-1">🟦</span>
                   <span>Square</span>
                 </button>
 
                 <button
                   onClick={() => handleInteractiveAnswer(false)}
-                  className="p-4 rounded-2xl font-bold text-sm bg-white hover:bg-sky-100 text-slate-800 border-2 border-sky-200 shadow-xs transition-all active:scale-95"
+                  className="p-2.5 sm:p-4 rounded-2xl font-bold text-xs sm:text-sm bg-white hover:bg-sky-100 text-slate-800 border-2 border-sky-200 shadow-xs transition-all active:scale-95"
                 >
-                  <span className="text-2xl block mb-1">🟡</span>
+                  <span className="text-xl sm:text-2xl block mb-1">🟡</span>
                   <span>Circle</span>
                 </button>
               </div>

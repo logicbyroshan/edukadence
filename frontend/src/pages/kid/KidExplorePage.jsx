@@ -88,7 +88,7 @@ export const KidExplorePage = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
           {levels.map((lvl) => {
             const isSelected = lvl.code === selectedLevelCode;
             return (
@@ -96,15 +96,15 @@ export const KidExplorePage = () => {
                 key={lvl.id}
                 onClick={() => setSelectedLevelCode(lvl.code)}
                 className={`
-                  p-3.5 rounded-3xl border-3 text-left transition-all relative overflow-hidden select-none
+                  p-2.5 sm:p-3.5 rounded-2xl sm:rounded-3xl border-2 sm:border-3 text-left transition-all relative overflow-hidden select-none
                   ${isSelected
-                    ? 'border-brand-500 bg-white ring-4 ring-brand-200 shadow-md scale-102'
+                    ? 'border-brand-500 bg-white ring-2 sm:ring-4 ring-brand-200 shadow-md scale-102'
                     : 'border-slate-200 bg-white hover:border-slate-300'}
                 `}
               >
-                <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${levelColorMap[lvl.code] || 'from-brand-500 to-sky-500'} mb-2`} />
-                <h4 className="text-xs font-black text-slate-900 leading-tight">{lvl.name}</h4>
-                <span className="text-[10px] font-bold text-slate-500">
+                <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gradient-to-r ${levelColorMap[lvl.code] || 'from-brand-500 to-sky-500'} mb-1.5 sm:mb-2`} />
+                <h4 className="text-[11px] sm:text-xs font-black text-slate-900 leading-tight">{lvl.name}</h4>
+                <span className="text-[9px] sm:text-[10px] font-bold text-slate-500">
                   Ages {lvl.min_age}–{lvl.max_age}
                 </span>
               </button>
@@ -115,16 +115,16 @@ export const KidExplorePage = () => {
 
       {/* Level Summary Header */}
       {currentLevelObj && (
-        <div className={`p-6 rounded-3xl bg-gradient-to-r ${levelColorMap[selectedLevelCode] || 'from-brand-500 to-sky-500'} text-white shadow-md flex items-center justify-between`}>
+        <div className={`p-4 sm:p-6 rounded-3xl bg-gradient-to-r ${levelColorMap[selectedLevelCode] || 'from-brand-500 to-sky-500'} text-white shadow-md flex items-center justify-between gap-3`}>
           <div className="space-y-1 max-w-xl">
-            <h3 className="text-xl sm:text-2xl font-black">
+            <h3 className="text-lg sm:text-2xl font-black">
               {currentLevelObj.name} Universe (Ages {currentLevelObj.min_age}–{currentLevelObj.max_age})
             </h3>
             <p className="text-xs sm:text-sm opacity-90 font-medium">
               {currentLevelObj.description}
             </p>
           </div>
-          <span className="text-4xl hidden sm:block">🌟</span>
+          <span className="text-3xl sm:text-4xl hidden sm:block">🌟</span>
         </div>
       )}
 

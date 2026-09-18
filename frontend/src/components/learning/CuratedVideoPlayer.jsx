@@ -51,13 +51,13 @@ export const CuratedVideoPlayer = ({ video = {}, onComplete }) => {
           Quiz: {checkpoint.question}
         </p>
 
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {checkpoint.options.map((opt, i) => (
             <button
               key={i}
               onClick={() => handleAnswer(opt)}
               className={`
-                px-5 py-2.5 rounded-2xl font-black text-sm border-2 transition-all active:scale-95
+                px-4 sm:px-5 py-2 sm:py-2.5 rounded-2xl font-black text-xs sm:text-sm border-2 transition-all active:scale-95
                 ${selectedAnswer === opt && opt === checkpoint.answer
                   ? 'bg-emerald-500 border-emerald-600 text-white shadow-md'
                   : 'bg-white hover:bg-indigo-100 border-indigo-200 text-slate-800'}

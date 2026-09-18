@@ -56,7 +56,7 @@ export const MemoryActivity = ({ content = {}, onComplete }) => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 pt-2 max-w-xs mx-auto">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2 max-w-xs mx-auto">
         {cards.map((card, idx) => {
           const isFlipped = flippedIndices.includes(idx) || matchedEmojis.has(card.emoji);
           return (
@@ -64,7 +64,7 @@ export const MemoryActivity = ({ content = {}, onComplete }) => {
               key={idx}
               onClick={() => handleCardClick(idx)}
               className={`
-                h-20 sm:h-24 rounded-2xl font-black text-3xl sm:text-4xl border-3 transition-all transform duration-300 flex items-center justify-center select-none active:scale-95 shadow-sm
+                h-16 sm:h-24 rounded-2xl font-black text-2xl sm:text-4xl border-2 sm:border-3 transition-all transform duration-300 flex items-center justify-center select-none active:scale-95 shadow-sm
                 ${isFlipped
                   ? 'bg-white border-amber-300 rotate-0'
                   : 'bg-gradient-to-br from-indigo-500 to-brand-600 border-brand-700 text-white'}

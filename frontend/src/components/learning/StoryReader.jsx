@@ -97,13 +97,13 @@ export const StoryReader = ({ story = {}, onComplete }) => {
           <p className="text-xs font-extrabold text-brand-600 uppercase">
             Story Question: {currentScene.checkpoint_prompt.question}
           </p>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             {currentScene.checkpoint_prompt.options.map((opt, i) => (
               <button
                 key={i}
                 onClick={() => setSelectedAnswer(opt)}
                 className={`
-                  px-4 py-2 rounded-xl text-xs font-extrabold border-2 transition-all
+                  px-3.5 sm:px-4 py-2 rounded-xl text-xs font-extrabold border-2 transition-all
                   ${selectedAnswer === opt
                     ? 'bg-emerald-500 text-white border-emerald-600'
                     : 'bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200'}
@@ -117,11 +117,11 @@ export const StoryReader = ({ story = {}, onComplete }) => {
       )}
 
       {/* Navigation Buttons */}
-      <div className="flex items-center justify-between pt-2">
+      <div className="flex items-center justify-between pt-2 gap-2">
         <button
           onClick={handlePrev}
           disabled={currentSceneIndex === 0}
-          className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-30 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors"
+          className="px-3 sm:px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-30 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors shrink-0"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Previous</span>
@@ -129,7 +129,7 @@ export const StoryReader = ({ story = {}, onComplete }) => {
 
         <button
           onClick={handleNext}
-          className="px-6 py-2.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-black text-sm flex items-center gap-2 shadow-md transition-transform hover:scale-105 active:scale-95"
+          className="px-4 sm:px-6 py-2.5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-black text-xs sm:text-sm flex items-center gap-1.5 sm:gap-2 shadow-md transition-transform hover:scale-105 active:scale-95 shrink-0"
         >
           <span>{currentSceneIndex + 1 === scenes.length ? 'Finish Story ⭐' : 'Next Page'}</span>
           <ArrowRight className="w-4 h-4" />

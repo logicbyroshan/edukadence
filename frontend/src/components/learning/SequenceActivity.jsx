@@ -47,12 +47,12 @@ export const SequenceActivity = ({ content = {}, onComplete }) => {
       </div>
 
       {/* Progress sequence slots */}
-      <div className="flex items-center justify-center gap-2 min-h-[50px]">
+      <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 min-h-[50px]">
         {targetSequence.map((_, i) => (
           <div
             key={i}
             className={`
-              w-12 h-12 rounded-2xl border-3 flex items-center justify-center font-black text-xl transition-all
+              w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl border-2 sm:border-3 flex items-center justify-center font-black text-lg sm:text-xl transition-all
               ${tappedSequence[i] !== undefined
                 ? 'bg-emerald-500 border-emerald-600 text-white shadow-sm scale-105'
                 : 'bg-slate-100 border-dashed border-slate-300 text-slate-400'}
@@ -64,7 +64,7 @@ export const SequenceActivity = ({ content = {}, onComplete }) => {
       </div>
 
       {/* Number Buttons */}
-      <div className="flex items-center justify-center gap-3 pt-2">
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-2">
         {shuffled.map((num) => {
           const isUsed = tappedSequence.includes(num);
           return (
@@ -73,7 +73,7 @@ export const SequenceActivity = ({ content = {}, onComplete }) => {
               onClick={() => handleTap(num)}
               disabled={isUsed}
               className={`
-                w-14 h-14 sm:w-16 sm:h-16 rounded-2xl font-black text-2xl border-3 transition-all active:scale-95 shadow-sm
+                w-12 h-12 sm:w-16 sm:h-16 rounded-2xl font-black text-xl sm:text-2xl border-2 sm:border-3 transition-all active:scale-95 shadow-sm
                 ${isUsed
                   ? 'bg-slate-100 border-slate-200 text-slate-300 opacity-50'
                   : isError

@@ -15,7 +15,7 @@ export const TraceActivity = ({ content = {}, onComplete }) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw large light grey guide character
-    ctx.font = 'bold 160px Inter, system-ui, sans-serif';
+    ctx.font = 'bold 120px Inter, system-ui, sans-serif';
     ctx.fillStyle = '#E2E8F0';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -65,7 +65,7 @@ export const TraceActivity = ({ content = {}, onComplete }) => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = 'bold 160px Inter, system-ui, sans-serif';
+    ctx.font = 'bold 120px Inter, system-ui, sans-serif';
     ctx.fillStyle = '#E2E8F0';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -74,29 +74,29 @@ export const TraceActivity = ({ content = {}, onComplete }) => {
   };
 
   return (
-    <div className="text-center space-y-6 max-w-lg mx-auto py-2">
+    <div className="text-center space-y-5 max-w-lg mx-auto py-1">
       <div className="space-y-1">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-900 text-xs font-black uppercase tracking-wider">
           <Sparkles className="w-3.5 h-3.5 text-blue-600" />
           <span>{content.instruction || 'Trace the letter with your finger!'}</span>
         </span>
-        <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+        <h2 className="text-lg sm:text-2xl font-black text-slate-900">
           Letter {targetChar} is for {hintWord}
         </h2>
       </div>
 
-      <div className="relative inline-block border-4 border-dashed border-sky-300 rounded-3xl bg-white shadow-inner p-2 touch-none">
+      <div className="relative inline-block border-3 sm:border-4 border-dashed border-sky-300 rounded-3xl bg-white shadow-inner p-1.5 sm:p-2 touch-none max-w-full">
         <canvas
           ref={canvasRef}
-          width={300}
-          height={240}
+          width={250}
+          height={190}
           onMouseDown={startDraw}
           onMouseMove={draw}
           onMouseUp={endDraw}
           onTouchStart={startDraw}
           onTouchMove={draw}
           onTouchEnd={endDraw}
-          className="cursor-crosshair rounded-2xl bg-slate-50"
+          className="cursor-crosshair rounded-2xl bg-slate-50 max-w-full"
         />
       </div>
 
