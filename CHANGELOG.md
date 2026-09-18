@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [3.0.1] - 2026-09-18
+
+### Fixed
+- **Frontend Utilities & Gitignore**:
+  - Scoped `lib/` in root `.gitignore` to prevent unintentionally ignoring `frontend/src/lib/`.
+  - Added `frontend/src/lib/tokenStorage.js` for robust JWT token persistence, active school context tracking, and cross-tab session syncing.
+  - Added `frontend/src/lib/queryClient.js` for centralized TanStack Query client configuration.
+  - Resolved `npm run build` import resolution errors.
+
+---
+
 ## [3.0.0-phase3] - 2026-09-17
 
 ### Added
