@@ -266,6 +266,21 @@ class Command(BaseCommand):
             defaults={'relationship_type': 'MOTHER', 'is_primary_contact': False, 'can_pickup': True}
         )
 
+        # Child User for direct Kid Mode login
+        child_user, _ = User.objects.get_or_create(
+            username='aarav.kid',
+            defaults={
+                'first_name': 'Aarav', 'last_name': 'Sharma', 'email': 'aarav.kid@sunrisekids.edu',
+                'avatar': 'https://images.unsplash.com/photo-1595454223600-91fbdd774e1d?w=150&auto=format&fit=crop&q=80',
+                'is_active': True
+            }
+        )
+        child_user.set_password('Kid@12345')
+        child_user.save()
+        SchoolMembership.objects.update_or_create(
+            user=child_user, school=school_a, role='CHILD', defaults={'is_default': True, 'is_active': True}
+        )
+
         # 8. Authorized Pickups
         gp, _ = AuthorizedPickupPerson.objects.update_or_create(
             school=school_a, child=aarav, name='Ramesh Sharma',
@@ -915,6 +930,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Admin Login:   principal@sunrisekids.edu   / School@12345'))
         self.stdout.write(self.style.SUCCESS('Teacher Login: sarah.teacher@sunrisekids.edu / Teacher@12345'))
         self.stdout.write(self.style.SUCCESS('Parent Login:  john.parent@gmail.com        / Parent@12345 (Children: Aarav & Riya)'))
+        self.stdout.write(self.style.SUCCESS('Kid Login:     aarav.kid                    / Kid@12345'))
         self.stdout.write(self.style.SUCCESS('Super Admin:   admin@edukadence.com         / Admin@12345'))
         self.stdout.write(self.style.SUCCESS('======================================================='))
 
