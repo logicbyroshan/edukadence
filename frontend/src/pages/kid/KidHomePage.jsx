@@ -15,6 +15,10 @@ import {
   Type,
   Leaf,
   Video,
+  CheckCircle,
+  Clock,
+  Heart,
+  MessageCircle,
 } from 'lucide-react';
 import { Card, Badge, Button } from '../../components/ui';
 import { ActivityRunner } from '../../components/learning/ActivityRunner';
@@ -22,10 +26,13 @@ import { ActivityRunner } from '../../components/learning/ActivityRunner';
 export const KidHomePage = () => {
   const { selectedChild, childSummary, refreshSummary } = useOutletContext();
   const [activeActivity, setActiveActivity] = useState(null);
+  const [activeAssignmentId, setActiveAssignmentId] = useState(null);
+  const [selectedQuest, setSelectedQuest] = useState(null);
 
   const childName = childSummary?.child?.first_name || selectedChild?.first_name || 'Explorer';
   const childAge = childSummary?.child?.age || 3.5;
   const currentLevel = childSummary?.level;
+  const homeworkQuests = childSummary?.active_homework || [];
 
   const categories = [
     { title: 'Letters & Words', icon: Type, color: 'bg-emerald-500', count: '12 Activities', path: '/kid/explore?area=ALPHABET_PHONICS' },
@@ -36,8 +43,13 @@ export const KidHomePage = () => {
     { title: 'Learning Videos', icon: Video, color: 'bg-indigo-500', count: '10 Videos', path: '/kid/videos' },
   ];
 
+  const handleStartQuestActivity = (quest, activity) => {
+    setActiveAssignmentId(quest.assignment_id);
+    setActiveActivity(activity);
+  };
+
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-6 sm:space-y-8 animate-fadeIn">
       {/* Cheerful Personalized Welcome Banner */}
       <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-sky-400 via-brand-500 to-indigo-500 text-white shadow-lg relative overflow-hidden">
         <div className="relative z-10 max-w-2xl space-y-2">
@@ -61,6 +73,125 @@ export const KidHomePage = () => {
         </div>
       </div>
 
+      {/* =========================================================================
+          TODAY'S TEACHER HOMEWORK QUESTS (PHASE 4)
+         ========================================================================= */}
+      {homeworkQuests.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between px-1">
+            <div className="flex items-center space-x-2">
+              <div className="p-2 rounded-2xl bg-amber-400 text-amber-950 shadow-sm">
+                <BookOpen className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
+                  <span>Today's Learning Quests</span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-bold border border-amber-200">
+                    From Teacher
+                  </span>
+                </h2>
+                <p className="text-xs text-slate-500">
+                  Complete these activities to earn stars and level up!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {homeworkQuests.map((quest) => {
+              const isCompleted = quest.status === 'COMPLETED';
+              const isInProgress = quest.status === 'IN_PROGRESS';
+              const percent = Math.round(((quest.completed_count || 0) / (quest.total_count || 1)) * 100);
+
+              return (
+                <div
+                  key={quest.assignment_id}
+                  className={`p-5 sm:p-6 rounded-3xl border-3 transition-all relative overflow-hidden shadow-md flex flex-col justify-between ${
+                    isCompleted
+                      ? 'bg-gradient-to-br from-emerald-50 to-teal-50/60 border-emerald-300'
+                      : 'bg-gradient-to-br from-amber-50 to-orange-50/60 border-amber-300 hover:shadow-lg'
+                  }`}
+                >
+                  <div className="space-y-3">
+                    {/* Header Badges */}
+                    <div className="flex items-center justify-between">
+                      <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                        isCompleted
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-amber-400 text-amber-950'
+                      }`}>
+                        {isCompleted ? '⭐ Quest Completed!' : '🎯 Active Quest'}
+                      </span>
+
+                      <span className="text-xs font-bold text-slate-600">
+                        {quest.completed_count} of {quest.total_count} activities
+                      </span>
+                    </div>
+
+                    {/* Quest Title */}
+                    <div>
+                      <h3 className="text-xl font-black text-slate-900">
+                        {quest.title}
+                      </h3>
+                      {quest.instructions && (
+                        <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                          {quest.instructions}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Teacher Feedback note for child */}
+                    {quest.teacher_feedback && (
+                      <div className="p-3 rounded-2xl bg-white/80 border border-brand-200 text-xs text-brand-900 font-medium flex items-center space-x-2">
+                        <Heart className="w-4 h-4 text-rose-500 fill-rose-500 flex-shrink-0" />
+                        <span>Teacher note: "{quest.teacher_feedback}"</span>
+                      </div>
+                    )}
+
+                    {/* Activities List / Steps */}
+                    <div className="space-y-1.5 pt-1">
+                      {quest.activities?.map((act, idx) => (
+                        <div
+                          key={act.id || idx}
+                          className="p-2.5 rounded-xl bg-white/70 border border-slate-200/60 flex items-center justify-between text-xs"
+                        >
+                          <div className="flex items-center space-x-2">
+                            <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-700 font-black flex items-center justify-center text-[10px]">
+                              {idx + 1}
+                            </span>
+                            <span className="font-bold text-slate-800">{act.title}</span>
+                          </div>
+
+                          <button
+                            onClick={() => handleStartQuestActivity(quest, act)}
+                            className="px-3 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-bold text-[11px] flex items-center space-x-1 shadow-xs hover:scale-105 active:scale-95 transition-all"
+                          >
+                            <Play className="w-3 h-3 fill-white" />
+                            <span>Play</span>
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Progress bar */}
+                  <div className="pt-4 mt-2">
+                    <div className="w-full h-2.5 bg-slate-200/60 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          isCompleted ? 'bg-emerald-500' : 'bg-amber-500'
+                        }`}
+                        style={{ width: `${percent}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Continue Adventure & Today's Challenge */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Today's Challenge */}
@@ -83,7 +214,10 @@ export const KidHomePage = () => {
             </p>
 
             <button
-              onClick={() => setActiveActivity(childSummary.today_challenge)}
+              onClick={() => {
+                setActiveAssignmentId(null);
+                setActiveActivity(childSummary.today_challenge);
+              }}
               className="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-amber-950 font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-95"
             >
               <Play className="w-4 h-4 fill-amber-950" />
@@ -111,7 +245,10 @@ export const KidHomePage = () => {
           </p>
 
           <button
-            onClick={() => setActiveActivity(childSummary?.continue_activity || childSummary?.recommended_activities?.[0])}
+            onClick={() => {
+              setActiveAssignmentId(null);
+              setActiveActivity(childSummary?.continue_activity || childSummary?.recommended_activities?.[0]);
+            }}
             className="w-full py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-95"
           >
             <Play className="w-4 h-4 fill-white" />
@@ -144,7 +281,10 @@ export const KidHomePage = () => {
           {childSummary?.recommended_activities?.map((act) => (
             <div
               key={act.id}
-              onClick={() => setActiveActivity(act)}
+              onClick={() => {
+                setActiveAssignmentId(null);
+                setActiveActivity(act);
+              }}
               className="p-5 rounded-3xl bg-white border-2 border-slate-200 hover:border-brand-400 hover:shadow-lg transition-all cursor-pointer flex flex-col justify-between group transform hover:-translate-y-1"
             >
               <div className="space-y-2">
@@ -216,7 +356,11 @@ export const KidHomePage = () => {
         <ActivityRunner
           activity={activeActivity}
           child={childSummary?.child || selectedChild}
-          onClose={() => setActiveActivity(null)}
+          assignmentId={activeAssignmentId}
+          onClose={() => {
+            setActiveActivity(null);
+            setActiveAssignmentId(null);
+          }}
           onComplete={() => {
             refreshSummary();
           }}

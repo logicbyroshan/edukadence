@@ -117,26 +117,26 @@ export const LoginPage = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
           <button
             type="button"
-            onClick={() => fillDemo('principal@littlesprouts.edu', 'School@12345')}
+            onClick={() => fillDemo('principal@sunrisekids.edu', 'School@12345')}
             className="p-2.5 rounded-xl border border-slate-200 hover:border-brand-400 hover:bg-brand-50/50 bg-white transition-all text-left group flex flex-col"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-900 group-hover:text-brand-700">Principal / Admin</span>
               <Badge variant="brand" size="sm">School</Badge>
             </div>
-            <span className="text-[10px] text-slate-500 mt-1 truncate">principal@littlesprouts.edu</span>
+            <span className="text-[10px] text-slate-500 mt-1 truncate">principal@sunrisekids.edu</span>
           </button>
 
           <button
             type="button"
-            onClick={() => fillDemo('sarah.teacher@littlesprouts.edu', 'Teacher@12345')}
+            onClick={() => fillDemo('sarah.teacher@sunrisekids.edu', 'Teacher@12345')}
             className="p-2.5 rounded-xl border border-slate-200 hover:border-brand-400 hover:bg-brand-50/50 bg-white transition-all text-left group flex flex-col"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-900 group-hover:text-brand-700">Teacher</span>
               <Badge variant="sky" size="sm">Teacher</Badge>
             </div>
-            <span className="text-[10px] text-slate-500 mt-1 truncate">sarah.teacher@littlesprouts.edu</span>
+            <span className="text-[10px] text-slate-500 mt-1 truncate">sarah.teacher@sunrisekids.edu</span>
           </button>
 
           <button

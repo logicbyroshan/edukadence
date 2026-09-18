@@ -12,6 +12,9 @@ from .views import (
     InteractiveStoryViewSet,
     CuratedVideoViewSet,
     ActivityAssignmentViewSet,
+    HomeworkViewSet,
+    HomeworkAssignmentViewSet,
+    ChildHomeworkProgressViewSet,
     KidDashboardView,
 )
 
@@ -26,9 +29,13 @@ router.register(r'badges', RewardBadgeViewSet, basename='learning-badges')
 router.register(r'child-badges', ChildBadgeViewSet, basename='learning-child-badges')
 router.register(r'stories', InteractiveStoryViewSet, basename='learning-stories')
 router.register(r'videos', CuratedVideoViewSet, basename='learning-videos')
-router.register(r'assignments', ActivityAssignmentViewSet, basename='learning-assignments')
+router.register(r'legacy-assignments', ActivityAssignmentViewSet, basename='learning-legacy-assignments')
+router.register(r'homework', HomeworkViewSet, basename='learning-homework')
+router.register(r'assignments', HomeworkAssignmentViewSet, basename='learning-assignments')
+router.register(r'homework-progress', ChildHomeworkProgressViewSet, basename='learning-homework-progress')
 
 urlpatterns = [
     path('kid-home/', KidDashboardView.as_view({'get': 'list'}), name='kid-home-dashboard'),
     path('', include(router.urls)),
 ]
+

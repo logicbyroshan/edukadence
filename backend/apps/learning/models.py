@@ -127,6 +127,17 @@ class Activity(UUIDModel, TimeStampedModel):
     media_asset_url = models.CharField(max_length=500, blank=True, default='')
     audio_instruction_url = models.CharField(max_length=500, blank=True, default='')
 
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='authored_learning_activities'
+    )
+    version = models.PositiveIntegerField(default=1)
+    is_template = models.BooleanField(default=False)
+    template_category = models.CharField(max_length=100, blank=True, default='')
+
     content = models.JSONField(default=dict, blank=True, help_text="Structured payload for the activity renderer")
     status = models.CharField(max_length=20, choices=ContentStatus.choices, default=ContentStatus.PUBLISHED, db_index=True)
     order_index = models.PositiveIntegerField(default=1)
@@ -153,6 +164,8 @@ class ActivityAttempt(UUIDModel, TimeStampedModel):
     school = models.ForeignKey('schools.School', on_delete=models.CASCADE, related_name='activity_attempts', null=True, blank=True)
     child = models.ForeignKey('students.Child', on_delete=models.CASCADE, related_name='activity_attempts')
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE, related_name='attempts')
+    homework = models.ForeignKey('Homework', on_delete=models.SET_NULL, null=True, blank=True, related_name='attempts')
+    assignment = models.ForeignKey('HomeworkAssignment', on_delete=models.SET_NULL, null=True, blank=True, related_name='attempts')
 
     started_at = models.DateTimeField(default=timezone.now)
     completed_at = models.DateTimeField(null=True, blank=True)
@@ -341,7 +354,7 @@ class CuratedVideo(UUIDModel, TimeStampedModel):
 
 class ActivityAssignment(UUIDModel, TimeStampedModel):
     """
-    Teacher/School assignment of learning activities to classes, sections, or individual children.
+    Teacher/School assignment of individual learning activities (legacy/simple assignment).
     """
     school = models.ForeignKey('schools.School', on_delete=models.CASCADE, related_name='learning_assignments')
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE, related_name='assignments')
@@ -359,3 +372,140 @@ class ActivityAssignment(UUIDModel, TimeStampedModel):
         ordering = ['-assigned_at']
         verbose_name = 'Activity Assignment'
         verbose_name_plural = 'Activity Assignments'
+
+
+class Homework(UUIDModel, TimeStampedModel):
+    """
+    Teacher-authored or school-curated interactive homework set comprising one or more activities.
+    """
+    school = models.ForeignKey('schools.School', on_delete=models.CASCADE, related_name='homework_sets')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='created_homework_sets')
+
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, default='')
+    instructions = models.TextField(blank=True, default='', help_text='Child-facing quest instructions')
+
+    learning_level = models.ForeignKey(LearningLevel, on_delete=models.CASCADE, related_name='homework_sets')
+    learning_area = models.ForeignKey(LearningArea, on_delete=models.SET_NULL, null=True, blank=True, related_name='homework_sets')
+    topic = models.ForeignKey(LearningTopic, on_delete=models.SET_NULL, null=True, blank=True, related_name='homework_sets')
+
+    difficulty = models.CharField(max_length=20, choices=DifficultyLevel.choices, default=DifficultyLevel.EASY)
+    estimated_duration_minutes = models.PositiveIntegerField(default=10)
+
+    status = models.CharField(max_length=20, choices=ContentStatus.choices, default=ContentStatus.DRAFT, db_index=True)
+    version = models.PositiveIntegerField(default=1)
+    is_template = models.BooleanField(default=False)
+
+    cover_image_url = models.CharField(max_length=500, blank=True, default='')
+    theme_color = models.CharField(max_length=50, default='sky')
+
+    class Meta:
+        db_table = 'learning_homework'
+        ordering = ['-created_at']
+        verbose_name = 'Homework Set'
+        verbose_name_plural = 'Homework Sets'
+
+    def __str__(self):
+        return f"{self.title} ({self.learning_level.name}) [{self.status}]"
+
+
+class HomeworkActivity(UUIDModel, TimeStampedModel):
+    """
+    Ordered sequence of interactive learning activities contained within a Homework set.
+    """
+    homework = models.ForeignKey(Homework, on_delete=models.CASCADE, related_name='items')
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE, related_name='homework_inclusions')
+    order_index = models.PositiveIntegerField(default=1)
+    instructions_override = models.TextField(blank=True, default='')
+    required_to_complete = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'learning_homework_activities'
+        ordering = ['order_index']
+        unique_together = ['homework', 'activity']
+        verbose_name = 'Homework Activity'
+        verbose_name_plural = 'Homework Activities'
+
+    def __str__(self):
+        return f"{self.homework.title} - #{self.order_index} {self.activity.title}"
+
+
+class AssignmentTargetType(models.TextChoices):
+    CLASS = 'CLASS', 'Whole Class Level'
+    SECTION = 'SECTION', 'Specific Classroom Section'
+    INDIVIDUAL_CHILDREN = 'INDIVIDUAL_CHILDREN', 'Selected Children'
+
+
+class HomeworkAssignment(UUIDModel, TimeStampedModel):
+    """
+    Distribution/scheduling instance of a Homework set to a classroom or specific students.
+    """
+    school = models.ForeignKey('schools.School', on_delete=models.CASCADE, related_name='homework_assignments')
+    homework = models.ForeignKey(Homework, on_delete=models.CASCADE, related_name='assignments')
+    assigned_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='assigned_homework_list')
+
+    target_type = models.CharField(max_length=30, choices=AssignmentTargetType.choices, default=AssignmentTargetType.SECTION)
+    class_level = models.ForeignKey('classes.ClassLevel', on_delete=models.SET_NULL, null=True, blank=True, related_name='homework_assignments')
+    section = models.ForeignKey('classes.Section', on_delete=models.SET_NULL, null=True, blank=True, related_name='homework_assignments')
+
+    assigned_at = models.DateTimeField(default=timezone.now)
+    due_date = models.DateField()
+
+    status = models.CharField(max_length=20, choices=ContentStatus.choices, default=ContentStatus.PUBLISHED, db_index=True)
+    is_active = models.BooleanField(default=True)
+    teacher_notes = models.TextField(blank=True, default='')
+
+    class Meta:
+        db_table = 'learning_homework_assignments'
+        ordering = ['-assigned_at', '-due_date']
+        verbose_name = 'Homework Assignment'
+        verbose_name_plural = 'Homework Assignments'
+
+    def __str__(self):
+        target = self.section.display_name if self.section else (self.class_level.name if self.class_level else 'Custom Group')
+        return f"{self.homework.title} -> {target} (Due: {self.due_date})"
+
+
+class HomeworkStatus(models.TextChoices):
+    NOT_STARTED = 'NOT_STARTED', 'Not Started'
+    IN_PROGRESS = 'IN_PROGRESS', 'In Progress'
+    COMPLETED = 'COMPLETED', 'Completed'
+    OVERDUE = 'OVERDUE', 'Overdue'
+
+
+class ChildHomeworkProgress(UUIDModel, TimeStampedModel):
+    """
+    Tracks individual child completion status, stars earned, attempts, and teacher feedback for an assignment.
+    """
+    school = models.ForeignKey('schools.School', on_delete=models.CASCADE, related_name='child_homework_progress_set')
+    assignment = models.ForeignKey(HomeworkAssignment, on_delete=models.CASCADE, related_name='submissions')
+    child = models.ForeignKey('students.Child', on_delete=models.CASCADE, related_name='homework_progress_set')
+
+    status = models.CharField(max_length=20, choices=HomeworkStatus.choices, default=HomeworkStatus.NOT_STARTED, db_index=True)
+    started_at = models.DateTimeField(null=True, blank=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
+
+    completed_activities_count = models.PositiveIntegerField(default=0)
+    total_activities_count = models.PositiveIntegerField(default=1)
+
+    total_stars_earned = models.PositiveIntegerField(default=0)
+    average_score = models.PositiveIntegerField(default=0)
+
+    teacher_feedback = models.TextField(blank=True, default='')
+    teacher_feedback_at = models.DateTimeField(null=True, blank=True)
+    teacher_feedback_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='given_homework_feedbacks')
+
+    class Meta:
+        db_table = 'learning_child_homework_progress'
+        unique_together = ['assignment', 'child']
+        ordering = ['-created_at']
+        verbose_name = 'Child Homework Progress'
+        verbose_name_plural = 'Child Homework Progress Records'
+        indexes = [
+            models.Index(fields=['child', 'status']),
+            models.Index(fields=['assignment', 'status']),
+        ]
+
+    def __str__(self):
+        return f"{self.child.full_name} - {self.assignment.homework.title} [{self.get_status_display()}]"
+
