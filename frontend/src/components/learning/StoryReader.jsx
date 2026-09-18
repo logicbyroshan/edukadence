@@ -74,9 +74,12 @@ export const StoryReader = ({ story = {}, onComplete }) => {
       {/* Scene Illustration */}
       <div className="rounded-3xl overflow-hidden border-3 border-sky-200 shadow-md bg-slate-100 max-h-[220px]">
         <img
-          src={currentScene.illustration_url}
+          src={currentScene.illustration_url || 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&auto=format&fit=crop&q=80'}
           alt={currentScene.title}
           className="w-full h-48 object-cover"
+          onError={(e) => {
+            e.currentTarget.src = 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&auto=format&fit=crop&q=80';
+          }}
         />
       </div>
 

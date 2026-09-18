@@ -81,6 +81,9 @@ export const KidStoriesPage = () => {
                       src={story.cover_image_url || 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=80'}
                       alt={story.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=80';
+                      }}
                     />
                     <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-xs text-amber-300 text-xs font-black flex items-center gap-1 shadow-sm">
                       <Star className="w-3.5 h-3.5 fill-amber-300" />

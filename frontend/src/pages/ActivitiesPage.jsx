@@ -131,6 +131,9 @@ export const ActivitiesPage = () => {
                     src={act.media_urls[0]}
                     alt={act.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
                   />
                   {act.media_urls.length > 1 && (
                     <span className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md text-white px-2.5 py-1 rounded-full text-xs font-semibold flex items-center gap-1">

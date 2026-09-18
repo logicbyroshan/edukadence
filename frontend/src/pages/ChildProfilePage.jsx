@@ -8,6 +8,7 @@ import {
   Modal,
   FormField,
   Input,
+  Avatar,
   LoadingState,
   ErrorState,
 } from '../components/ui';
@@ -134,17 +135,12 @@ export const ChildProfilePage = () => {
       {/* Header Profile Card */}
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-5">
-          {child.profile_photo_url ? (
-            <img
-              src={child.profile_photo_url}
-              alt={child.full_name}
-              className="w-20 h-20 rounded-2xl object-cover border-2 border-slate-200 shadow-sm"
-            />
-          ) : (
-            <div className="w-20 h-20 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center font-extrabold text-2xl">
-              {child.first_name?.[0] || 'C'}
-            </div>
-          )}
+          <Avatar
+            src={child.profile_photo_url}
+            name={child.full_name}
+            size="2xl"
+            shape="rounded"
+          />
           <div>
             <div className="flex items-center gap-3">
               <h1 className="text-2xl font-bold text-slate-900">{child.full_name}</h1>
@@ -344,13 +340,12 @@ export const ChildProfilePage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {child.authorized_pickups?.map((p) => (
               <div key={p.id} className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-start gap-4">
-                {p.photo_url ? (
-                  <img src={p.photo_url} alt={p.name} className="w-12 h-12 rounded-xl object-cover" />
-                ) : (
-                  <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-                    {p.name[0]}
-                  </div>
-                )}
+                <Avatar
+                  src={p.photo_url}
+                  name={p.name}
+                  size="lg"
+                  shape="rounded"
+                />
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <h4 className="font-bold text-slate-900">{p.name}</h4>
@@ -389,7 +384,15 @@ export const ChildProfilePage = () => {
               {act.media_urls?.length > 0 && (
                 <div className="grid grid-cols-2 gap-2 pt-2">
                   {act.media_urls.map((url, idx) => (
-                    <img key={idx} src={url} alt="Class activity" className="h-32 w-full object-cover rounded-lg" />
+                    <img
+                      key={idx}
+                      src={url}
+                      alt="Class activity"
+                      className="h-32 w-full object-cover rounded-lg"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
                   ))}
                 </div>
               )}

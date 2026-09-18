@@ -9,11 +9,9 @@ import {
   Clock,
   ShieldCheck,
   CreditCard,
-  Bell,
   Sparkles,
   Building2,
   Users,
-  ChevronDown,
 } from 'lucide-react';
 import { Avatar, Badge } from '../components/ui';
 
@@ -28,7 +26,7 @@ export const ParentShell = () => {
   const [selectedChildIndex, setSelectedChildIndex] = useState(0);
 
   // Fetch children connected to this parent account
-  const { data: childrenData, isLoading } = useQuery({
+  const { data: childrenData } = useQuery({
     queryKey: ['parent-children-list'],
     queryFn: () => studentService.getChildren(),
   });
@@ -37,18 +35,18 @@ export const ParentShell = () => {
   const selectedChild = children[selectedChildIndex] || children[0] || null;
 
   const navItems = [
-    { label: 'Day View', path: '/parent', icon: <Home className="w-5 h-5" /> },
-    { label: 'Moments', path: '/parent/activities', icon: <Clock className="w-5 h-5" /> },
-    { label: 'Learning', path: '/parent/learning', icon: <Sparkles className="w-5 h-5" /> },
-    { label: 'Attendance', path: '/parent/attendance', icon: <Users className="w-5 h-5" /> },
-    { label: 'Fees', path: '/parent/fees', icon: <CreditCard className="w-5 h-5" /> },
-    { label: 'Pickup PIN', path: '/parent/pickup', icon: <ShieldCheck className="w-5 h-5" /> },
+    { label: 'Day View', path: '/parent', icon: Home },
+    { label: 'Moments', path: '/parent/activities', icon: Clock },
+    { label: 'Learning', path: '/parent/learning', icon: Sparkles },
+    { label: 'Attendance', path: '/parent/attendance', icon: Users },
+    { label: 'Fees', path: '/parent/fees', icon: CreditCard },
+    { label: 'Pickup PIN', path: '/parent/pickup', icon: ShieldCheck },
   ];
 
   return (
     <ParentContext.Provider value={{ selectedChild, children, setSelectedChildIndex, selectedChildIndex }}>
-      <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-start pb-24 antialiased">
-        <div className="w-full max-w-lg bg-white min-h-screen shadow-xl flex flex-col">
+      <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-start pb-20 sm:pb-24 antialiased">
+        <div className="w-full max-w-lg bg-white min-h-screen shadow-xl flex flex-col relative border-x border-slate-200/60">
           {/* Header */}
           <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-100 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -58,8 +56,9 @@ export const ParentShell = () => {
             <div className="flex items-center gap-2">
               <Link
                 to="/app"
-                className="p-1.5 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 transition-colors"
+                className="p-1.5 rounded-full bg-slate-50 text-slate-600 hover:bg-slate-100 transition-colors border border-slate-200/80"
                 title="Switch to School Admin"
+                aria-label="Switch to School Admin"
               >
                 <Building2 className="w-4 h-4" />
               </Link>
@@ -69,46 +68,49 @@ export const ParentShell = () => {
 
           {/* Sibling Switcher Header Bar */}
           {children.length > 0 && (
-            <div className="bg-blue-50/70 border-b border-blue-100/80 px-4 py-2.5 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                {selectedChild?.profile_photo_url ? (
-                  <img
-                    src={selectedChild.profile_photo_url}
-                    alt={selectedChild.full_name}
-                    className="w-9 h-9 rounded-full object-cover border border-blue-200"
-                  />
-                ) : (
-                  <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">
-                    {selectedChild?.first_name?.[0] || 'C'}
-                  </div>
-                )}
-                <div>
+            <div className="bg-gradient-to-r from-brand-50/90 to-skybrand-50/80 border-b border-brand-100 px-4 py-2.5 flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Avatar
+                  src={selectedChild?.profile_photo_url}
+                  name={selectedChild?.full_name}
+                  size="sm"
+                  shape="circle"
+                />
+                <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-bold text-slate-900">{selectedChild?.full_name}</span>
+                    <span className="text-xs font-bold text-slate-900 truncate">
+                      {selectedChild?.full_name}
+                    </span>
                     <Badge variant="primary" size="sm">
                       {selectedChild?.current_class?.display_name || 'Enrolled'}
                     </Badge>
                   </div>
-                  <p className="text-[10px] text-slate-500">ID: {selectedChild?.admission_number}</p>
+                  <p className="text-[10px] text-slate-500 truncate">
+                    ID: {selectedChild?.admission_number}
+                  </p>
                 </div>
               </div>
 
               {/* Multi-Child Sibling Selector */}
               {children.length > 1 && (
-                <div className="flex items-center gap-1 bg-white p-1 rounded-lg border border-blue-200 shadow-xs">
-                  {children.map((c, idx) => (
-                    <button
-                      key={c.id}
-                      onClick={() => setSelectedChildIndex(idx)}
-                      className={`px-2 py-1 rounded-md text-[11px] font-bold transition-all ${
-                        selectedChildIndex === idx
-                          ? 'bg-blue-600 text-white shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900'
-                      }`}
-                    >
-                      {c.first_name}
-                    </button>
-                  ))}
+                <div className="flex items-center gap-1 bg-white p-1 rounded-xl border border-brand-200 shadow-2xs overflow-x-auto no-scrollbar shrink-0 max-w-[170px] sm:max-w-none">
+                  {children.map((c, idx) => {
+                    const isSelected = selectedChildIndex === idx;
+                    return (
+                      <button
+                        key={c.id}
+                        onClick={() => setSelectedChildIndex(idx)}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all whitespace-nowrap ${
+                          isSelected
+                            ? 'bg-brand-600 text-white shadow-xs'
+                            : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                        }`}
+                        aria-pressed={isSelected}
+                      >
+                        {c.first_name}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -120,20 +122,30 @@ export const ParentShell = () => {
           </main>
 
           {/* Bottom Mobile Navigation Bar */}
-          <nav className="fixed bottom-0 w-full max-w-lg bg-white border-t border-slate-200/80 px-1 py-1.5 flex items-center justify-around z-40 shadow-lg">
+          <nav
+            className="fixed bottom-0 w-full max-w-lg bg-white/95 backdrop-blur-md border-t border-slate-200/90 px-2 py-1.5 grid grid-cols-6 z-40 shadow-lg"
+            aria-label="Parent Portal Navigation"
+          >
             {navItems.map((item) => {
+              const Icon = item.icon;
               const isActive = location.pathname === item.path;
               return (
                 <Link
                   key={item.path}
                   to={item.path}
                   className={`
-                    flex flex-col items-center py-1 px-2 rounded-xl transition-all
-                    ${isActive ? 'text-blue-600 font-bold' : 'text-slate-400 hover:text-slate-600 font-normal'}
+                    flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all min-h-[48px] select-none
+                    ${isActive
+                      ? 'text-brand-600 font-bold bg-brand-50/70 scale-102'
+                      : 'text-slate-400 hover:text-slate-700 font-medium'}
                   `}
+                  aria-label={item.label}
+                  aria-current={isActive ? 'page' : undefined}
                 >
-                  {item.icon}
-                  <span className="text-[10px] mt-0.5">{item.label}</span>
+                  <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-brand-600 stroke-[2.5]' : 'stroke-[1.75]'}`} />
+                  <span className="text-[10px] mt-0.5 leading-none truncate w-full text-center">
+                    {item.label}
+                  </span>
                 </Link>
               );
             })}

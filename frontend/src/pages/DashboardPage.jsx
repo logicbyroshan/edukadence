@@ -227,7 +227,14 @@ export const DashboardPage = () => {
               {activities.slice(0, 3).map((act) => (
                 <div key={act.id} className="p-3.5 rounded-xl border border-slate-100 bg-slate-50/60 flex items-start gap-3">
                   {act.media_urls?.[0] ? (
-                    <img src={act.media_urls[0]} alt="" className="w-12 h-12 rounded-lg object-cover shrink-0" />
+                    <img
+                      src={act.media_urls[0]}
+                      alt=""
+                      className="w-12 h-12 rounded-lg object-cover shrink-0"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
                   ) : (
                     <div className="w-12 h-12 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold shrink-0">
                       🎨

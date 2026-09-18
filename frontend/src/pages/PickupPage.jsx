@@ -4,6 +4,7 @@ import {
   PageHeader,
   Button,
   Badge,
+  Avatar,
   Modal,
   FormField,
   Input,
@@ -125,13 +126,11 @@ export const PickupPage = () => {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    {child.profile_photo_url ? (
-                      <img src={child.profile_photo_url} alt={child.full_name} className="w-12 h-12 rounded-xl object-cover" />
-                    ) : (
-                      <div className="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-lg">
-                        {child.first_name[0]}
-                      </div>
-                    )}
+                    <Avatar
+                      src={child.profile_photo_url}
+                      name={child.full_name || child.first_name}
+                      size="lg"
+                    />
                     <div>
                       <h4 className="font-bold text-slate-900 text-base">{child.full_name}</h4>
                       <p className="text-xs text-slate-500">
