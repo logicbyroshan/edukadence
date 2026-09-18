@@ -102,3 +102,24 @@ This document records all meaningful tasks performed across agent sessions.
   - `npm run build` (transformed 1646 modules, 0 errors).
 - **Known Follow-up**:
   - Phase 4: Teacher Homework Authoring Studio and interactive assignment workflow.
+
+---
+
+### Task: Frontend Lib Utilities & Gitignore Fix
+- **Date**: 2026-09-18
+- **Reason**: Fix gitignore pattern that unintentionally ignored `frontend/src/lib/`, restoring `tokenStorage.js` and `queryClient.js`.
+- **Files/Areas Affected**:
+  - `.gitignore`
+  - `frontend/src/lib/tokenStorage.js`
+  - `frontend/src/lib/queryClient.js`
+  - `CHANGELOG.md`, `.agent-memory/TASK_HISTORY.md`
+- **What Changed**:
+  - Scoped `lib/` in root `.gitignore` to `/lib/`.
+  - Added `frontend/src/lib/tokenStorage.js` and `frontend/src/lib/queryClient.js`.
+  - Verified `npm run build` passes in 2.92s and `pytest tests/ -v` passes 38/38 tests.
+- **Testing Performed**:
+  - `pytest tests/ -v` (38/38 passed).
+  - `npm run build` (0 errors).
+  - Backend running at `http://127.0.0.1:8000/api/v1/`.
+  - Frontend running at `http://localhost:5173/`.
+
