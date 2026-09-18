@@ -26,17 +26,40 @@ import { DragDropActivity } from './DragDropActivity';
 import { StoryReader } from './StoryReader';
 import { CuratedVideoPlayer } from './CuratedVideoPlayer';
 
-export const ActivityRunner = ({ activity, child, onClose, onComplete }) => {
+export const ActivityRunner = ({
+  activity,
+  child,
+  assignmentId,
+  homeworkId,
+  previewMode = false,
+  onClose,
+  onComplete,
+}) => {
   const [completed, setCompleted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [completionData, setCompletionData] = useState(null);
 
   const handleActivityComplete = async (result = {}) => {
-    if (!activity || !child) return;
+    if (!activity) return;
+
+    if (previewMode || !child) {
+      // Simulate completion in teacher preview mode without touching child records
+      setCompletionData({
+        stars_awarded: activity.star_reward || 2,
+        score_percentage: 100,
+        badge_unlocked: null,
+      });
+      setCompleted(true);
+      if (onComplete) onComplete({ success: true, preview: true });
+      return;
+    }
+
     setSubmitting(true);
     try {
       const payload = {
         child_id: child.id,
+        assignment_id: assignmentId || null,
+        homework_id: homeworkId || null,
         correct_count: result.correct_count ?? 1,
         total_count: result.total_count ?? 1,
         is_completed: true,

@@ -92,6 +92,12 @@ export const ParentPortalPage = () => {
     enabled: !!childId,
   });
 
+  const { data: homeworkProgressData } = useQuery({
+    queryKey: ['parent-homework-progress', childId],
+    queryFn: () => learningService.getHomeworkProgress({ child_id: childId }),
+    enabled: !!childId,
+  });
+
   if (!selectedChild || isOverviewLoading) {
     return (
       <div className="p-8 text-center">
@@ -113,6 +119,7 @@ export const ParentPortalPage = () => {
   const progressList = Array.isArray(learningProgressData) ? learningProgressData : learningProgressData?.results || [];
   const childBadges = Array.isArray(childBadgesData) ? childBadgesData : childBadgesData?.results || [];
   const attempts = Array.isArray(childAttemptsData) ? childAttemptsData : childAttemptsData?.results || [];
+  const homeworkProgressList = Array.isArray(homeworkProgressData) ? homeworkProgressData : homeworkProgressData?.results || [];
 
   const totalStarsEarned = attempts.filter((a) => a.is_completed).reduce((sum, a) => sum + (a.stars_awarded || 0), 0);
 
@@ -196,6 +203,106 @@ export const ParentPortalPage = () => {
               <div className="text-2xl font-black text-purple-950">{childBadges.length || 1}</div>
               <span className="text-[10px] font-bold text-purple-800 uppercase tracking-wider">Badges Unlocked</span>
             </div>
+          </div>
+
+          {/* Assigned Homework Quests & Teacher Notes */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                <BookOpen className="w-4 h-4 text-brand-600" />
+                <span>Assigned Homework Quests</span>
+              </h4>
+              <span className="text-[11px] text-slate-400 font-medium">
+                {homeworkProgressList.length} Quests Assigned
+              </span>
+            </div>
+
+            {homeworkProgressList.length === 0 ? (
+              <div className="p-4 bg-white rounded-2xl border border-slate-200 text-center">
+                <p className="text-xs text-slate-500">No active homework assignments for this week.</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {homeworkProgressList.map((hp) => {
+                  const isDone = hp.status === 'COMPLETED';
+                  const isInProgress = hp.status === 'IN_PROGRESS';
+
+                  return (
+                    <div
+                      key={hp.id}
+                      className={`p-4 rounded-2xl border shadow-xs transition-all space-y-3 ${
+                        isDone
+                          ? 'bg-gradient-to-br from-emerald-50/60 to-white border-emerald-200'
+                          : 'bg-white border-slate-200'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-50 text-brand-700 border border-brand-200">
+                          {hp.assignment_details?.section_name || 'Class Roster'}
+                        </span>
+
+                        <span
+                          className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${
+                            isDone
+                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                              : isInProgress
+                              ? 'bg-amber-100 text-amber-800 border border-amber-200'
+                              : 'bg-slate-100 text-slate-600 border border-slate-200'
+                          }`}
+                        >
+                          {hp.status_display || hp.status}
+                        </span>
+                      </div>
+
+                      <div>
+                        <h5 className="font-bold text-slate-900 text-sm">
+                          {hp.homework_title}
+                        </h5>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          Completed {hp.completed_activities_count} of {hp.total_activities_count} activities
+                        </p>
+                      </div>
+
+                      {/* Teacher Feedback Note for Parent */}
+                      {hp.teacher_feedback && (
+                        <div className="p-3 bg-brand-50/80 border border-brand-200 rounded-xl space-y-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-bold text-brand-800 uppercase tracking-wider flex items-center gap-1">
+                              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                              <span>Teacher Note</span>
+                            </span>
+                            {hp.teacher_feedback_by_name && (
+                              <span className="text-[10px] text-brand-600 font-medium">
+                                By {hp.teacher_feedback_by_name}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-brand-900 font-medium italic">
+                            "{hp.teacher_feedback}"
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Completion Progress Bar */}
+                      <div className="space-y-1">
+                        <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full transition-all ${
+                              isDone ? 'bg-emerald-500' : 'bg-amber-500'
+                            }`}
+                            style={{
+                              width: `${Math.round(
+                                (hp.completed_activities_count / (hp.total_activities_count || 1)) * 100
+                              )}%`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Subject Area Progress */}

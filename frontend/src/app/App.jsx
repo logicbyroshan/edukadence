@@ -28,6 +28,7 @@ import { KidStoriesPage } from '../pages/kid/KidStoriesPage';
 import { KidVideosPage } from '../pages/kid/KidVideosPage';
 import { KidBadgesPage } from '../pages/kid/KidBadgesPage';
 import { SettingsPage } from '../pages/SettingsPage';
+import { LearningStudioPage } from '../pages/LearningStudioPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { LoadingState } from '../components/ui';
 
@@ -68,6 +69,7 @@ export const App = () => {
         }
       >
         <Route index element={<DashboardPage />} />
+        <Route path="learning" element={<LearningStudioPage />} />
         <Route path="children" element={<ChildrenPage />} />
         <Route path="children/:id" element={<ChildProfilePage />} />
         <Route path="parents" element={<ParentsPage />} />

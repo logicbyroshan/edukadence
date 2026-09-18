@@ -36,6 +36,7 @@ export const AppShell = () => {
       label: null,
       items: [
         { label: 'Dashboard', path: '/app', icon: <LayoutDashboard className="w-4 h-4" /> },
+        { label: 'Learning Studio', path: '/app/learning', icon: <Sparkles className="w-4 h-4" /> },
       ],
     },
     {
@@ -255,8 +256,8 @@ export const AppShell = () => {
           {/* Sidebar Footer */}
           <div className="p-4 border-t border-slate-100 bg-slate-50/50">
             <div className="text-[11px] text-slate-500 flex items-center justify-between">
-              <span>EduKadence v2.0</span>
-              <span className="text-emerald-600 font-semibold">● Phase 2 Live</span>
+              <span>EduKadence v4.0</span>
+              <span className="text-emerald-600 font-semibold">● Phase 4 Live</span>
             </div>
           </div>
         </aside>

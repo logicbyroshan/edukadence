@@ -1,6 +1,16 @@
-# EduKadence (Phase 1 Foundation)
+# EduKadence (Phase 4 — Teacher Learning Studio & Interactive Homework)
 
 > **EduKadence** is a modern, production-ready SaaS platform purposefully architected for small schools serving young children approximately **2 to 10 years old** (play schools, preschools, nursery schools, Montessori, kindergartens, and primary schools up to ~200 students).
+
+---
+
+## 🚦 Phase Roadmap Status
+
+- **Phase 1 — Foundation & Core Tenancy**: ✅ **COMPLETE**
+- **Phase 2 — School Operations & Parent Connect**: ✅ **COMPLETE**
+- **Phase 3 — Child Learning Universe & Activity Engine**: ✅ **COMPLETE**
+- **Phase 4 — Teacher Learning Studio & Interactive Homework**: ✅ **COMPLETE**
+- **Phase 5 — Production Hardening**: ⏳ **NOT STARTED**
 
 ---
 
@@ -18,13 +28,13 @@ EduKadence departs from traditional, convoluted enterprise ERPs by delivering th
    1. SCHOOL                  2. PARENT                  3. CHILD
      MANAGE                    CONNECT             PLAY + LEARN + GROW
   Clean, minimal         Mobile-first window      Safe, visual, playful
-  administration for      into their child's       learning universe &
-   small educators         daily school life       interactive homework
+  administration &        into their child's       learning universe &
+  Teacher Learning        daily school life       interactive homework
 ```
 
-1. **SCHOOL (Manage)**: Streamlined, minimal administration for small educator teams without ERP bloat.
-2. **PARENT (Connect)**: Mobile-first window into the child's daily school life, attendance, milestones, and direct communication.
-3. **CHILD / KID MODE (Play + Learn + Grow)**: A safe, delightful visual interface for age-tailored exploration and interactive learning.
+1. **SCHOOL (Manage & Teacher Studio)**: Streamlined, minimal administration for small educator teams without ERP bloat, featuring the visual Teacher Learning Studio for authoring activities, bundling homework quests, and tracking student submissions.
+2. **PARENT (Connect)**: Mobile-first window into the child's daily school life, attendance, milestones, assigned homework quests, and teacher feedback notes.
+3. **CHILD / KID MODE (Play + Learn + Grow)**: A safe, delightful visual interface for age-tailored exploration and interactive homework quests with star rewards and badge progression.
 
 ---
 
@@ -169,8 +179,8 @@ When you run `python manage.py seed_dev_data`, the following test users are crea
 | Role | Email / Username | Password | Experience |
 | :--- | :--- | :--- | :--- |
 | **Super Admin** | `admin@edukadence.com` | `Admin@12345` | Global SaaS Management |
-| **School Admin** | `principal@littlesprouts.edu` | `School@12345` | School Management Shell |
-| **Teacher** | `sarah.teacher@littlesprouts.edu` | `Teacher@12345` | Class & Student Workflows |
+| **School Admin** | `principal@sunrisekids.edu` | `School@12345` | School Management Shell |
+| **Teacher** | `sarah.teacher@sunrisekids.edu` | `Teacher@12345` | Teacher Learning Studio & Quests |
 | **Parent** | `john.parent@gmail.com` | `Parent@12345` | Mobile-First Parent Portal |
 | **Child** | `leo.kid` | `Kid@12345` | Kid Mode Learning Shell |
 

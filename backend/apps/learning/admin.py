@@ -13,6 +13,10 @@ from .models import (
     StoryScene,
     CuratedVideo,
     ActivityAssignment,
+    Homework,
+    HomeworkActivity,
+    HomeworkAssignment,
+    ChildHomeworkProgress,
 )
 
 
@@ -83,3 +87,30 @@ class CuratedVideoAdmin(admin.ModelAdmin):
 @admin.register(ActivityAssignment)
 class ActivityAssignmentAdmin(admin.ModelAdmin):
     list_display = ['activity', 'class_level', 'section', 'child', 'assigned_by', 'due_date', 'is_active']
+
+
+class HomeworkActivityInline(admin.TabularInline):
+    from .models import HomeworkActivity
+    model = HomeworkActivity
+    extra = 1
+
+
+@admin.register(Homework)
+class HomeworkAdmin(admin.ModelAdmin):
+    list_display = ['title', 'learning_level', 'learning_area', 'difficulty', 'status', 'created_by', 'created_at']
+    list_filter = ['status', 'learning_level', 'difficulty']
+    search_fields = ['title', 'description']
+    inlines = [HomeworkActivityInline]
+
+
+@admin.register(HomeworkAssignment)
+class HomeworkAssignmentAdmin(admin.ModelAdmin):
+    list_display = ['homework', 'target_type', 'class_level', 'section', 'assigned_by', 'due_date', 'status']
+    list_filter = ['status', 'target_type']
+
+
+@admin.register(ChildHomeworkProgress)
+class ChildHomeworkProgressAdmin(admin.ModelAdmin):
+    list_display = ['child', 'assignment', 'status', 'completed_activities_count', 'total_activities_count', 'total_stars_earned', 'average_score']
+    list_filter = ['status']
+

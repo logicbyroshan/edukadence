@@ -1,12 +1,12 @@
 # Project Memory: Current Project State
 
-## 1. Current Baseline: Version 3.0.0-phase3
+## 1. Current Baseline: Version 4.0.0-phase4
 
-Phase 1, Phase 2, and Phase 3 are fully implemented, verified with 38/38 passing backend tests, and frontend production build passes cleanly.
+Phases 1, 2, 3, and 4 are fully implemented, verified with 43/43 passing backend tests, and frontend production build passes cleanly with zero warnings or errors.
 
 ---
 
-## 2. Completed Capabilities (Phases 1, 2 & 3)
+## 2. Completed Capabilities (Phases 1, 2, 3 & 4)
 
 ### Backend (Django + DRF)
 - [x] Modular Monolith structure: `apps/core`, `apps/users`, `apps/schools`, `apps/classes`, `apps/students`, `apps/attendance`, `apps/fees`, `apps/activities`, `apps/communication`, `apps/reports`, `apps/learning`.
@@ -27,25 +27,31 @@ Phase 1, Phase 2, and Phase 3 are fully implemented, verified with 38/38 passing
 - [x] Server-side attempt submission (`ActivityAttempt`) with score, star rewards, and progress tracking (`LearningProgress`).
 - [x] Achievement milestone badges (`RewardBadge`, `ChildBadge`).
 - [x] Interactive storybooks (`InteractiveStory`, `StoryScene`) and curated educational video hub (`CuratedVideo`).
-- [x] 38/38 passing Pytest tests covering RBAC, tenancy, and learning engine.
+- [x] **Phase 4 Homework Models**: `Homework`, `HomeworkActivity`, `HomeworkAssignment`, `ChildHomeworkProgress`, and enhanced `ActivityAttempt`.
+- [x] **Phase 4 REST API Endpoints**: `HomeworkViewSet` (publish, duplicate), `HomeworkAssignmentViewSet` (class_progress, feedback), `ChildHomeworkProgressViewSet`, and activity `templates`.
+- [x] 43/43 passing Pytest tests (100% success rate) covering auth, RBAC, multi-tenancy, and Phase 4 teacher learning flows.
 
 ### Frontend (React + Vite)
 - [x] Pure JavaScript React 18 + Vite SPA (NO TypeScript, NO Next.js).
 - [x] 25+ reusable UI primitives under `src/components/ui/`.
 - [x] School Management Shell (`AppShell`) with categorized sidebar navigation.
-- [x] Mobile-First Parent Portal (`ParentShell` & `ParentPortalPage`) with multi-child sibling switcher, daily school status, photo moments feed, monthly attendance, fee dues & receipt view, pickup PIN reveal, and **Learning Journey tab**.
-- [x] Safe Kid Mode Sandbox (`KidShell`, `KidHomePage`, `KidExplorePage`, `KidStoriesPage`, `KidVideosPage`, `KidBadgesPage`) with live stars counter, sound switcher, and adult math-gate exit dialog.
-- [x] Reusable `ActivityRunner` with 12 interactive activity sub-components and star celebration screen.
-- [x] Clean frontend production bundle (`npm run build` succeeds in 6s).
+- [x] Mobile-First Parent Portal (`ParentShell` & `ParentPortalPage`) with multi-child sibling switcher, daily school status, photo moments feed, monthly attendance, fee dues & receipt view, pickup PIN reveal, and **Learning Journey tab with Assigned Homework Quests & Teacher Notes**.
+- [x] Safe Kid Mode Sandbox (`KidShell`, `KidHomePage`, `KidExplorePage`, `KidStoriesPage`, `KidVideosPage`, `KidBadgesPage`) with live stars counter, sound switcher, adult math-gate exit dialog, and **Today's Learning Quests card section**.
+- [x] Reusable `ActivityRunner` with 12 interactive activity sub-components, preview mode, assignmentId context, and star celebration screen.
+- [x] **Teacher Learning Studio (`LearningStudioPage.jsx`)**: 4 sub-tabs (Overview, Homework Quests, Activity Studio, Class Progress).
+- [x] **Activity Editor Modal (`ActivityEditorModal.jsx`)**: Visual authoring with 6+ starter templates and live test preview.
+- [x] **Homework Builder Modal (`HomeworkBuilderModal.jsx`)**: 3-step wizard for bundling activities and scheduling assignments.
+- [x] **Teacher Review Modal (`TeacherReviewModal.jsx`)**: Roster submission metrics, student cards, and quick encouragement feedback stamps.
+- [x] Clean frontend production bundle (`npm run build` succeeds in 3.5s).
 
 ---
 
-## 3. Next Phase (Phase 4: Teacher Interactive Homework Authoring Studio)
+## 3. Next Phase (Phase 5: Production Hardening & Deployment)
 
-Phase 4 will introduce:
-1. Teacher Homework Authoring Studio (building interactive lessons, custom quests).
-2. Advanced assignment scheduling, submission reviews, and teacher feedback.
-3. Homework completion streaks and classroom progress analytics.
+Phase 5 will introduce:
+1. Production staging and live deployment configurations.
+2. End-to-end security audits, rate-limiting, and error telemetry.
+3. Final production optimizations.
 
 ---
 

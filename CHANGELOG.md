@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [4.0.0-phase4] - 2026-09-18
+
+### Added
+- **Teacher Learning Studio & Quest Authoring (`apps.learning`)**:
+  - `Homework` model (UUID, tenant-aware, title, instructions, learning area, topic, target level, difficulty, estimated minutes, status lifecycle, versioning).
+  - `HomeworkActivity` linking activities into ordered sequential quest bundles with completion requirements.
+  - `HomeworkAssignment` class scheduling model with start date, due date, section/class targeting, and active state management.
+  - `ChildHomeworkProgress` tracking individual student completion rates, average scores, total stars earned, and personalized teacher feedback.
+  - Enhanced `Activity` model with teacher authorship tracking (`created_by`), versioning, and starter template classification (`is_template`, `template_category`).
+  - Enhanced `ActivityAttempt` linking attempts to homework quest and assignment context.
+- **REST APIs & Backend Workflows (`backend/apps/learning/`)**:
+  - `HomeworkViewSet` with CRUD, duplicate, and publish endpoints.
+  - `HomeworkAssignmentViewSet` with automated child progress generation upon assignment, `class_progress` roster breakdown, and `feedback` endpoint.
+  - `ChildHomeworkProgressViewSet` for student submission tracking.
+  - Enhanced `ActivityViewSet` with `templates` catalog and 1-click `duplicate` action.
+  - Enhanced `submit_attempt` action automatically updating `ChildHomeworkProgress` and rewarding safe stars.
+  - Enhanced `KidDashboardView` returning active assigned homework quests for enrolled students.
+- **Frontend Teacher Learning Studio (`frontend/src/pages/LearningStudioPage.jsx`)**:
+  - Four dedicated sub-tabs: Overview, Homework Quests, Activity Studio, and Class Progress.
+  - Quick KPI summary cards, active quests overview, and starter template scaffolds.
+  - Visual activity authoring modal (`ActivityEditorModal.jsx`) supporting 12 data-driven activity types with real-time test preview.
+  - Multi-step quest builder modal (`HomeworkBuilderModal.jsx`) for bundling activities and scheduling assignments.
+  - Teacher Review & Encouragement Modal (`TeacherReviewModal.jsx`) with roster completion metrics, score cards, and positive feedback stamps.
+- **Child Kid Mode & Parent Portal Extensions**:
+  - `KidHomePage.jsx`: "Today's Learning Quests" card section displaying teacher-assigned quests with sequential play triggers and teacher notes.
+  - `ParentPortalPage.jsx`: "Assigned Homework Quests" list under Learning Journey tab displaying quest progress, due dates, and teacher feedback notes.
+- **Automated Tests & Quality Gate**:
+  - Comprehensive Pytest test suite (`tests/test_phase4_teacher_learning.py`) covering homework creation, class assignment, child progress updates, teacher review/feedback, and strict multi-tenant isolation.
+  - 43 of 43 automated backend tests passing with 100% success rate.
+  - Frontend production build (`npm run build`) passing with 0 errors.
+
+---
+
 ## [3.0.1] - 2026-09-18
 
 ### Fixed

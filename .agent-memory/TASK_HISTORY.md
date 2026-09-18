@@ -105,21 +105,31 @@ This document records all meaningful tasks performed across agent sessions.
 
 ---
 
-### Task: Frontend Lib Utilities & Gitignore Fix
+### Task: Phase 4 Teacher Learning Studio & Interactive Homework Engine
 - **Date**: 2026-09-18
-- **Reason**: Fix gitignore pattern that unintentionally ignored `frontend/src/lib/`, restoring `tokenStorage.js` and `queryClient.js`.
+- **Reason**: Implement Phase 4: Teacher Learning Studio, interactive activity authoring (12 types + starter templates), homework quest bundling, class assignment scheduling, submission reviews, and teacher feedback integration.
 - **Files/Areas Affected**:
-  - `.gitignore`
-  - `frontend/src/lib/tokenStorage.js`
-  - `frontend/src/lib/queryClient.js`
-  - `CHANGELOG.md`, `.agent-memory/TASK_HISTORY.md`
+  - `backend/apps/learning/` (`models.py`, `serializers.py`, `views.py`, `urls.py`, `admin.py`, migrations)
+  - `backend/apps/schools/management/commands/seed_dev_data.py` (Seeded teacher custom activities, homework quests, and assignments)
+  - `backend/tests/test_phase4_teacher_learning.py` (5 comprehensive test cases)
+  - `frontend/src/services/learningService.js` (Phase 4 REST API methods)
+  - `frontend/src/components/learning/` (`ActivityEditorModal.jsx`, `HomeworkBuilderModal.jsx`, `TeacherReviewModal.jsx`, `ActivityRunner.jsx`)
+  - `frontend/src/pages/` (`LearningStudioPage.jsx`, `LoginPage.jsx`, `kid/KidHomePage.jsx`, `ParentPortalPage.jsx`)
+  - `frontend/src/layouts/AppShell.jsx`, `frontend/src/app/App.jsx`
+  - `docs/` (`HOMEWORK_ENGINE.md`, `TEACHER_AUTHORING.md`), `README.md`, `CHANGELOG.md`, `.agent-memory/`
 - **What Changed**:
-  - Scoped `lib/` in root `.gitignore` to `/lib/`.
-  - Added `frontend/src/lib/tokenStorage.js` and `frontend/src/lib/queryClient.js`.
-  - Verified `npm run build` passes in 2.92s and `pytest tests/ -v` passes 38/38 tests.
+  - Reused and orchestrated the Phase 3 activity engine into a cohesive homework workflow without creating duplicate quiz engines.
+  - Implemented `Homework`, `HomeworkActivity`, `HomeworkAssignment`, and `ChildHomeworkProgress` models with tenant isolation and safe versioning.
+  - Built full `LearningStudioPage` with 4 sub-tabs: Overview, Homework Quests, Activity Studio, and Class Progress.
+  - Built visual `ActivityEditorModal` for authoring all 12 activity types with 1-click starter templates and test preview.
+  - Built 3-step `HomeworkBuilderModal` for bundling activities and scheduling assignments to classes/sections.
+  - Built `TeacherReviewModal` for viewing class completion metrics, student scores, and stamping positive encouragement notes.
+  - Added "Today's Learning Quests" to Kid Mode (`/kid`) and "Assigned Homework Quests" to Parent Portal (`/parent/learning`).
+  - Verified with 43/43 passing Pytest tests (100% pass rate) and clean Vite production build (`npm run build`).
+  - Conducted live browser subagent end-to-end verification across teacher, kid, and parent interfaces.
 - **Testing Performed**:
-  - `pytest tests/ -v` (38/38 passed).
-  - `npm run build` (0 errors).
-  - Backend running at `http://127.0.0.1:8000/api/v1/`.
-  - Frontend running at `http://localhost:5173/`.
+  - `pytest tests/ -v` (43/43 passed).
+  - `npm run build` (transformed 1673 modules, 0 errors).
+  - Browser subagent visual validation of full Teacher -> Kid -> Parent workflow.
+
 

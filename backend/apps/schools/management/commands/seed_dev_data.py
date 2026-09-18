@@ -782,12 +782,140 @@ class Command(BaseCommand):
             school=school_a, child=aarav, badge=b_first_star, defaults={'earned_at': timezone.now()}
         )
 
+        # 13. Phase 4: Teacher Authored Activities, Homework Sets, and Assignments
+        teacher_sarah = User.objects.filter(email='sarah.teacher@sunrisekids.edu').first() or school_admin
+
+        # Teacher-created custom activities
+        act_fruit_sort, _ = Activity.objects.update_or_create(
+            title="Sarah's Farm Fruit Sorting",
+            school=school_a,
+            defaults={
+                'created_by': teacher_sarah,
+                'is_global': False,
+                'learning_level': lvl_discover,
+                'learning_area': area_science,
+                'topic': topic_letters_ad,
+                'description': 'Sort delicious apples and berries into farm baskets!',
+                'activity_type': 'SORT',
+                'difficulty': 'EASY',
+                'estimated_duration_minutes': 4,
+                'star_reward': 2,
+                'status': 'PUBLISHED',
+                'content': {
+                    'prompt': 'Sort the farm produce into Apples and Berries!',
+                    'categories': ['Apples 🍎', 'Berries 🍓'],
+                    'items': [
+                        {'id': 'i1', 'label': 'Red Apple 🍎', 'category_index': 0},
+                        {'id': 'i2', 'label': 'Strawberry 🍓', 'category_index': 1},
+                        {'id': 'i3', 'label': 'Green Apple 🍏', 'category_index': 0},
+                        {'id': 'i4', 'label': 'Blueberry 🫐', 'category_index': 1},
+                    ]
+                }
+            }
+        )
+
+        from apps.learning.models import Homework, HomeworkActivity, HomeworkAssignment, ChildHomeworkProgress, HomeworkStatus
+
+        # Homework Set 1: Letter A & Animal Safari (Published)
+        hw_safari, _ = Homework.objects.update_or_create(
+            school=school_a,
+            title='Letter A & Animal Safari',
+            defaults={
+                'created_by': teacher_sarah,
+                'description': 'A cheerful interactive quest exploring letter A phonics and farm animal sounds.',
+                'instructions': 'Help Pip the bear find all the letter A objects and matching farm friends!',
+                'learning_level': lvl_discover,
+                'learning_area': area_alphabet,
+                'topic': topic_letters_ad,
+                'difficulty': 'EASY',
+                'estimated_duration_minutes': 8,
+                'status': 'PUBLISHED',
+                'theme_color': 'sky',
+                'cover_image_url': 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=600&auto=format&fit=crop&q=80',
+            }
+        )
+        HomeworkActivity.objects.update_or_create(homework=hw_safari, activity=act_tap, defaults={'order_index': 1})
+        HomeworkActivity.objects.update_or_create(homework=hw_safari, activity=act_match, defaults={'order_index': 2})
+        HomeworkActivity.objects.update_or_create(homework=hw_safari, activity=act_fruit_sort, defaults={'order_index': 3})
+
+        # Homework Set 2: Counting Stars & Shapes (Published)
+        hw_stars, _ = Homework.objects.update_or_create(
+            school=school_a,
+            title='Counting Stars & Magic Shapes',
+            defaults={
+                'created_by': teacher_sarah,
+                'description': 'Count shining stars and classify colorful geometric shapes.',
+                'instructions': 'Count the friendly stars and match shapes to earn your explorer badge!',
+                'learning_level': lvl_explore,
+                'learning_area': area_math,
+                'topic': topic_count5,
+                'difficulty': 'EASY',
+                'estimated_duration_minutes': 6,
+                'status': 'PUBLISHED',
+                'theme_color': 'emerald',
+                'cover_image_url': 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&auto=format&fit=crop&q=80',
+            }
+        )
+        HomeworkActivity.objects.update_or_create(homework=hw_stars, activity=act_count, defaults={'order_index': 1})
+        HomeworkActivity.objects.update_or_create(homework=hw_stars, activity=act_sequence, defaults={'order_index': 2})
+
+        # Assignment 1: Assign hw_safari to Nursery A (Due in 3 days)
+        sec_nursery_a = Section.objects.filter(school=school_a, name='A').first() or Section.objects.first()
+        asgn_safari, _ = HomeworkAssignment.objects.update_or_create(
+            school=school_a,
+            homework=hw_safari,
+            section=sec_nursery_a,
+            defaults={
+                'assigned_by': teacher_sarah,
+                'target_type': 'SECTION',
+                'due_date': timezone.localdate() + timedelta(days=3),
+                'status': 'PUBLISHED',
+                'is_active': True,
+                'teacher_notes': 'Please complete before our Friday show-and-tell session!',
+            }
+        )
+
+        # Populate Child Progress for Aarav (COMPLETED with feedback)
+        prog_aarav, _ = ChildHomeworkProgress.objects.update_or_create(
+            school=school_a,
+            assignment=asgn_safari,
+            child=aarav,
+            defaults={
+                'status': HomeworkStatus.COMPLETED,
+                'started_at': timezone.now() - timedelta(hours=5),
+                'completed_at': timezone.now() - timedelta(hours=1),
+                'completed_activities_count': 3,
+                'total_activities_count': 3,
+                'total_stars_earned': 6,
+                'average_score': 100,
+                'teacher_feedback': 'Wonderful job identifying all the animals and letters, Aarav! Keep up the brilliant work! ⭐',
+                'teacher_feedback_at': timezone.now() - timedelta(minutes=30),
+                'teacher_feedback_by': teacher_sarah,
+            }
+        )
+
+        # Populate Child Progress for Riya (IN_PROGRESS)
+        prog_riya, _ = ChildHomeworkProgress.objects.update_or_create(
+            school=school_a,
+            assignment=asgn_safari,
+            child=riya,
+            defaults={
+                'status': HomeworkStatus.IN_PROGRESS,
+                'started_at': timezone.now() - timedelta(hours=2),
+                'completed_activities_count': 1,
+                'total_activities_count': 3,
+                'total_stars_earned': 2,
+                'average_score': 90,
+            }
+        )
+
         self.stdout.write(self.style.SUCCESS('\n======================================================='))
-        self.stdout.write(self.style.SUCCESS('[+] EduKadence Phase 3 Seed Complete!'))
+        self.stdout.write(self.style.SUCCESS('[+] EduKadence Phase 4 Teacher Learning Studio Seed Complete!'))
         self.stdout.write(self.style.SUCCESS('======================================================='))
         self.stdout.write(self.style.SUCCESS('Admin Login:   principal@sunrisekids.edu   / School@12345'))
         self.stdout.write(self.style.SUCCESS('Teacher Login: sarah.teacher@sunrisekids.edu / Teacher@12345'))
         self.stdout.write(self.style.SUCCESS('Parent Login:  john.parent@gmail.com        / Parent@12345 (Children: Aarav & Riya)'))
         self.stdout.write(self.style.SUCCESS('Super Admin:   admin@edukadence.com         / Admin@12345'))
         self.stdout.write(self.style.SUCCESS('======================================================='))
+
 
