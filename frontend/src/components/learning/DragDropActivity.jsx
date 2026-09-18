@@ -52,12 +52,12 @@ export const DragDropActivity = ({ content = {}, onComplete }) => {
       </div>
 
       {/* Available Items */}
-      <div className="flex items-center justify-center gap-3">
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
         {remainingItems.map((it) => (
           <button
             key={it.id}
             onClick={() => handleFeed(it)}
-            className="px-4 py-3 rounded-2xl bg-white hover:bg-emerald-50 border-3 border-emerald-200 text-slate-800 font-bold text-sm shadow-sm transition-all hover:scale-105 active:scale-95"
+            className="px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-2xl bg-white hover:bg-emerald-50 border-2 sm:border-3 border-emerald-200 text-slate-800 font-bold text-xs sm:text-sm shadow-sm transition-all hover:scale-105 active:scale-95"
           >
             {it.label}
           </button>

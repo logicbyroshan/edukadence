@@ -71,7 +71,7 @@ export const CountActivity = ({ content = {}, onComplete }) => {
         <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">
           Select the correct number:
         </p>
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
           {options.map((num) => {
             const isSelected = selectedAnswer === num;
             return (
@@ -80,9 +80,9 @@ export const CountActivity = ({ content = {}, onComplete }) => {
                 onClick={() => handleSelectAnswer(num)}
                 disabled={isCorrect === true}
                 className={`
-                  w-14 h-14 sm:w-16 sm:h-16 rounded-2xl font-black text-xl sm:text-2xl border-3 transition-all active:scale-95 shadow-sm
+                  w-12 h-12 sm:w-16 sm:h-16 rounded-2xl font-black text-lg sm:text-2xl border-2 sm:border-3 transition-all active:scale-95 shadow-sm
                   ${isSelected && isCorrect === true
-                    ? 'bg-emerald-500 border-emerald-600 text-white ring-4 ring-emerald-200 scale-110'
+                    ? 'bg-emerald-500 border-emerald-600 text-white ring-3 sm:ring-4 ring-emerald-200 scale-105 sm:scale-110'
                     : isSelected && isCorrect === false
                     ? 'bg-rose-100 border-rose-400 text-rose-800'
                     : 'bg-white hover:bg-sky-50 border-sky-200 text-slate-800 hover:border-sky-400'}

@@ -29,7 +29,7 @@ export const EduKadenceLogo = ({
           </div>
           {subtitle && (
             <span
-              className={`text-[9px] font-bold uppercase tracking-wider mt-0.5 ${
+              className={`text-[9px] font-bold uppercase tracking-wider mt-0.5 truncate max-w-[130px] sm:max-w-[220px] ${
                 variant === 'light' ? 'text-skybrand-300' : 'text-slate-400'
               }`}
             >

@@ -47,9 +47,9 @@ export const MatchActivity = ({ content = {}, onComplete }) => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 pt-2">
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-4 pt-2">
         {/* Left column */}
-        <div className="space-y-3">
+        <div className="space-y-2.5 sm:space-y-3">
           {pairs.map((p) => {
             const isMatched = matchedPairs.has(p.id);
             const isSelected = selectedLeft?.id === p.id;
@@ -59,23 +59,23 @@ export const MatchActivity = ({ content = {}, onComplete }) => {
                 onClick={() => handleLeftClick(p)}
                 disabled={isMatched}
                 className={`
-                  w-full p-4 rounded-2xl font-black text-base border-3 transition-all text-left flex items-center justify-between
+                  w-full p-2.5 sm:p-4 rounded-2xl font-black text-xs sm:text-base border-2 sm:border-3 transition-all text-left flex items-center justify-between gap-1
                   ${isMatched
                     ? 'bg-emerald-100 border-emerald-400 text-emerald-900 opacity-80'
                     : isSelected
-                    ? 'bg-brand-500 border-brand-600 text-white ring-4 ring-brand-200 scale-102'
+                    ? 'bg-brand-500 border-brand-600 text-white ring-2 sm:ring-4 ring-brand-200 scale-102'
                     : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-800'}
                 `}
               >
-                <span>{p.left}</span>
-                {isMatched && <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
+                <span className="truncate">{p.left}</span>
+                {isMatched && <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0" />}
               </button>
             );
           })}
         </div>
 
         {/* Right column */}
-        <div className="space-y-3">
+        <div className="space-y-2.5 sm:space-y-3">
           {pairs.map((p) => {
             const isMatched = matchedPairs.has(p.id);
             return (
@@ -84,14 +84,14 @@ export const MatchActivity = ({ content = {}, onComplete }) => {
                 onClick={() => handleRightClick(p)}
                 disabled={isMatched}
                 className={`
-                  w-full p-4 rounded-2xl font-black text-base border-3 transition-all text-left flex items-center justify-between
+                  w-full p-2.5 sm:p-4 rounded-2xl font-black text-xs sm:text-base border-2 sm:border-3 transition-all text-left flex items-center justify-between gap-1
                   ${isMatched
                     ? 'bg-emerald-100 border-emerald-400 text-emerald-900 opacity-80'
                     : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-800'}
                 `}
               >
-                <span>{p.right}</span>
-                {isMatched && <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
+                <span className="truncate">{p.right}</span>
+                {isMatched && <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0" />}
               </button>
             );
           })}

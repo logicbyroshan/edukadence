@@ -49,13 +49,13 @@ export const KidBadgesPage = () => {
   return (
     <div className="space-y-6 sm:space-y-8">
       {/* Trophy World Header */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 text-amber-950 shadow-lg flex items-center justify-between">
-        <div className="space-y-2 max-w-xl">
+      <div className="p-4 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-400 via-yellow-500 to-orange-500 text-amber-950 shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="space-y-1.5 sm:space-y-2 max-w-xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/30 backdrop-blur-sm text-xs font-black">
             <Trophy className="w-4 h-4 text-amber-950" />
             <span>My Achievement World</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black">
+          <h1 className="text-xl sm:text-3xl font-black">
             {childName}'s Trophy Chest 🏆
           </h1>
           <p className="text-xs sm:text-sm font-bold opacity-90">
@@ -64,15 +64,15 @@ export const KidBadgesPage = () => {
         </div>
 
         {/* Star Chest Total */}
-        <div className="p-4 sm:p-5 rounded-3xl bg-white/90 shadow-md border-2 border-amber-300 flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-amber-400 flex items-center justify-center text-white shadow-sm animate-bounce-slow">
-            <Star className="w-7 h-7 fill-white" />
+        <div className="w-full sm:w-auto p-3.5 sm:p-5 rounded-3xl bg-white/90 shadow-md border-2 border-amber-300 flex items-center justify-center sm:justify-start gap-3 shrink-0">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-amber-400 flex items-center justify-center text-white shadow-sm animate-bounce-slow">
+            <Star className="w-6 h-6 sm:w-7 sm:h-7 fill-white" />
           </div>
           <div>
             <span className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight block">
               {totalStars}
             </span>
-            <span className="text-xs font-black text-amber-700 uppercase tracking-wider">
+            <span className="text-[10px] sm:text-xs font-black text-amber-700 uppercase tracking-wider">
               Total Stars
             </span>
           </div>

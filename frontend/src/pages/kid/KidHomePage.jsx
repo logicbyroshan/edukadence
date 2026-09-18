@@ -106,7 +106,7 @@ export const KidHomePage = () => {
               return (
                 <div
                   key={quest.assignment_id}
-                  className={`p-5 sm:p-6 rounded-3xl border-3 transition-all relative overflow-hidden shadow-md flex flex-col justify-between ${
+                  className={`p-4 sm:p-6 rounded-3xl border-3 transition-all relative overflow-hidden shadow-md flex flex-col justify-between ${
                     isCompleted
                       ? 'bg-gradient-to-br from-emerald-50 to-teal-50/60 border-emerald-300'
                       : 'bg-gradient-to-br from-amber-50 to-orange-50/60 border-amber-300 hover:shadow-lg'
@@ -114,8 +114,8 @@ export const KidHomePage = () => {
                 >
                   <div className="space-y-3">
                     {/* Header Badges */}
-                    <div className="flex items-center justify-between">
-                      <span className={`px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span className={`px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider ${
                         isCompleted
                           ? 'bg-emerald-500 text-white'
                           : 'bg-amber-400 text-amber-950'
@@ -123,14 +123,14 @@ export const KidHomePage = () => {
                         {isCompleted ? '⭐ Quest Completed!' : '🎯 Active Quest'}
                       </span>
 
-                      <span className="text-xs font-bold text-slate-600">
+                      <span className="text-[11px] sm:text-xs font-bold text-slate-600">
                         {quest.completed_count} of {quest.total_count} activities
                       </span>
                     </div>
 
                     {/* Quest Title */}
                     <div>
-                      <h3 className="text-xl font-black text-slate-900">
+                      <h3 className="text-lg sm:text-xl font-black text-slate-900">
                         {quest.title}
                       </h3>
                       {quest.instructions && (
@@ -153,18 +153,18 @@ export const KidHomePage = () => {
                       {quest.activities?.map((act, idx) => (
                         <div
                           key={act.id || idx}
-                          className="p-2.5 rounded-xl bg-white/70 border border-slate-200/60 flex items-center justify-between text-xs"
+                          className="p-2 sm:p-2.5 rounded-xl bg-white/70 border border-slate-200/60 flex items-center justify-between gap-2 text-xs"
                         >
-                          <div className="flex items-center space-x-2">
-                            <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-700 font-black flex items-center justify-center text-[10px]">
+                          <div className="flex items-center space-x-2 min-w-0">
+                            <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-700 font-black flex items-center justify-center text-[10px] shrink-0">
                               {idx + 1}
                             </span>
-                            <span className="font-bold text-slate-800">{act.title}</span>
+                            <span className="font-bold text-slate-800 truncate">{act.title}</span>
                           </div>
 
                           <button
                             onClick={() => handleStartQuestActivity(quest, act)}
-                            className="px-3 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-bold text-[11px] flex items-center space-x-1 shadow-xs hover:scale-105 active:scale-95 transition-all"
+                            className="px-2.5 sm:px-3 py-1 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-bold text-[11px] flex items-center space-x-1 shadow-xs hover:scale-105 active:scale-95 transition-all shrink-0"
                           >
                             <Play className="w-3 h-3 fill-white" />
                             <span>Play</span>
@@ -196,9 +196,9 @@ export const KidHomePage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Today's Challenge */}
         {childSummary?.today_challenge && (
-          <Card className="p-5 sm:p-6 rounded-3xl border-3 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50/50 shadow-md">
-            <div className="flex items-center justify-between mb-3">
-              <span className="px-3 py-1 rounded-full bg-amber-400 text-amber-950 font-black text-xs uppercase tracking-wider shadow-xs">
+          <Card className="p-4 sm:p-6 rounded-3xl border-3 border-amber-300 bg-gradient-to-br from-amber-50 to-orange-50/50 shadow-md">
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <span className="px-2.5 sm:px-3 py-1 rounded-full bg-amber-400 text-amber-950 font-black text-[11px] sm:text-xs uppercase tracking-wider shadow-xs">
                 🎯 Today's Challenge
               </span>
               <span className="font-extrabold text-xs text-amber-800">
@@ -206,7 +206,7 @@ export const KidHomePage = () => {
               </span>
             </div>
 
-            <h3 className="text-lg font-black text-slate-900 mb-1">
+            <h3 className="text-base sm:text-lg font-black text-slate-900 mb-1">
               {childSummary.today_challenge.title}
             </h3>
             <p className="text-xs text-slate-600 mb-4 line-clamp-2">
@@ -218,7 +218,7 @@ export const KidHomePage = () => {
                 setActiveAssignmentId(null);
                 setActiveActivity(childSummary.today_challenge);
               }}
-              className="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-amber-950 font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-95"
+              className="w-full py-2.5 sm:py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-amber-950 font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-95"
             >
               <Play className="w-4 h-4 fill-amber-950" />
               <span>Start Challenge</span>
@@ -227,9 +227,9 @@ export const KidHomePage = () => {
         )}
 
         {/* Continue Adventure / Recent Activity */}
-        <Card className="p-5 sm:p-6 rounded-3xl border-3 border-sky-300 bg-gradient-to-br from-sky-50 to-blue-50/50 shadow-md">
-          <div className="flex items-center justify-between mb-3">
-            <span className="px-3 py-1 rounded-full bg-brand-500 text-white font-black text-xs uppercase tracking-wider shadow-xs">
+        <Card className="p-4 sm:p-6 rounded-3xl border-3 border-sky-300 bg-gradient-to-br from-sky-50 to-blue-50/50 shadow-md">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <span className="px-2.5 sm:px-3 py-1 rounded-full bg-brand-500 text-white font-black text-[11px] sm:text-xs uppercase tracking-wider shadow-xs">
               ⚡ Continue Learning
             </span>
             <span className="font-extrabold text-xs text-sky-700">
@@ -237,7 +237,7 @@ export const KidHomePage = () => {
             </span>
           </div>
 
-          <h3 className="text-lg font-black text-slate-900 mb-1">
+          <h3 className="text-base sm:text-lg font-black text-slate-900 mb-1">
             {childSummary?.continue_activity?.title || 'Number Safari & Counting 1-5'}
           </h3>
           <p className="text-xs text-slate-600 mb-4 line-clamp-2">
@@ -249,7 +249,7 @@ export const KidHomePage = () => {
               setActiveAssignmentId(null);
               setActiveActivity(childSummary?.continue_activity || childSummary?.recommended_activities?.[0]);
             }}
-            className="w-full py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-black text-sm shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-95"
+            className="w-full py-2.5 sm:py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 hover:scale-102 active:scale-95"
           >
             <Play className="w-4 h-4 fill-white" />
             <span>Play Now</span>

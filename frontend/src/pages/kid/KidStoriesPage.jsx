@@ -41,20 +41,20 @@ export const KidStoriesPage = () => {
   return (
     <div className="space-y-6">
       {/* Storybook Corner Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 text-white shadow-lg flex items-center justify-between">
-        <div className="space-y-2 max-w-xl">
+      <div className="p-4 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-400 via-orange-500 to-rose-500 text-white shadow-lg flex items-center justify-between gap-3">
+        <div className="space-y-1.5 sm:space-y-2 max-w-xl">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-black">
             <BookOpen className="w-4 h-4 text-amber-200" />
             <span>Interactive Storybook Theatre</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black">
+          <h1 className="text-xl sm:text-3xl font-black">
             Snuggle Up for Story Time! 📖
           </h1>
           <p className="text-xs sm:text-sm text-amber-100 font-medium">
             Listen to cheerful illustrated tales, discover magical worlds, and answer fun story checkpoints.
           </p>
         </div>
-        <span className="text-6xl hidden sm:block select-none">🐻</span>
+        <span className="text-4xl sm:text-6xl hidden sm:block select-none">🐻</span>
       </div>
 
       {/* Storybook Library Grid */}

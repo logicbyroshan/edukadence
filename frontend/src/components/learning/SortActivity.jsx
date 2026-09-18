@@ -65,20 +65,20 @@ export const SortActivity = ({ content = {}, onComplete }) => {
       )}
 
       {/* Target Baskets */}
-      <div className="grid grid-cols-2 gap-4 pt-2">
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-4 pt-2">
         {baskets.map((basket) => (
           <button
             key={basket.id}
             onClick={() => handleBasketClick(basket.id)}
             disabled={isFinished}
-            className="p-5 rounded-3xl bg-purple-50 hover:bg-purple-100 border-3 border-dashed border-purple-300 transition-all flex flex-col items-center justify-center gap-2 active:scale-95 shadow-sm"
+            className="p-3 sm:p-5 rounded-2xl sm:rounded-3xl bg-purple-50 hover:bg-purple-100 border-2 sm:border-3 border-dashed border-purple-300 transition-all flex flex-col items-center justify-center gap-2 active:scale-95 shadow-sm"
           >
-            <span className="text-lg font-black text-purple-900">{basket.title}</span>
-            <div className="min-h-[50px] flex flex-wrap gap-1 items-center justify-center">
+            <span className="text-xs sm:text-lg font-black text-purple-900">{basket.title}</span>
+            <div className="min-h-[40px] sm:min-h-[50px] flex flex-wrap gap-1 items-center justify-center">
               {sortedItems[basket.id]?.map((it) => (
                 <span
                   key={it.id}
-                  className="px-2.5 py-1 rounded-xl bg-white border border-purple-200 text-xs font-bold text-slate-700 shadow-xs"
+                  className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-xl bg-white border border-purple-200 text-[10px] sm:text-xs font-bold text-slate-700 shadow-xs"
                 >
                   {it.label}
                 </span>
