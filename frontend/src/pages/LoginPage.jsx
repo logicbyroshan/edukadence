@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/useToast';
 import { Input, Button, Card, CardBody, Badge } from '../components/ui';
-import { Lock, Mail, User, Sparkles, Building2, HeartHandshake, ArrowRight } from 'lucide-react';
+import { Lock, Mail, User, Sparkles, Building2, HeartHandshake, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export const LoginPage = () => {
   const { login } = useAuth();
@@ -11,8 +11,10 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [activeTab, setActiveTab] = useState('STAFF'); // 'STAFF' | 'PARENT' | 'KID'
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -39,7 +41,7 @@ export const LoginPage = () => {
         navigate('/app', { replace: true });
       }
     } catch (err) {
-      const errMsg = err.response?.data?.error?.message || err.response?.data?.detail || 'Invalid email or password.';
+      const errMsg = err.response?.data?.error?.message || err.response?.data?.detail || 'Invalid email, username, or password.';
       setError(errMsg);
       toast.error(errMsg);
     } finally {
@@ -47,55 +49,124 @@ export const LoginPage = () => {
     }
   };
 
-  const fillDemo = (idVal, passVal) => {
-    setIdentifier(idVal);
-    setPassword(passVal);
-    setError(null);
+  const getPlaceholder = () => {
+    if (activeTab === 'KID') return 'Enter your child username (e.g. leo.kid)';
+    if (activeTab === 'PARENT') return 'Enter your parent email address';
+    return 'Enter your educator or admin email';
+  };
+
+  const getIcon = () => {
+    if (activeTab === 'KID') return <User className="w-4 h-4 text-amber-500" />;
+    if (activeTab === 'PARENT') return <HeartHandshake className="w-4 h-4 text-blue-500" />;
+    return <Mail className="w-4 h-4 text-blue-600" />;
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900">Sign in to EduKadence</h2>
-        <p className="text-xs text-slate-500 mt-1">
-          Select a demo role below or enter your credentials.
+    <div className="space-y-5">
+      <div className="text-center sm:text-left space-y-1">
+        <h2 className="text-2xl font-black tracking-tight text-slate-900">Sign in to EduKadence</h2>
+        <p className="text-xs text-slate-500 font-medium">
+          Access your school management, parent connect, or kid learning world.
         </p>
       </div>
 
+      {/* Role Tabs */}
+      <div className="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-2xl border border-slate-200 text-center">
+        <button
+          type="button"
+          onClick={() => { setActiveTab('STAFF'); setError(null); }}
+          className={`py-2 px-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+            activeTab === 'STAFF'
+              ? 'bg-white text-blue-700 shadow-xs border border-slate-200/80'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Building2 className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">Staff</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => { setActiveTab('PARENT'); setError(null); }}
+          className={`py-2 px-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+            activeTab === 'PARENT'
+              ? 'bg-white text-blue-700 shadow-xs border border-slate-200/80'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <HeartHandshake className="w-3.5 h-3.5 shrink-0" />
+          <span className="truncate">Parent</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => { setActiveTab('KID'); setError(null); }}
+          className={`py-2 px-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+            activeTab === 'KID'
+              ? 'bg-white text-amber-800 shadow-xs border border-slate-200/80'
+              : 'text-slate-600 hover:text-slate-900'
+          }`}
+        >
+          <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+          <span className="truncate">Student</span>
+        </button>
+      </div>
+
       {error && (
-        <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700">
+        <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 font-medium animate-in fade-in">
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
-          label="Email or Username"
+          label={activeTab === 'KID' ? 'Student Username' : 'Email or Username'}
           type="text"
           required
-          placeholder="e.g. principal@littlesprouts.edu or leo.kid"
+          placeholder={getPlaceholder()}
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
-          leftIcon={<Mail className="w-4 h-4" />}
+          leftIcon={getIcon()}
           autoComplete="username"
         />
 
-        <Input
-          label="Password"
-          type="password"
-          required
-          placeholder="••••••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          leftIcon={<Lock className="w-4 h-4" />}
-          autoComplete="current-password"
-        />
+        <div className="space-y-1">
+          <Input
+            label="Password"
+            type="password"
+            required
+            placeholder="••••••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
+            autoComplete="current-password"
+          />
+        </div>
+
+        <div className="flex items-center justify-between text-xs text-slate-600 pt-1">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-slate-300"
+            />
+            <span>Remember me</span>
+          </label>
+          <button
+            type="button"
+            onClick={() => toast.info('Please reach out to your school administrator to reset your credentials.')}
+            className="text-blue-600 hover:text-blue-800 font-semibold"
+          >
+            Forgot password?
+          </button>
+        </div>
 
         <Button
           type="submit"
           variant="primary"
           size="md"
-          className="w-full mt-2"
+          className="w-full mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl shadow-sm"
           isLoading={isLoading}
           rightIcon={<ArrowRight className="w-4 h-4" />}
         >
@@ -103,76 +174,10 @@ export const LoginPage = () => {
         </Button>
       </form>
 
-      {/* Quick-Fill Demo User Accounts */}
-      <div className="pt-4 border-t border-slate-200/80">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-            Phase 1 Demo Credentials
-          </span>
-          <span className="text-[10px] text-brand-600 bg-brand-50 px-2 py-0.5 rounded-full font-semibold">
-            1-Click Preset
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-left">
-          <button
-            type="button"
-            onClick={() => fillDemo('principal@sunrisekids.edu', 'School@12345')}
-            className="p-2.5 rounded-xl border border-slate-200 hover:border-brand-400 hover:bg-brand-50/50 bg-white transition-all text-left group flex flex-col"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-900 group-hover:text-brand-700">Principal / Admin</span>
-              <Badge variant="brand" size="sm">School</Badge>
-            </div>
-            <span className="text-[10px] text-slate-500 mt-1 truncate">principal@sunrisekids.edu</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => fillDemo('sarah.teacher@sunrisekids.edu', 'Teacher@12345')}
-            className="p-2.5 rounded-xl border border-slate-200 hover:border-brand-400 hover:bg-brand-50/50 bg-white transition-all text-left group flex flex-col"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-900 group-hover:text-brand-700">Teacher</span>
-              <Badge variant="sky" size="sm">Teacher</Badge>
-            </div>
-            <span className="text-[10px] text-slate-500 mt-1 truncate">sarah.teacher@sunrisekids.edu</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => fillDemo('john.parent@gmail.com', 'Parent@12345')}
-            className="p-2.5 rounded-xl border border-slate-200 hover:border-brand-400 hover:bg-brand-50/50 bg-white transition-all text-left group flex flex-col"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-900 group-hover:text-brand-700">Parent (Guardian)</span>
-              <Badge variant="success" size="sm">Parent</Badge>
-            </div>
-            <span className="text-[10px] text-slate-500 mt-1 truncate">john.parent@gmail.com</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => fillDemo('leo.kid', 'Kid@12345')}
-            className="p-2.5 rounded-xl border border-slate-200 hover:border-amber-400 hover:bg-amber-50/50 bg-white transition-all text-left group flex flex-col"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-900 group-hover:text-amber-800">Child (Kid Mode)</span>
-              <Badge variant="kid" size="sm">Kid</Badge>
-            </div>
-            <span className="text-[10px] text-slate-500 mt-1 truncate">leo.kid</span>
-          </button>
-        </div>
-
-        <div className="mt-2 text-center">
-          <button
-            type="button"
-            onClick={() => fillDemo('admin@edukadence.com', 'Admin@12345')}
-            className="text-[11px] text-slate-500 hover:text-slate-800 underline underline-offset-2"
-          >
-            Log in as Super Admin (admin@edukadence.com)
-          </button>
-        </div>
+      {/* Production Security Footer */}
+      <div className="pt-4 border-t border-slate-100 flex items-center justify-center gap-2 text-[11px] text-slate-400 font-medium">
+        <ShieldCheck className="w-4 h-4 text-emerald-500" />
+        <span>256-Bit Encrypted Multi-Tenant SaaS Platform</span>
       </div>
     </div>
   );

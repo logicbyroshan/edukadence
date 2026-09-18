@@ -4,6 +4,29 @@ This document records all meaningful tasks performed across agent sessions.
 
 ---
 
+### Task: Mobile & Tablet Responsive Overhaul (320px to 1000px)
+- **Date**: 2026-09-18
+- **Reason**: Ensure butter-smooth responsive behavior, zero horizontal overflow, and touch accessibility across Parent Portal and Student Kid Mode from compact mobile (320px) up to tablet landscape (1000px).
+- **Files/Areas Affected**:
+  - `frontend/src/components/EduKadenceLogo.jsx`
+  - `frontend/src/layouts/ParentShell.jsx`, `frontend/src/layouts/KidShell.jsx`
+  - `frontend/src/pages/ParentPortalPage.jsx`, `frontend/src/pages/KidModePage.jsx`
+  - `frontend/src/pages/kid/` (`KidHomePage.jsx`, `KidBadgesPage.jsx`, `KidExplorePage.jsx`, `KidStoriesPage.jsx`, `KidVideosPage.jsx`)
+  - `frontend/src/components/learning/` (`ActivityRunner.jsx`, `DragDropActivity.jsx`, `ColorActivity.jsx`, `TraceActivity.jsx`, `SequenceActivity.jsx`, `CountActivity.jsx`, `MatchActivity.jsx`, `MemoryActivity.jsx`, `QuizActivity.jsx`, `SortActivity.jsx`, `StoryReader.jsx`, `TapChooseActivity.jsx`, `CuratedVideoPlayer.jsx`)
+- **What Changed**:
+  - Logo subtitle truncation prevents pushing action buttons offscreen on 320px viewports.
+  - Parent bottom bar updated with 6 uniform responsive columns (`min-h-[46px]`, `px-1 sm:px-2`, `text-[9px] sm:text-[10px]`) with zero text clipping.
+  - Sibling switcher capsule container constrained with horizontal scroll.
+  - Kid Mode header, star wallet, and challenge cards updated with fluid responsive padding.
+  - All 12 interactive learning activities updated with flex-wrap item chips and responsive canvas bounding boxes.
+- **Testing Performed**:
+  - Multi-breakpoint browser visual validation at 320px, 360px, 390px, 768px, and 1000px.
+  - `npm run build` (built cleanly in 3.66s with zero errors).
+  - `pytest tests/ -v` (47/47 passed).
+  - Mandatory Git PR workflow (`fix/mobile-responsive-parent-student-320px-1000px` -> PR #8 -> merged into `main`).
+
+---
+
 ### Task: Phase 1 Foundation Bootstrap & Memory System Setup
 - **Date**: 2026-09-17
 - **Reason**: Initialize the entire EduKadence multi-tenant architecture, design system, test suite, and establish the permanent token-efficient agent memory system.

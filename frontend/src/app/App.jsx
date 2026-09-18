@@ -32,8 +32,8 @@ import { LearningStudioPage } from '../pages/LearningStudioPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { LoadingState } from '../components/ui';
 
-const ProtectedRoute = ({ children }) => {
-  const { user, isLoading } = useAuth();
+const ProtectedRoute = ({ children, allowedRoles }) => {
+  const { user, activeRole, isLoading } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -48,7 +48,31 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // If role is not authorized for this section, redirect to appropriate home
+  if (allowedRoles && !allowedRoles.includes(activeRole)) {
+    if (activeRole === 'CHILD') return <Navigate to="/kid" replace />;
+    if (activeRole === 'PARENT') return <Navigate to="/parent" replace />;
+    return <Navigate to="/app" replace />;
+  }
+
   return children;
+};
+
+const RootRedirect = () => {
+  const { user, activeRole, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <LoadingState message="Connecting..." />
+      </div>
+    );
+  }
+
+  if (!user) return <Navigate to="/login" replace />;
+  if (activeRole === 'CHILD') return <Navigate to="/kid" replace />;
+  if (activeRole === 'PARENT') return <Navigate to="/parent" replace />;
+  return <Navigate to="/app" replace />;
 };
 
 export const App = () => {
@@ -59,11 +83,11 @@ export const App = () => {
         <Route path="/login" element={<LoginPage />} />
       </Route>
 
-      {/* School Management Experience */}
+      {/* School Management Experience (Educators & Administrators) */}
       <Route
         path="/app"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['SUPER_ADMIN', 'SCHOOL_ADMIN', 'TEACHER']}>
             <AppShell />
           </ProtectedRoute>
         }
@@ -91,7 +115,7 @@ export const App = () => {
       <Route
         path="/parent"
         element={
-          <ProtectedRoute>
+          <ProtectedRoute allowedRoles={['PARENT', 'SUPER_ADMIN', 'SCHOOL_ADMIN']}>
             <ParentShell />
           </ProtectedRoute>
         }
@@ -107,7 +131,7 @@ export const App = () => {
         <Route path="profile" element={<ParentPortalPage />} />
       </Route>
 
-      {/* Safe Kid Mode Sandbox */}
+      {/* Safe Kid Mode Sandbox (Children & Parents in Kid Mode) */}
       <Route
         path="/kid"
         element={
@@ -124,7 +148,7 @@ export const App = () => {
       </Route>
 
       {/* Root Redirection */}
-      <Route path="/" element={<Navigate to="/app" replace />} />
+      <Route path="/" element={<RootRedirect />} />
 
       {/* 404 Catch-All */}
       <Route path="*" element={<NotFoundPage />} />

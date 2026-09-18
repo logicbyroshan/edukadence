@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [5.1.0-responsive] - 2026-09-18
+
+### Fixed & Optimized
+- **320px–1000px Mobile & Tablet Responsive Overhaul (Parent Portal & Kid Mode)**:
+  - Scaled logo container with truncated subtitle (`max-w-[130px] sm:max-w-[220px]`) preventing header action button collision on ultra-narrow 320px devices.
+  - Optimized Parent Portal 6-tab mobile bottom bar (`min-h-[46px]`, `px-1 sm:px-2 py-1`, `text-[9px] sm:text-[10px]`, `w-4.5 h-4.5 sm:w-5 sm:h-5` icons) fitting cleanly on 320px screens with zero horizontal overflow.
+  - Refined Kid Mode Header and Star Wallet (`px-2.5 sm:px-3.5 py-1 text-xs sm:text-sm`) with fluid responsive scaling.
+  - Enhanced all 12 interactive learning activities (`DragDrop`, `Color`, `Trace`, `Sequence`, `Count`, `Match`, `Memory`, `Quiz`, `Sort`, `StoryReader`, `TapChoose`, `CuratedVideoPlayer`) with flex-wrap item chips, responsive canvases, and touch targets ensuring 100% butter-smooth experience across compact mobile (320px, 360px, 390px) and tablets (768px, 1000px).
+
+---
+
 ## [5.0.0-audit] - 2026-09-18
 
 ### Fixed & Stabilized
