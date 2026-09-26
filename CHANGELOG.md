@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [5.2.0-dpdp] - 2026-09-26
+
+### Added & Implemented
+- **Digital Personal Data Protection Act, 2023 & DPDP Rules, 2025 Architecture (`apps.privacy`)**:
+  - `PrivacyNotice`: Versioned statutory notice with itemized processing purposes, storage localization in India, and Grievance Officer contacts.
+  - `ConsentPurpose` & `ConsentRecord`: Verifiable consent logging under Section 6 & Section 9 with withdrawal audit trails.
+  - `DataPrincipalRequest`: Data Principal Rights engine supporting Section 11 & 12 (Access Summary, Correction, Completion, Updating, Erasure) with 90-day statutory deadline enforcement.
+  - `export-my-data`: 1-click Section 11 structured JSON personal data summary export for parents and staff.
+  - `DataPrincipalNomination`: Section 14 statutory right to nominate trusted individuals in event of death/incapacity.
+  - `PrivacyGrievance`: Section 13 formal grievance redressal ticketing system (`PGR-...`) with resolution tracking.
+  - `DataBreachIncident`: Section 8(6) technical incident response and breach register.
+  - `DataRetentionPolicy` & `run_retention_cleanup`: Automated statutory data retention matrix and scheduled cleanup engine.
+  - `PrivacyAuditLog`: Tamper-evident privacy mutation event audit logger.
+- **Frontend Privacy & Data Governance Center**:
+  - `PrivacyCenterModal.jsx`: 5-tab interactive privacy center for parents, teachers, and staff.
+  - `PrivacyPage.jsx`: Full-page governance dashboard with administrative review tools for School Admins / DPOs.
+  - Header & settings integration across `AppShell`, `ParentShell`, and `SettingsPage`.
+- **Automated Verification**:
+  - `backend/tests/test_privacy_dpdp.py`: 11 comprehensive automated tests covering notice, consent, export, rights requests, grievances, nominations, breach logging, erasure, and tenant isolation.
+  - Full suite expanded to 59/59 passing Pytest tests (100% pass rate).
+  - Frontend production build verified with zero errors.
+
+---
+
 ## [5.1.0-responsive] - 2026-09-18
 
 ### Fixed & Optimized

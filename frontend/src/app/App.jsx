@@ -29,6 +29,7 @@ import { KidVideosPage } from '../pages/kid/KidVideosPage';
 import { KidBadgesPage } from '../pages/kid/KidBadgesPage';
 import { SettingsPage } from '../pages/SettingsPage';
 import { LearningStudioPage } from '../pages/LearningStudioPage';
+import { PrivacyPage } from '../pages/PrivacyPage';
 import { NotFoundPage } from '../pages/NotFoundPage';
 import { LoadingState } from '../components/ui';
 
@@ -83,6 +84,9 @@ export const App = () => {
         <Route path="/login" element={<LoginPage />} />
       </Route>
 
+      {/* Public / Authenticated Privacy Portal */}
+      <Route path="/privacy" element={<PrivacyPage />} />
+
       {/* School Management Experience (Educators & Administrators) */}
       <Route
         path="/app"
@@ -108,6 +112,7 @@ export const App = () => {
         <Route path="reports" element={<ReportsPage />} />
         <Route path="schools" element={<SchoolsPage />} />
         <Route path="users" element={<UsersPage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
         <Route path="settings" element={<SettingsPage />} />
       </Route>
 
@@ -128,6 +133,7 @@ export const App = () => {
         <Route path="pickup" element={<ParentPortalPage />} />
         <Route path="notices" element={<ParentPortalPage />} />
         <Route path="messages" element={<ParentPortalPage />} />
+        <Route path="privacy" element={<PrivacyPage />} />
         <Route path="profile" element={<ParentPortalPage />} />
       </Route>
 

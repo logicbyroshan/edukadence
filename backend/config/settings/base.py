@@ -49,6 +49,7 @@ LOCAL_APPS = [
     'apps.communication.apps.CommunicationConfig',
     'apps.reports.apps.ReportsConfig',
     'apps.learning.apps.LearningConfig',
+    'apps.privacy.apps.PrivacyConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -175,3 +176,10 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
     'x-school-id',
 ]
+
+# DPDP Act 2023 & Web Security Headers
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+REFERRER_POLICY = 'strict-origin-when-cross-origin'
+

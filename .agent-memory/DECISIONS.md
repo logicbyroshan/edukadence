@@ -98,5 +98,14 @@ This document tracks all foundational architectural and technical decisions made
 - **Decision**: Directly utilize the high-resolution official `EduKedance.png` graphic asset across all application shells (Admin, Parent, Kid, Auth) and extract exact color tokens into Tailwind and CSS custom properties (Electric Azure `#0084D6`, Star & Leaping Child Cyan `#00C3FF`/`#00D2FF`, Deep Navy `#081928`).
 - **Rationale**: Guarantees pixel-perfect brand fidelity, consistent visual identity across desktop/tablet/mobile screens, and harmonious design cohesion.
 
+---
+
+## ADR 013: DPDP Act 2023 & DPDP Rules 2025 Data Governance Architecture
+- **Date**: 2026-09-26
+- **Status**: Accepted
+- **Decision**: Implement a dedicated `apps.privacy` Django app with versioned `PrivacyNotice`, itemized `ConsentPurpose` & `ConsentRecord` verifiable tracking, `DataPrincipalRequest` rights manager (Sections 11 & 12), `DataPrincipalNomination` (Section 14), `PrivacyGrievance` redressal mechanism (Section 13) with statutory 90-day SLA enforcement, `DataBreachIncident` register (Section 8(6)), automated `DataRetentionPolicy` cleanup engine, and interactive frontend Privacy Center modal & standalone `/privacy` dashboard.
+- **Rationale**: EduKadence processes early-childhood data (ages 2–10). Direct, verifiable parental consent, strict prohibition of child behavioral tracking, zero-friction Section 11 instant data export, statutory grievance workflows, and audited de-identification provide technical compliance with India's DPDP Act, 2023 and DPDP Rules, 2025.
+
+
 
 

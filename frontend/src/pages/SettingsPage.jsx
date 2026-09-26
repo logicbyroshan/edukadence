@@ -183,6 +183,46 @@ export const SettingsPage = () => {
               </div>
             </CardBody>
           </Card>
+
+          {/* DPDP Act 2023 Compliance Widget */}
+          <Card className="border-blue-200 bg-gradient-to-br from-white to-blue-50/50">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-sm flex items-center gap-1.5 text-blue-950">
+                  <ShieldAlert className="w-4 h-4 text-blue-600" />
+                  Data Governance (DPDP)
+                </CardTitle>
+                <Badge variant="success" size="sm">Active</Badge>
+              </div>
+              <CardDescription className="text-xs">
+                Digital Personal Data Protection Act, 2023 & DPDP Rules, 2025 readiness.
+              </CardDescription>
+            </CardHeader>
+            <CardBody className="space-y-3 pt-0">
+              <div className="text-xs text-slate-600 space-y-1.5">
+                <div className="flex justify-between items-center text-[11px]">
+                  <span>Storage Jurisdiction:</span>
+                  <strong className="text-slate-800">India (Localized)</strong>
+                </div>
+                <div className="flex justify-between items-center text-[11px]">
+                  <span>Child Tracking Policy:</span>
+                  <strong className="text-emerald-700">Strictly Prohibited</strong>
+                </div>
+                <div className="flex justify-between items-center text-[11px]">
+                  <span>Statutory SLA:</span>
+                  <strong className="text-slate-800">&le; 90 Days</strong>
+                </div>
+              </div>
+              <Button
+                variant="primary"
+                size="sm"
+                className="w-full text-xs"
+                to="/app/privacy"
+              >
+                Open Privacy Center
+              </Button>
+            </CardBody>
+          </Card>
         </div>
       </div>
     </div>
