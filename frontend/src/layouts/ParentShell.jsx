@@ -14,6 +14,7 @@ import {
   Users,
 } from 'lucide-react';
 import { Avatar, Badge } from '../components/ui';
+import { PrivacyCenterModal } from '../components/privacy/PrivacyCenterModal';
 
 export const ParentContext = createContext();
 
@@ -24,6 +25,7 @@ export const ParentShell = () => {
   const location = useLocation();
 
   const [selectedChildIndex, setSelectedChildIndex] = useState(0);
+  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
   // Fetch children connected to this parent account
   const { data: childrenData } = useQuery({
@@ -54,6 +56,14 @@ export const ParentShell = () => {
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => setIsPrivacyOpen(true)}
+                className="p-1.5 rounded-full text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                title="Privacy & Data Rights Center (DPDP Act)"
+                aria-label="Privacy & Data Rights"
+              >
+                <ShieldCheck className="w-5 h-5 text-blue-600" />
+              </button>
               <Link
                 to="/kid"
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-orange-400 text-amber-950 font-black text-xs shadow-xs hover:scale-105 active:scale-95 transition-all"
@@ -150,6 +160,8 @@ export const ParentShell = () => {
               );
             })}
           </nav>
+
+          <PrivacyCenterModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
         </div>
       </div>
     </ParentContext.Provider>

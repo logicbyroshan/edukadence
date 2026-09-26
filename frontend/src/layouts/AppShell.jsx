@@ -45,6 +45,7 @@ export const AppShell = () => {
           { label: 'System Overview', path: '/app', icon: <LayoutDashboard className="w-4 h-4" /> },
           { label: 'Schools Directory', path: '/app/schools', icon: <Building2 className="w-4 h-4" /> },
           { label: 'Users & RBAC', path: '/app/users', icon: <Users className="w-4 h-4" /> },
+          { label: 'Privacy & DPDP Center', path: '/app/privacy', icon: <ShieldCheck className="w-4 h-4" /> },
           { label: 'System Reports', path: '/app/reports', icon: <BarChart3 className="w-4 h-4" /> },
           { label: 'Global Settings', path: '/app/settings', icon: <Settings className="w-4 h-4" /> },
         ],
@@ -69,9 +70,10 @@ export const AppShell = () => {
         ],
       },
       {
-        label: 'Communication',
+        label: 'Communication & Privacy',
         items: [
           { label: 'Announcements', path: '/app/communication', icon: <Megaphone className="w-4 h-4" /> },
+          { label: 'Privacy Charter', path: '/app/privacy', icon: <ShieldCheck className="w-4 h-4" /> },
         ],
       },
     ];
@@ -116,9 +118,10 @@ export const AppShell = () => {
         ],
       },
       {
-        label: 'Analytics & Admin',
+        label: 'Governance & Admin',
         items: [
           { label: 'Reports & Export', path: '/app/reports', icon: <BarChart3 className="w-4 h-4" /> },
+          { label: 'Privacy & DPDP Governance', path: '/app/privacy', icon: <ShieldCheck className="w-4 h-4 text-blue-600" /> },
           { label: 'Schools Directory', path: '/app/schools', icon: <Building2 className="w-4 h-4" /> },
           { label: 'Users & RBAC', path: '/app/users', icon: <Users className="w-4 h-4" /> },
           { label: 'Settings', path: '/app/settings', icon: <Settings className="w-4 h-4" /> },

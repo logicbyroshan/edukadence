@@ -20,6 +20,7 @@ urlpatterns = [
     path('api/v1/communication/', include('apps.communication.urls', namespace='communication')),
     path('api/v1/reports/', include('apps.reports.urls', namespace='reports')),
     path('api/v1/learning/', include('apps.learning.urls')),
+    path('api/v1/privacy/', include('apps.privacy.urls', namespace='privacy')),
 ]
 
 if settings.DEBUG:
